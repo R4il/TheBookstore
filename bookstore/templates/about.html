@@ -1,0 +1,72 @@
+{% extends 'layout.html' %}
+{% load static from staticfiles %}
+{% block title %} About {% endblock %}
+
+{% block content %}
+
+<div class="container">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{% static 'css/w3.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
+    <style>
+        body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
+    </style>
+<body>
+
+  <hr id="about">
+
+  <!-- About Section -->
+  <div class="w3-container w3-padding-1 w3-center">
+    <h3>About Us, Name</h3><br>
+    <img src="{% static 'img/geek.jpeg' %}" alt="Me" class="w3-image" style="display:block;margin:auto" width="800" height="533">
+    <div class="w3-padding-32">
+      <h4><b>We are who We are!</b></h4>
+      <h6><i>With Passion For Real Good Reads</i></h6>
+      <p>We categorize, share and give a medium for geeks like us to find, explore and share opinions on books. We here at Name have a heart of love and a curiousity to learn. We want to share our world with you. Please fill our home with your comments, your views and suggestions. Let us explore the world
+      of the esoteric, dive into science fiction and play a few games to celebrate. We are Name and we are here to grow together.</p>
+    </div>
+  </div>
+  <hr>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main w3-content w3-padding" style="max-width:1200px;margin-top:100px">
+  <!-- First Photo Grid-->
+  <div class="w3-row-padding w3-padding-16 w3-center" >
+    <div class="w3-quarter">
+      <img src="{% static 'img/internet.jpg' %}" alt="IOT" style="width:100%">
+      <h3>Internet Of Things</h3>
+      <p>What better way to explore the web then our very own Internet Of Things. Join us you might learn something. ;) </p>
+    </div>
+    <div class="w3-quarter">
+      <img src="{% static 'img/Asgard.jpg' %}" alt="Science Fiction" style="width:100%">
+      <h3>Science Fiction</h3>
+      <p>Explore Asgard, Jump inside of a time machine, or visit a galaxy far, far away.</p>
+    </div>
+    <div class="w3-quarter">
+      <img src="{% static 'img/history.jpg' %}" alt="History" style="width:100%">
+      <h3>History</h3>
+      <p>Who are we? How did we get here? Explore the past with our hand picked and critically acclaimed selection</p>
+    </div>
+    <div class="w3-quarter">
+      <img src="{% static 'img/social.jpg' %}" alt="Social" style="width:100%">
+      <h3>Social</h3>
+      <p>Because sometimes having a wingman is all we need to get to that next level.</p>
+    </div>
+  </div>
+
+
+</div>
+ <!-- Second Photo Grid-->
+  <div class="w3-row-padding w3-padding-16 w3-center" >
+          <div class="w3-quarter">
+      <img src="{% static 'img/Gaming.jpg' %}"alt="Gaming" style="width:100%">
+      <h3>Gaming</h3>
+      <p>After it is all said and done lets take a break, sip some pop, and go ham on our brotheren. </p>
+    </div>
+  </div>
+
+</body>
+</div>
+
+
+{% endblock %}
