@@ -86,7 +86,7 @@ def manage_account(request):
     user = User.objects.get(pk=online_user.user_id)
     form = EditUserProfileForm(request.POST or None, initial={'first_name': online_user.first_name,
                                                     'last_name': online_user.last_name, 'nickname': online_user.nickname,
-                                                    'email_address': online_user.email_address}, instance=request.user)
+                                                    'email_address': online_user.email_address, 'credit_card': online_user.credit_card}, instance=request.user)
 
     if request.method == 'POST':
         if form.is_valid():
@@ -94,6 +94,7 @@ def manage_account(request):
             user.last_name = form.cleaned_data['last_name']
             user.nickname = form.cleaned_data['nickname']
             user.email_address = form.cleaned_data['email_address']
+            user.credit_card = form.cleaned_data['credit_card']
 
             user.save()
 
