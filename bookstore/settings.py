@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'send_email',
     'accounts',
     'bootstrap3',
-
+    'books',
 ]
 
 MIDDLEWARE = [
