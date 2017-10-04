@@ -66,7 +66,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
     <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
     <h3 class="w3-wide"><b>Bookstore</b></h3>
   </div>
-    <form method="get" action="#" id="search">  <input name="bookSearch" type="text" size="30" placeholder="Search Book" value='{{request.get.q}}' /></form>
+    <form method="get" action="search/" id="search">  <input name="bookSearch" type="text" size="30" placeholder="Search Book" value='{{request.get.q}}' /></form>
   <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
           {% if user.is_authenticated %}
     <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">

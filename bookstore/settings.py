@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'send_email',
     'accounts',
     'bootstrap3',
+    'search',
 
 ]
 
@@ -143,3 +144,7 @@ LOGIN_REDIRECT_URL = reverse_lazy('index')
 
 
 CONTEXT_PROCESSORS = 'django.core.context_processors.csrf'
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/bookCover')
+
