@@ -23,6 +23,7 @@ class Book(models.Model):
     rating = models.DecimalField(decimal_places=2, max_digits=3)
     publisher = models.CharField(max_length=255)
     about = models.CharField(max_length=3000)
+    cover = models.CharField(max_length=255, default="nocover.jpg")
 
     def __str__(self):
         return self.title
