@@ -1,0 +1,54 @@
+@fieldSizeFont {
+      font-size: 17px;
+      font-family: arial;
+      }
+      body,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+      font-family: "Karma", sans-serif
+      }
+      .w3-bar-block .w3-bar-item {
+      padding: 0px
+      }
+      #search {}
+      #search input[type="text"] {
+      background: url(search-white.png) no-repeat 10px 6px #444;
+      border: 0 none;
+      color: #d7d7d7;
+      width: 250px;
+      padding: 10px 15px 6px 30px;
+      -webkit-border-radius: 20px;
+      -moz-border-radius: 20px;
+      border-radius: 20px;
+      text-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+      -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+      -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+      -webkit-transition: all 0.7s ease 0s;
+      -moz-transition: all 0.7s ease 0s;
+      -o-transition: all 0.7s ease 0s;
+      transition: all 0.7s ease 0s;
+      }
+      #search input[type="text"]:focus {
+      background: url(search-dark.png) no-repeat 10px 6px #fcfcfc;
+      color: #6a6f75;
+      width: 200px;
+      text-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+      }
+      .w3-sidebar a {
+      font-family: "Roboto", sans-serif
+      }
+      body,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      .w3-wide {
+      font-family: "Montserrat", sans-serif;
+      }

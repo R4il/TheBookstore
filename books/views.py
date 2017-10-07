@@ -4,7 +4,7 @@ from django.http import HttpResponse
 
 
 # Create your views here.
-def index(request):
+def search(request):
     all_books = Book.objects.all()
     template = loader.get_template('books/index.html')
     context = {
