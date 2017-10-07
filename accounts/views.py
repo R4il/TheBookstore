@@ -33,36 +33,7 @@ def login_view(request):
                 login(request, user)
                 current_user = request.user
 
-                # find future order list of user
-                future_order_cart = FutureOrder.objects.get(
-                    user_id=current_user.user_id
-                )
-
-                # set future order id into request.session
-                request.session['fOrderId'] = future_order_cart.id
-
-                # find the latest shopping cart by user
-                latest_cart = Order.objects.filter(
-                    user_id=current_user.user_id
-                ).order_by('date_created').last()
-
-                # create new shopping cart if latest cart has been payed
-                if latest_cart.payed_order:
-                    new_cart = create_shopping_cart(current_user.user_id)
-                    request.session['orderId'] = new_cart.id
-
-                # use existing shopping cart that has not been payed for
-                # used when shoppers log off then log back in with preexisting shopping cart and books stored inside
-                else:
-                    request.session['orderId'] = latest_cart.id
-
-                messages.success(request, 'User has successfully logged in.')
-
-            # account is not active
-            else:
-                messages.error(request, 'Your account has been disabled.')
-
-        # no user with matching credentials
+            # no user with matching credentials
         else:
             # bad login credentials were provided
             messages.error(request, 'Sorry the credentials you input, were incorrect.')
