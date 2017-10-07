@@ -3,28 +3,38 @@
 {% load static from staticfiles %}
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-   <link href="{% static 'css/w3.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/w3.css' %}" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
-        .fieldSizeFont{
-            font-size:17px;
-            font-family:arial;
-        }
-    body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
-    .w3-bar-block .w3-bar-item {padding:0px}
+  .fieldSizeFont {
+    font-size: 17px;
+    font-family: arial;
+  }
+
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Karma", sans-serif
+  }
+
+  .w3-bar-block .w3-bar-item {
+    padding: 0px
+  }
 
 
-    #search {
+  #search {}
 
-}
-
-#search input[type="text"] {
+  #search input[type="text"] {
     background: url(search-white.png) no-repeat 10px 6px #444;
     border: 0 none;
     color: #d7d7d7;
-    width:250px;
+    width: 250px;
     padding: 10px 15px 6px 35px;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
@@ -37,142 +47,159 @@
     -moz-transition: all 0.7s ease 0s;
     -o-transition: all 0.7s ease 0s;
     transition: all 0.7s ease 0s;
-    }
+  }
 
-#search input[type="text"]:focus {
+  #search input[type="text"]:focus {
     background: url(search-dark.png) no-repeat 10px 6px #fcfcfc;
     color: #6a6f75;
     width: 200px;
 
     text-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
-    }
-.w3-sidebar a {font-family: "Roboto", sans-serif}
-body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
+  }
+
+  .w3-sidebar a {
+    font-family: "Roboto", sans-serif
+  }
+
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .w3-wide {
+    font-family: "Montserrat", sans-serif;
+  }
+
 </style>
-  <!-- Bootstrap -->
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-    <link href="{% static 'css/bootstrap-social.css' %}" rel="stylesheet" type="text/css">
-   <link href="{% static 'css/w3.css' %}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
+<!-- Bootstrap -->
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<link href="{% static 'css/bootstrap-social.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/w3.css' %}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
 
 
 <!-- Sidebar/menu -->
-<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px"id="mySidebar">
-        {% if user.is_authenticated %}
-    Hello {{ user.nickname }}
-        {% endif %}
-  <div class="w3-container w3-display-container w3-padding-16">
-    <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
-    <h3 class="w3-wide"><b>Bookstore</b></h3>
-  </div>
-    <form method="get" action="#" id="search">  <input name="bookSearch" type="text" size="30" placeholder="Search Book" value='{{request.get.q}}' /></form>
-  <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
-          {% if user.is_authenticated %}
-    <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
-      Manage <i class="fa fa-caret-down"></i>
-    </a>
-    <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
-      <a href="#" class="w3-bar-item w3-button w3-light-grey"><i class="fa fa-caret-right w3-margin-right"></i>Dropdown?</a>
-      <a href="#" class="w3-bar-item w3-button">Manage Accounts</a>
-      <a href="#" class="w3-bar-item w3-button">Manage Payment Method</a>
-      <a href="#" class="w3-bar-item w3-button">Manage Shipping Address</a>
-      <a href="#" class="w3-bar-item w3-button">Logout</a>
+<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
+    {% if user.is_authenticated %} Hello {{ user.nickname }} {% endif %}
+    <div class="w3-container w3-display-container w3-padding-16">
+        <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
+        <h3 class="w3-wide"><b>Bookstore</b></h3>
     </div>
-                    {% else %}
-                        <!-- Login id target -->
-                      <a href="#" class="w3-bar-item w3-button"  data-toggle="modal" data-target="#modalSignIn" >Sign In</a>
-                      <a href="{% url 'accounts:signup' %}" class="w3-bar-item w3-button">Sign Up</a>
-                    {% endif %}
-    <br>
-    <a href="#" class="w3-bar-item w3-button">Best Sellers</a>
-    <a href="#" class="w3-bar-item w3-button">Books By Author</a>
-    <a href="#" class="w3-bar-item w3-button">Books By Genre</a>
+    <form method="get" action="#" id="search"><input name="bookSearch" type="text" size="30" placeholder="Search Book"
+                                                     value='{{request.get.q}}'/></form>
+    <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
+        {% if user.is_authenticated %}
+        <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
+            Manage <i class="fa fa-caret-down"></i>
+        </a>
+        <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
+            <a href="#" class="w3-bar-item w3-button w3-light-grey"><i class="fa fa-caret-right w3-margin-right"></i>Dropdown?</a>
+            <a href="#" class="w3-bar-item w3-button">Manage Accounts</a>
+            <a href="#" class="w3-bar-item w3-button">Manage Payment Method</a>
+            <a href="#" class="w3-bar-item w3-button">Manage Shipping Address</a>
+            <a href="#" class="w3-bar-item w3-button">Logout</a>
+        </div>
+        {% else %}
+        <!-- Login id target -->
+        <a href="#" class="w3-bar-item w3-button" data-toggle="modal" data-target="#modalSignIn">Sign In</a>
+        <a href="{% url 'accounts:signup' %}" class="w3-bar-item w3-button">Sign Up</a> {% endif %}
+        <br>
+        <a href="#" class="w3-bar-item w3-button">Best Sellers</a>
+        <a href="#" class="w3-bar-item w3-button">Books By Author</a>
+        <a href="#" class="w3-bar-item w3-button">Books By Genre</a>
 
 
-                    <!-- Link to Dropdown for My Account -->
-                    <ul class="nav navbar-nav navbar-right">
+        <!-- Link to Dropdown for My Account -->
+        <ul class="nav navbar-nav navbar-right">
 
-  <a href="{% url 'email' %}" class="w3-bar-item w3-button w3-padding">Contact</a>
-  <a href="{% url 'about' %}" class="w3-bar-item w3-button w3-padding" onclick="document.getElementById('newsletter').style.display='block'">About Us</a>
-  <a href="#footer"  class="w3-bar-item w3-button w3-padding">Social</a>
-    <a class="btn btn-social-icon btn-facebook" href="http://www.facebook.com/profile.php?id=">
-                            <i class="fa fa-facebook"></i></a>
-                        <a class="btn btn-social-icon btn-linkedin" href="http://www.linkedin.com/in/">
-                            <i class="fa fa-linkedin"></i></a>
-                        <a class="btn btn-social-icon btn-twitter" href="http://twitter.com/">
-                            <i class="fa fa-twitter"></i></a>
-                        <a class="btn btn-social-icon btn-youtube" href="http://youtube.com/">
-                            <i class="fa fa-youtube"></i></a>
-                        <a class="btn btn-social-icon" href="mailto:"><i class="fa fa-envelope"></i></a>
+            <a href="{% url 'email' %}" class="w3-bar-item w3-button w3-padding">Contact</a>
+            <a href="{% url 'about' %}" class="w3-bar-item w3-button w3-padding"
+               onclick="document.getElementById('newsletter').style.display='block'">About Us</a>
+            <a href="#footer" class="w3-bar-item w3-button w3-padding">Social</a>
+            <a class="btn btn-social-icon btn-facebook" href="http://www.facebook.com/profile.php?id=">
+                <i class="fa fa-facebook"></i></a>
+            <a class="btn btn-social-icon btn-linkedin" href="http://www.linkedin.com/in/">
+                <i class="fa fa-linkedin"></i></a>
+            <a class="btn btn-social-icon btn-twitter" href="http://twitter.com/">
+                <i class="fa fa-twitter"></i></a>
+            <a class="btn btn-social-icon btn-youtube" href="http://youtube.com/">
+                <i class="fa fa-youtube"></i></a>
+            <a class="btn btn-social-icon" href="mailto:"><i class="fa fa-envelope"></i></a>
 </nav>
 
 <!-- Top menu on small screens -->
 <header class="w3-bar w3-top w3-hide-large w3-black w3-xlarge">
-  <div class="w3-bar-item w3-padding-24 w3-wide">Bookstore</div>
-  <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding-24 w3-right" onclick="w3_open()"><i class="fa fa-bars"></i></a>
+    <div class="w3-bar-item w3-padding-24 w3-wide">Bookstore</div>
+    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding-24 w3-right" onclick="w3_open()"><i
+            class="fa fa-bars"></i></a>
 </header>
 
 <!-- Overlay effect when opening sidebar on small screens -->
-<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu"
+     id="myOverlay"></div>
 
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:250px">
 
-  <!-- Push down content on small screens -->
-  <div class="w3-hide-large" style="margin-top:83px"></div>
+    <!-- Push down content on small screens -->
+    <div class="w3-hide-large" style="margin-top:83px"></div>
 
-  <!-- Top header -->
-  <header class="w3-container w3-xlarge">
-    <p class="w3-left">"{{ Page.Name.Here }}Home" </p>
-    <p class="w3-right">
-<a class="nav-link" href="#"><span class="glyphicon glyphicon-shopping-cart"></span></a>
-    </p>
+    <!-- Top header -->
+    <header class="w3-container w3-xlarge">
+        <p class="w3-left">"{{ Page.Name.Here }}Home" </p>
+        <p class="w3-right">
+            <a class="nav-link" href="#"><span class="glyphicon glyphicon-shopping-cart"></span></a>
+        </p>
 
-         <!-- Sign In Modal -->
-    <div class="modal fade" id="modalSignIn" role="dialog">
-        <div class="modal-dialog">
-            <!-- Sign In Modal Content -->
-            <div class="modal-content">
-                {% include 'accounts/login.html' %}
+        <!-- Sign In Modal -->
+        <div class="modal fade" id="modalSignIn" role="dialog">
+            <div class="modal-dialog">
+                <!-- Sign In Modal Content -->
+                <div class="modal-content">
+                    {% include 'accounts/login.html' %}
+                </div>
             </div>
         </div>
-    </div>
 
-  </header>
-      {% block content %}{% endblock %}
+    </header>
+    {% block content %}
+
+    {% endblock %}
 
 
- <!-- Footer -->
-<footer class="row-footer" >
-                    <p align=center>© Copyright 2017</p>
-</footer>
-<script>
-// Accordion
-function myAccFunc() {
-    var x = document.getElementById("demoAcc");
-    if (x.className.indexOf("w3-show") == -1) {
+    <!-- Footer -->
+    <footer class="row-footer">
+        <p align=center>© Copyright 2017</p>
+    </footer>
+    <script>
+    // Accordion
+    function myAccFunc() {
+      var x = document.getElementById("demoAcc");
+      if (x.className.indexOf("w3-show") == -1) {
         x.className += " w3-show";
-    } else {
+      } else {
         x.className = x.className.replace(" w3-show", "");
+      }
     }
-}
 
-// Click on the "Jeans" link on page load to open the accordion for demo purposes
-document.getElementById("myBtn").click();
+    // Click on the "Jeans" link on page load to open the accordion for demo purposes
+    document.getElementById("myBtn").click();
 
 
-// Script to open and close sidebar
-function w3_open() {
-    document.getElementById("mySidebar").style.display = "block";
-    document.getElementById("myOverlay").style.display = "block";
-}
+    // Script to open and close sidebar
+    function w3_open() {
+      document.getElementById("mySidebar").style.display = "block";
+      document.getElementById("myOverlay").style.display = "block";
+    }
 
-function w3_close() {
-    document.getElementById("mySidebar").style.display = "none";
-    document.getElementById("myOverlay").style.display = "none";
-}
-</script>
+    function w3_close() {
+      document.getElementById("mySidebar").style.display = "none";
+      document.getElementById("myOverlay").style.display = "none";
+    }
 
-</body>
+    </script>
+    </body>
 </html>
