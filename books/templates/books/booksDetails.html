@@ -7,7 +7,7 @@
 {% block title %} Book details: {% endblock %}
 
 {% block content %}
-<div style="padding-left:80px">
+<div style="padding-left:40px">
     <h1>{{book.title}}</h1>
         <div>
             <img src="/static/covers/{{ book.cover }}" class=".w3-image" style="float:left" />
@@ -20,12 +20,11 @@
                 <li>Price: {{book.price}}$</li>
             </ul>
         </div>
-    <h3>
+    <h3 style="padding-left:15px; overflow:hidden">
         {{book.about}}
     </h3>
     <div>&nbsp;</div>
     <a href="#" class="w3-bar-item w3-button" onClick="javascript:history.go(-1);">Go back</a>
     <a href="#" class="w3-bar-item w3-button" >Add to cart</a>
-
 </div>
 {% endblock %}
