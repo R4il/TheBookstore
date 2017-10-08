@@ -5,7 +5,7 @@ from django.db import models
 
 
 class Author(models.Model):
-    authoID = models.AutoField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     first = models.CharField(max_length=50)
     last = models.CharField(max_length=50)
     about = models.CharField(max_length=3000)

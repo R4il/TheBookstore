@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% block title %} Book listing {% endblock %}
+
+{% block content %}
+    <ul>
+        {% for book in all_books %}
+        <li>
+            <a href="/books/{{ book.id }}/">
+                <img  src="/static/covers/{{ book.cover }}" height="128" width="128"/>
+                {{book.title}}
+            </a>
+        </li>
+        <br>
+        {% endfor %}
+    </ul>
+
+    <div>&nbsp;</div>
+    <a href="#" class="w3-bar-item w3-button" onClick="javascript:history.go(-1);">Go back</a>
+{% endblock %}
