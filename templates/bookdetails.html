@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Search Results</title>
+    </head>
+    <body>
+        <h1>Book Details:</h1>
+            <br/>
+            <td>Book Key: </td>
+            {{ instance.id }}<br/>
+            <td>Book Title:</td>
+            <a href='/search/{{ instance.id }}'>{{ instance.title }}</a><br/>
+            <td>Author: </td>
+            {{ instance.author }}<br/>
+            <td>Author Bio: </td>
+            {{ instance.authorbio }}<br/>
+            <td>Genre: </td>
+            {{ instance.genre }}<br/>
+            <td>Publisher: </td>
+            {{ instance.publisher }}<br/>
+            <td>Price: $</td>
+            {{ instance.price }}<br/>
+            <td>Book Rating: </td>
+            {{ instance.bookrating }}<br/>
+            <td>Release Date</td>
+            {{ instance.releasedate }}<br/>
+            <td>Book Description: </td>
+            {{ instance.description }}<br/>
+            <td>Comments: </td>
+            {{ instance.content }}<br/>
+    </body>
+</html>

@@ -26,9 +26,8 @@
           <h3 class="w3-wide"><b><a href="{% url 'index' %}" class="w3-bar-item w3-button">Bookstore</a></b></h3>
       </div>
 
-      <form method="get" action="#" id="search"><input name="bookSearch" type="text" size="30" placeholder="Search Book"
-         value='{{request.get.q}}'/></form>
-
+       <form method="get" action="search/" id="search">  <input name="bookSearch" type="text" size="30" placeholder="Search Book" value='{{request.get.q}}' /></form>
+ 
       <div class="w3-padding-16 w3-large w3-text-grey" style="font-weight:bold">
           {% if user.is_authenticated %}
               <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
