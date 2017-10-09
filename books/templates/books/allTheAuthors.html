@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% block title %} Author listing {% endblock %}
+
+{% block content %}
+    <ul>
+        {% for author in all_authors %}
+        <li>
+            <a href="/books/author/{{author.id}}">{{author.first}} {{author.last}}</a>
+        </li>
+        <br>
+        {% endfor %}
+    </ul>
+
+    <div>&nbsp;</div>
+    <a href="#" class="w3-bar-item w3-button" onClick="javascript:history.go(-1);">Go back</a>
+{% endblock %}

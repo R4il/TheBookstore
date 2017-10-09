@@ -10,11 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
-import os,json
-from django.core.urlresolvers import reverse_lazy
+import json
+import os
+
 from django.contrib.messages import constants as messages
-
-
+from django.core.urlresolvers import reverse_lazy
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',
@@ -28,7 +28,6 @@ MESSAGE_TAGS = {
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -39,7 +38,6 @@ SECRET_KEY = '3uu$g*gaj%cn4is93p-stc0rmh7_+5hdweakl7*qoof!rbu0pj'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -54,7 +52,7 @@ INSTALLED_APPS = [
     'accounts',
     'bootstrap3',
     'search',
-
+    'books',
 ]
 
 MIDDLEWARE = [
@@ -72,7 +70,7 @@ ROOT_URLCONF = 'bookstore.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates',],
+        'DIRS': ['templates', ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -87,13 +85,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bookstore.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 with open('bookstore/aws_rds_auth.json') as data_file:
     DATABASES = json.load(data_file)
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -113,7 +109,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -126,7 +121,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
@@ -141,7 +135,6 @@ AUTH_USER_MODEL = "accounts.User"
 LOGIN_URL = reverse_lazy('login')
 
 LOGIN_REDIRECT_URL = reverse_lazy('index')
-
 
 CONTEXT_PROCESSORS = 'django.core.context_processors.csrf'
 
