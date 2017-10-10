@@ -7,17 +7,17 @@
 {% block title %} Author details: {% endblock %}
 
 {% block content %}
-<div style="padding-left:80px">
-    <h1>{{book.title}}</h1>
-        <div>
-            <h1>{{author.first}} {{author.last}}</h1>
-             <h3>
-                {{author.about}}
-            </h3>
-        </div>
+    <div style="padding-left:80px">
+        <h1>{{book.title}}</h1>
+            <div>
+                <h1>{{author.first}} {{author.last}}</h1>
+                 <h3>
+                    {{author.about}}
+                </h3>
+            </div>
 
-    <div>&nbsp;</div>
-    <a href="#" class="w3-bar-item w3-button" onClick="javascript:history.go(-1);">Go back</a>
-    <a href="/books/byauthor/{{author.id}}" class="w3-bar-item w3-button" >More by this author</a>
-</div>
+        <div>&nbsp;</div>
+        <a href="#" class="w3-bar-item w3-button" onClick="javascript:history.go(-1);">Go back</a>
+        <a href="/books/byauthor/{{author.id}}" class="w3-bar-item w3-button" >More by this author</a>
+    </div>
 {% endblock %}

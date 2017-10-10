@@ -1,0 +1,16 @@
+{% extends 'books/booksDetails.html' %}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+{% block title %} Contact Us {% endblock %}
+
+{% block review %}
+      <div class="container">
+            <h3 align="center">Thanks for reviewing the book!</h3>
+      </div>
+{% endblock %}

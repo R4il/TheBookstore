@@ -7,24 +7,29 @@
 {% block title %} Book details: {% endblock %}
 
 {% block content %}
-<div style="padding-left:40px">
-    <h1>{{book.title}}</h1>
-        <div>
-            <img src="/static/covers/{{ book.cover }}" class=".w3-image" style="float:left" />
-            <ul class="w3-ul" style="display: inline">
-                <li>By:<a href="/books/author/{{author.id}}">{{author.first}} {{author.last}}</a></li>
+    <div style="padding-left:40px">
+        <h1>{{book.title}}</h1>
+            <div>
+                <img src="/static/covers/{{ book.cover }}" class=".w3-image" style="float:left" />
+                <ul class="w3-ul" style="display: inline">
+                    <li>By:<a href="/books/author/{{author.id}}">{{author.first}} {{author.last}}</a></li>
 
-                <li>Genre: {{book.genre}}</li>
-                <li>Published by: {{book.publisher}}</li>
-                <li>Rating: {{book.rating}}</li>
-                <li>Price: {{book.price}}$</li>
-            </ul>
-        </div>
-    <h3 style="padding-left:15px; overflow:hidden">
-        {{book.about}}
-    </h3>
-    <div>&nbsp;</div>
-    <a href="#" class="w3-bar-item w3-button" onClick="javascript:history.go(-1);">Go back</a>
-    <a href="#" class="w3-bar-item w3-button" >Add to cart</a>
-</div>
+                    <li>Genre: {{book.genre}}</li>
+                    <li>Published by: {{book.publisher}}</li>
+                    <li>Rating: {{book.rating}}</li>
+                    <li>Price: {{book.price}}$</li>
+                </ul>
+            </div>
+        <h3 style="padding-left:15px; overflow:hidden">
+            {{book.about}}
+        </h3>
+        <div>&nbsp;</div>
+        <a href="#" class="w3-bar-item w3-button" onClick="javascript:history.go(-1);">Go back</a>
+        <a href="#" class="w3-bar-item w3-button" >Add to cart</a>
+
+        <a href="/books/review/{{book.id}}" class="w3-bar-item w3-button" >Review</a>
+    </div>
+    {% block review %}
+
+    {% endblock %}
 {% endblock %}

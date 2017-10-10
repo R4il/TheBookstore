@@ -1,7 +1,10 @@
 from django.template import loader
-from .models import Book, Author
-from django.http import HttpResponse
-
+from .models import Book, Author, Review
+from .forms import ReviewForm
+from purchases.models import PreviousOrder
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render
+import logging
 
 # Create your views here.
 def books(request):
@@ -51,3 +54,28 @@ def by_author(request, author_id):
     }
     return HttpResponse(template.render(context, request))
 
+
+def review_book(request, book_id):
+    user = request.user
+    book = Book.objects.get(pk=book_id)
+    order = PreviousOrder.objects.filter(user=user.user_id, book=book_id)
+    if len(order) == 0:
+        return render(request, 'reviewDenied.html')
+    else:
+        if request.method == 'POST':
+            review = Review.objects.filter(user=user.user_id, book=book_id)
+            form = ReviewForm(data=request.POST)
+            if form.is_valid():
+                if len(review):
+                    Review.objects.filter(user=user.user_id, book=book_id).delete()
+
+                final = form.save(commit=False)
+                final.user = user
+                final.book = book
+                final.save()
+                return render(request, 'reviewSuccessful.html', {'book': book})
+            else:
+                return render(request, 'formProblem.html', {'error': form.errors, 'book': book})
+        else:
+            form = ReviewForm()
+            return render(request, 'reviewForm.html', {'form': form})
