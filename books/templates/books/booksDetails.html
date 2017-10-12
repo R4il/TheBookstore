@@ -1,30 +1,429 @@
 {% extends 'layout.html' %}
 {% load bootstrap3 %}
-
+{% load filters %}
 {# Load CSS and JavaScript #}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% block title %} Book details: {% endblock %}
-
 {% block content %}
-<div style="padding-left:40px">
-    <h1>{{book.title}}</h1>
-        <div>
-            <img src="/static/covers/{{ book.cover }}" class=".w3-image" style="float:left" />
-            <ul class="w3-ul" style="display: inline">
-                <li>By:<a href="/books/author/{{author.id}}">{{author.first}} {{author.last}}</a></li>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style type="text/css">
+      .carousel-control.left,.carousel-control.right  {background:none;width:25px;}
+      .carousel-control.left {left:-20px;}
+      .carousel-control.right {right:-25px;}
+      .block-text {
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 3px 0 #2c2222;
+      color: #626262;
+      font-size: 14px;
+      margin-top: 27px;
+      padding: 15px 18px;
+  width: 350px;
+    margin-bottom: 0.5cm;
+  box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+      }
+      .block-text a {
+        width: 200px;
+      color: #7d4702;
+      font-size: 20px;
+      font-weight: bold;
+      line-height: 21px;
+      text-decoration: none;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      }
+      .mark {
+      padding: 12px 0;background:none;
+      }
+      .block-text p {
+      color: #585858;
+      font-family: Georgia;
+      font-style: italic;
+      line-height: 20px;
+      }
+      .block-text ins {
+      bottom: -44px;
+      left: 10%;
+      margin-left: -60px;
+      }
+      .block {
+      display: block;
+      }
+      .zmin {
+      z-index: 1;
+      }
+      .ab {
+      position: absolute;
+      }
+      .person-text {
+      padding: 10px 0 0;
+      text-align: center;
+      z-index: 2;
+      }
+      .person-text a {
+      color: #ffcc00;
+      display: block;
+      font-size: 14px;
+      margin-top: 3px;
+      text-decoration: underline;
+      }
+      .person-text i {
+      color: #fff;
+      font-family: Georgia;
+      font-size: 13px;
+      }
+      .rel {
+      position: relative;
+      }
+      .img-circle {
+      border-radius: 50%;
+      }
+      a {
+      width=100;
+      }
+            h1 {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
 
-                <li>Genre: {{book.genre}}</li>
-                <li>Published by: {{book.publisher}}</li>
-                <li>Rating: {{book.rating}}</li>
-                <li>Price: {{book.price}}$</li>
-            </ul>
-        </div>
-    <h3 style="padding-left:15px; overflow:hidden">
-        {{book.about}}
-    </h3>
-    <div>&nbsp;</div>
-    <a href="#" class="w3-bar-item w3-button" onClick="javascript:history.go(-1);">Go back</a>
-    <a href="#" class="w3-bar-item w3-button" >Add to cart</a>
+      }
+
+                  h3 {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      padding-left:15px;
+
+      }
+      p {
+      width: 300px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      }
+      p1 {
+      width: 300px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 8;
+      -webkit-box-orient: vertical;
+      }
+
+      body {
+  background: rgb(204,204,204);
+}
+page {
+  background: white;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 0.5cm;
+  box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+}
+page[size="A4"] {
+border-radius: 5px;
+  width: 23cm;
+  height: 10cm;
+
+}
+@media print {
+  body, page {
+    margin: 0;
+    box-shadow: 0;
+  }
+}
+
+   </style>
+      <ul><h1>{{book.title}}</h1></ul>
+
+<div class="row">
+  <div class="col-md-3">
+      <img src="/static/covers/{{ book.cover }}" height= 400 class=".w3-image" hspace="70" style="float:left" />
 </div>
+      <div class="col-md-8">
+          <p></p>
+<page size="A4">
+
+      <ul class="w3-ul" style="display: inline">
+         <li>By:<a href="/books/author/{{book.author.id}}">{{book.author.first}} {{book.author.last}}</a></li>
+         <li>Genre: {{book.genre}}</li>
+         <li>Published by: {{book.publisher}}</li>
+         <li>Rating: {{book.rating}}</li>
+         <li>Price: {{book.price}}$</li>
+      </ul>
+   <h3>
+      {{book.about}}
+   </h3>
+    <a href="#" class="w3-bar-item w3-button"  style="padding-left:15px" onClick="javascript:history.go(-1);">Wish List</a>
+    <a class="w3-bar-item w3-button"  href="#" data-target="#product_view" style="padding-left:15px" data-toggle="modal">Add to Cart</a>
+    <a class="w3-bar-item w3-button"  href="{% url 'review_book' book.id %}" style="padding-left:15px" data-target="#theModal" data-toggle="modal">Submit Review</a>
+</page>
+          </div>
+</div>
+<div class="modal fade text-center" id="theModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    </div>
+  </div>
+</div>
+
+   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+   <div class="carousel-reviews broun-block">
+      <div class="container">
+         <div class="row">
+            <div id="carousel-reviews" class="carousel slide" data-ride="carousel">
+               <div class="carousel-inner">
+                  <div class="item active">
+                     {% for reviews in review %}
+                     {% if forloop.counter > 3 %}
+                     {% else %}
+                     {% if forloop.counter == 1 %}
+                     <div class="col-md-4 col-sm-6">
+                        <div class="block-text rel zmin">
+                           <a title="" href="#"> {{reviews.title}}</a>
+                           <div class="mark"> My rating: {{reviews.rating}}
+                              <span class="rating-input">
+                              {% for i in "12345" %}
+                              {% if reviews.rating >= forloop.counter %}
+                              <span class="glyphicon glyphicon-star"></span>
+                              {% else %}
+                              <span class="glyphicon glyphicon-star-empty"></span>
+                              {% endif %}
+                              {% endfor %}
+                              </span>
+                           </div>
+                            <p>{{reviews.body}}</p>
+                            <p> -{{reviews.user}}</p>
+                           <ins class="ab zmin block"></ins>
+                        </div>
+                        <div class="person-text rel">
+                           <img class="img-circle" src="/static/pics/jose.jpg" />
+                           <i>{{reviews.user.last_login}}</i>
+                        </div>
+                     </div>
+                     {% endif %}
+                     {% if forloop.counter == 2 %}
+                     <div class="col-md-4 col-sm-6 hidden-xs">
+                        <div class="block-text rel zmin">
+                           <a title="" href="#"> {{reviews.title}}</a>
+                           <div class="mark"> My rating: {{reviews.rating}}
+                              <span class="rating-input">
+                              {% for i in "12345" %}
+                              {% if reviews.rating >= forloop.counter %}
+                              <span class="glyphicon glyphicon-star"></span>
+                              {% else %}
+                              <span class="glyphicon glyphicon-star-empty"></span>
+                              {% endif %}
+                              {% endfor %}
+                              </span>
+                           </div>
+                            <p>{{reviews.body}}</p>
+                            <p> -{{reviews.user}}</p>
+                           <ins class="ab zmin block"></ins>
+                        </div>
+                        <div class="person-text rel">
+                           <img class="img-circle" src="/static/pics/jose.jpg" />
+                           <i>{{reviews.user.last_login}}</i>
+                        </div>
+                     </div>
+                     {% endif %}
+                     {% if forloop.counter == 3 %}
+                     <div class="col-md-4 col-sm-6 hidden-sm hidden-xs">
+                        <div class="block-text rel zmin">
+                           <a title="" href="#"> {{reviews.title}}</a>
+                           <div class="mark"> My rating: {{reviews.rating}}
+                              <span class="rating-input">
+                              {% for i in "12345" %}
+                              {% if reviews.rating >= forloop.counter %}
+                              <span class="glyphicon glyphicon-star"></span>
+                              {% else %}
+                              <span class="glyphicon glyphicon-star-empty"></span>
+                              {% endif %}
+                              {% endfor %}
+                              </span>
+                           </div>
+                            <p>{{reviews.body}}</p>
+                            <p> -{{reviews.user}}</p>
+                           <ins class="ab zmin block"></ins>
+                        </div>
+                        <div class="person-text rel">
+                           <img class="img-circle" src="/static/pics/jose.jpg" />
+                           <i>{{reviews.user.last_login}}</i>
+                        </div>
+                     </div>
+                     {% endif %}
+                     {% endif %}
+                     {% endfor %}
+                  </div>
+
+                  <div class="item">
+                  {% for reviews in review %}
+                    {% if forloop.counter < 7 %}
+                  {% if forloop.counter > 3 %}
+                  {% if forloop.counter0|modulo3:3 %}
+
+                     {% endif %}
+                     {% if forloop.counter0|modulo3:3 %}
+                     <div class="col-md-4 col-sm-6">
+                        <div class="block-text rel zmin">
+                           <a title="" href="#"> {{reviews.title}}1</a>
+                           <div class="mark"> My rating: {{reviews.rating}}
+                              <span class="rating-input">
+                              {% for i in "12345" %}
+                              {% if reviews.rating >= forloop.counter %}
+                              <span class="glyphicon glyphicon-star"></span>
+                              {% else %}
+                              <span class="glyphicon glyphicon-star-empty"></span>
+                              {% endif %}
+                              {% endfor %}
+                              </span>
+                           </div>
+                            <p>{{reviews.body}}</p>
+                            <p> -{{reviews.user}}</p>
+                           <ins class="ab zmin block"></ins>
+                        </div>
+                        <div class="person-text rel">
+                           <img class="img-circle" src="/static/pics/jose.jpg" />
+                           <i>{{reviews.user.last_login}}</i>
+                        </div>
+                     </div>
+                     {% elif forloop.counter0|modulo:3 %}
+                     <div class="col-md-4 col-sm-6 hidden-xs">
+                        <div class="block-text rel zmin">
+                           <a title="" href="#"> {{reviews.title}}</a>
+                           <div class="mark"> My rating: {{reviews.rating}}
+                              <span class="rating-input">
+                              {% for i in "12345" %}
+                              {% if reviews.rating >= forloop.counter %}
+                              <span class="glyphicon glyphicon-star"></span>
+                              {% else %}
+                              <span class="glyphicon glyphicon-star-empty"></span>
+                              {% endif %}
+                              {% endfor %}
+                              </span>
+                           </div>
+                            <p>{{reviews.body}}</p>
+                            <p> -{{reviews.user}}</p>
+                           <ins class="ab zmin block"></ins>
+                        </div>
+                        <div class="person-text rel">
+                           <img class="img-circle" src="/static/pics/jose.jpg" />
+                           <i>{{reviews.user.last_login}}</i>
+                        </div>
+                     </div>
+                     {% elif forloop.counter0|modulo2:3 %}
+                     <div class="col-md-4 col-sm-6 hidden-sm hidden-xs">
+                        <div class="block-text rel zmin">
+                           <a title="" href="#"> {{reviews.title}}</a>
+                           <div class="mark"> My rating: {{reviews.rating}}
+                              <span class="rating-input">
+                              {% for i in "12345" %}
+                              {% if reviews.rating >= forloop.counter %}
+                              <span class="glyphicon glyphicon-star"></span>
+                              {% else %}
+                              <span class="glyphicon glyphicon-star-empty"></span>
+                              {% endif %}
+                              {% endfor %}
+                              </span>
+                           </div>
+                            <p>{{reviews.body}}</p>
+                            <p> -{{reviews.user}}</p>
+                           <ins class="ab zmin block"></ins>
+                        </div>
+                        <div class="person-text rel">
+                           <img class="img-circle" src="/static/pics/jose.jpg" />
+                           <i>{{reviews.user.last_login}}</i>
+                        </div>
+                     </div>
+                     {% endif %}
+                  {% endif %}
+                      {% endif %}
+                  {% endfor %}
+                  </div>
+
+
+
+               </div>
+               <a class="left carousel-control" href="#carousel-reviews" role="button" data-slide="prev">
+               <span class="glyphicon glyphicon-chevron-left"></span>
+               </a>
+               <a class="right carousel-control" href="#carousel-reviews" role="button" data-slide="next">
+               <span class="glyphicon glyphicon-chevron-right"></span>
+               </a>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+<div class="modal fade product_view" id="product_view">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" data-dismiss="modal" class="class pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+                <h3 class="modal-title">{{book.title}}</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6 product_img">
+                        <img src="/static/covers/{{ book.cover }}" class="img-responsive" >
+                    </div>
+                    <div class="col-md-6 product_content">
+                        <h3 class="cost"><span class="glyphicon glyphicon-usd"></span> {{book.price}}</h3>
+                        <h4>Product Id: <span>{{book.id}}</span></h4>
+                        <div class="rating">
+                              <span class="rating-input">
+                              {% for i in "12345" %}
+                              {% if book.rating >= forloop.counter %}
+                              <span class="glyphicon glyphicon-star"></span>
+                              {% else %}
+                              <span class="glyphicon glyphicon-star-empty"></span>
+                              {% endif %}
+                              {% endfor %}
+                              </span>
+                        </div>
+                        <p1>{{book.about}}</p1>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-5 col-sm-12">
+                                <select class="form-control" name="select">
+                                    <option value="" selected="">QTY</option>
+                                    <option value="">1</option>
+                                    <option value="">2</option>
+                                    <option value="">3</option>
+                                    <option value="">4</option>
+                                    <option value="">5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="space-ten"></div>
+                        <div class="btn-ground">
+                            <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span> Add To Cart</button>
+                            <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-heart"></span> Add To Wishlist</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block review %}
+
+
+{% endblock %}
+
 {% endblock %}

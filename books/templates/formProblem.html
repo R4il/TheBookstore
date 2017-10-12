@@ -1,0 +1,22 @@
+{% extends 'books/booksDetails.html' %}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+{% block title %} Contact Us {% endblock %}
+
+{% block review %}
+      <div class="container">
+            <h3 align="center">Sorry, but looks like there were problem with the form, please address this so we can publish your review.</h3>
+            <div>
+                  <pre>
+                        {{error}}
+                  </pre>
+            </div>
+            <a href="#" class="w3-bar-item w3-button" onClick="javascript:history.go(-1);">Go back</a>
+      </div>
+{% endblock %}

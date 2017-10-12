@@ -159,4 +159,3 @@ class AddressCreate(CreateView):
         return reverse('accounts:displayAddress')
 
 
-
