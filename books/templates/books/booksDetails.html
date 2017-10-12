@@ -6,6 +6,7 @@
 {% bootstrap_javascript %}
 {% block title %} Book details: {% endblock %}
 {% block content %}
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style type="text/css">
       .carousel-control.left,.carousel-control.right  {background:none;width:25px;}
       .carousel-control.left {left:-20px;}
@@ -90,6 +91,17 @@
       white-space: nowrap;
 
       }
+
+                  h3 {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      padding-left:15px;
+
+      }
       p {
       width: 300px;
       overflow: hidden;
@@ -121,11 +133,10 @@ page {
 }
 page[size="A4"] {
 border-radius: 5px;
-  width: 30cm;
-  height: 12cm;
+  width: 23cm;
+  height: 10cm;
+
 }
-
-
 @media print {
   body, page {
     margin: 0;
@@ -134,10 +145,16 @@ border-radius: 5px;
 }
 
    </style>
-<page size="A4">
       <ul><h1>{{book.title}}</h1></ul>
-   <div>
-      <img src="/static/covers/{{ book.cover }}" height= 400 class=".w3-image" hspace="8" style="float:left" />
+
+<div class="row">
+  <div class="col-md-3">
+      <img src="/static/covers/{{ book.cover }}" height= 400 class=".w3-image" hspace="70" style="float:left" />
+</div>
+      <div class="col-md-8">
+          <p></p>
+<page size="A4">
+
       <ul class="w3-ul" style="display: inline">
          <li>By:<a href="/books/author/{{book.author.id}}">{{book.author.first}} {{book.author.last}}</a></li>
          <li>Genre: {{book.genre}}</li>
@@ -145,15 +162,15 @@ border-radius: 5px;
          <li>Rating: {{book.rating}}</li>
          <li>Price: {{book.price}}$</li>
       </ul>
-   </div>
-   <h3 style="padding-left:15px; overflow:hidden">
+   <h3>
       {{book.about}}
    </h3>
-   <a href="#" class="w3-bar-item w3-button" onClick="javascript:history.go(-1);">Wish List</a>
-        <a class="w3-bar-item w3-button"  href="#" data-target="#product_view" data-toggle="modal">Add to Cart</a>
-    <a class="w3-bar-item w3-button"  href="{% url 'review_book' book.id %}" data-target="#theModal" data-toggle="modal">Submit Review</a>
+    <a href="#" class="w3-bar-item w3-button"  style="padding-left:15px" onClick="javascript:history.go(-1);">Wish List</a>
+    <a class="w3-bar-item w3-button"  href="#" data-target="#product_view" style="padding-left:15px" data-toggle="modal">Add to Cart</a>
+    <a class="w3-bar-item w3-button"  href="{% url 'review_book' book.id %}" style="padding-left:15px" data-target="#theModal" data-toggle="modal">Submit Review</a>
 </page>
-
+          </div>
+</div>
 <div class="modal fade text-center" id="theModal">
   <div class="modal-dialog">
     <div class="modal-content">
