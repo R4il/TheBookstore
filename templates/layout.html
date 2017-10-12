@@ -32,7 +32,7 @@
       <div class="w3-padding-16 w3-large w3-text-grey" style="font-weight:bold">
           {% if user.is_authenticated %}
               <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
-                  Manage <i class="fa fa-caret-down"></i>
+                  Account <i class="fa fa-caret-down"></i>
               </a>
 
               <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
@@ -54,9 +54,8 @@
           <a href="#" class="w3-bar-item w3-button">Books By Genre</a>
           <br>
           <!-- Link to Dropdown for My Account -->
-          <ul class="nav navbar-nav navbar-left">
-              <a href="{% url 'email' %}" class="w3-bar-item w3-button w3-padding">Contact</a>
-              <a href="{% url 'about' %}" class="w3-bar-item w3-button w3-padding" onclick="document.getElementById('newsletter').style.display='block'">About Us</a>
+              <a href="{% url 'email' %}" class="w3-bar-item w3-button">Contact</a>
+              <a href="{% url 'about' %}" class="w3-bar-item w3-button" onclick="document.getElementById('newsletter').style.display='block'">About Us</a>
               <br>
               <a class="btn btn-social-icon btn-facebook" href="http://www.facebook.com/profile.php?id=">
                   <i class="fa fa-facebook"></i>
@@ -73,7 +72,6 @@
               <a class="btn btn-social-icon" href="mailto:">
                   <i class="fa fa-envelope"></i>
               </a>
-          </ul>
       </div>
    </nav>
 

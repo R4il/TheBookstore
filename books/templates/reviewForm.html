@@ -1,40 +1,28 @@
-{% extends 'layout.html' %}
 {% load bootstrap3 %}
-
-{# Load CSS and JavaScript #}
-{% bootstrap_css %}
-{% bootstrap_javascript %}
-
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
-{% block title %} Contact Us {% endblock %}
 
-{% block content %}
-    <div class="container">
-        <h1 align="center">So, what do you think about the book?</h1>
+<div class="container">
+                <div class="modal-body">
+
 
         <form method="POST">{% csrf_token %}
             {% for field in form %}
                 <div class="form-group">
-                    <div class="col-md-offset-3 col-md-2 control-label">
+                    <div class="col-md-offset-4 col-md-2 control-label">
                         {% bootstrap_label field.label %}
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         {% bootstrap_field field show_label=False form_group_class=None placeholder=field.field.initial %}
                     </div>
                 </div>
-
-                <p style="padding:10px;"></p>
             {% endfor %}
 
             <div class="col-sm-offset-4 col-sm-2">
                 <button type="submit" class="btn btn-md btn-primary">submit</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
             </div>
         </form>
-        <a href="#" class="w3-bar-item w3-button" onClick="javascript:history.go(-1);">Go back</a>
-    </div>
+                </div>
 
-    <div>
-        <p style="padding:25px"></p>
-    </div>
-{% endblock %}
+</div>

@@ -28,10 +28,12 @@ def authors(request):
 def books_details(request, book_id):
     book = Book.objects.get(pk=book_id)
     author = Author.objects.get(pk=book.author_id)
+    review = Review.objects.filter(book=book_id)
     template = loader.get_template('books/booksDetails.html')
     context = {
         'book': book,
         'author': author,
+        'review':review,
     }
     return HttpResponse(template.render(context, request))
 
@@ -79,3 +81,5 @@ def review_book(request, book_id):
         else:
             form = ReviewForm()
             return render(request, 'reviewForm.html', {'form': form})
+
+
