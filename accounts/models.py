@@ -43,7 +43,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=50, default=None)
     password = models.CharField(max_length=255)
     email_address = models.EmailField(unique=True, max_length=255)
-    credit_card = models.CharField(max_length = 50, default = None)
+    credit_card = models.CharField(max_length=50, default="4200 0000 0000 0")
     last_login = models.DateTimeField(default=timezone.now)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -67,6 +67,16 @@ class User(AbstractBaseUser, PermissionsMixin):
         managed = True
         db_table = 'users'
 
+class CreditCard(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    credit_card_number = models.CharField(max_length = 25, primary_key=True, default=None)
+    cvv = models.CharField(max_length = 4, default=None)
+    exp_date = models.CharField(max_length = 5, default=None)
+    owner_name = models.CharField(max_length = 50, default=None) #owner name is independent from user!
+
+    class Meta:
+        managed = True
+        db_table = 'credit_cards'
 
 class Address(models.Model):
     id = models.AutoField(primary_key=True)

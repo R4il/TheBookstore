@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'deleteAddress/', views.AddressDelete.as_view(), name='deleteAddress'),
     url(r'addAddress/', views.AddressCreate.as_view(), name='addAddress'),
     url(r'updateAddress/', views.update_address, name='updateAddress'),
+    url(r'managecc/', views.EditCreditCardView, name='managecc')
 ]
