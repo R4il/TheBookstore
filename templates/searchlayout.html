@@ -1,39 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-{% load static from staticfiles %}
 <head>
-    <meta charset="UTF-8">
-    <title>Search Results</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
-          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
-          crossorigin="anonymous">
-    <!-- <link href="https://bootswatch.com/cosmo/bootstrap.min.css" rel="stylesheet" type="text/css"> -->
-    <link href="{% static 'css/w3.css' %}" rel="stylesheet" type="text/css">
 
 </head>
 <body>
 <div class="container">
     <br/>
-    <h1>Search Results:</h1>
+
+    <h1>Search Results: </h1>
 
     {% for instance in queryset %}
     <div class="row">
         <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
-                <!--<img src="..." alt="...">-->
                 <div class="caption">
-                    <p>
-                    <h3><a href='/search/{{ instance.id }}'>{{ instance.title }}</a></h3>
-                    <img src="{{ instance.bookCover.url }}" class="img-responsive" alt="image">
-                    <td>Author:</td>
-                    {{ instance.author }}<br/>
-                    <td>Price: $</td>
-                    {{ instance.price }}<br/>
-                    <td>Book Rating:</td>
-                    {{ instance.bookrating }}<br/>
-                    <td>Release Date</td>
-                    {{ instance.releasedate }}<br/></p>
-                    <p><a href="/search/{{ instance.id }}" class="btn btn-primary" role="button">View</a></p>
+                    <a href='/books/{{ instance.id }}'>
+                        <img src="/static/covers/{{ instance.cover }}" height="160" width="120"/>
+                    </a><br/>
+                    <h3><td>Title: </td>
+                    <a href='/books/{{ instance.id }}'>
+                        {{ instance.title }}</a>
+                    <br/>
+                    <td>Author: </td>
+                    <!-- Need to make this a link to the author.id -->
+                        {{ instance.author }}
+                    </h3>
+                    <br>
                     <br/>
                 </div>
             </div>

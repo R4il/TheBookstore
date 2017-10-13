@@ -26,4 +26,5 @@ urlpatterns = [
     url(r"^accounts/", include("django.contrib.auth.urls")),
     url(r'^admin/', admin.site.urls),
     url(r'^', include('send_email.urls')),
+    url(r'^search/', include('books.searchurl', namespace='search')),
 ]
