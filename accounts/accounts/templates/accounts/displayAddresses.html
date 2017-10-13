@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block title %}Display Addresses {% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+    <h2>Address</h2>
+    <p style="padding:20px;"></p>
+    {% for address in addresses %}
+        <h3>Address {{ forloop.counter }}</h3>
+        <h4>{{ address.street_address }}</h4>
+        <p style="padding:3px;"></p>
+        <div class="row">
+            <div class="col-sm-3">
+                <form action="{% url 'accounts:updateAddress' %}" method="GET" class="form-inline">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{ address.id }}" name="addr_id">
+                    <button type="submit" class="btn btn-md btn-primary">Edit Address</button>
+                </form>
+            </div>
+            <div class="col-sm-3 col-sm-pull-1">
+                <form action="{% url 'accounts:deleteAddress' %}" method="POST" class="form-inline">
+                    {%  csrf_token %}
+                    <input type="hidden" value="{{ address.id }}" name="addr_id">
+                    <button type="submit" class="btn btn-md btn-danger">Remove Address</button>
+                </form>
+            </div>
+        </div>
+        <hr>
+    {% endfor %}
+
+    <a class="btn btn-success btn-md" href="{% url 'accounts:addAddress' %}">Add New Address</a>
+
+    <p style="padding:25px;"></p>
+</div>
+
+
+{% endblock %}
