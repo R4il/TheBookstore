@@ -7,6 +7,21 @@ from django.shortcuts import render
 import logging
 
 # Create your views here.
+
+
+def book_search(request):
+    queryset = Book.objects.all()
+    query = request.GET.get("bookSearch")
+    if query:
+        queryset = queryset.filter(title__icontains=query)
+
+    context = {
+        "queryset": queryset,
+    }
+
+    return render(request, 'searchlayout.html', context)
+
+
 def books(request):
     all_books = Book.objects.all()
     template = loader.get_template('books/listBooks.html')
