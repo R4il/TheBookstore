@@ -17,8 +17,7 @@
         <h3><td>Title: </td>
             <a href='/books/{{ instance.id }}'> {{ instance.title }}</a><br/>
         <td>Author: </td>
-            <!-- Need to make this a link to the author.id -->
-            {{ instance.author }}
+            <a href='/books/author/{{ instance.author.id }}'> {{ instance.author }}</a>
         </h3>
         <br/>
         <br/>

@@ -21,7 +21,6 @@ urlpatterns = [
     # /books/review/id/
     url(r'review/(?P<book_id>[0-9]+)/$', review_book, name='review_book'),
 
-    # added book search
-    #url(r'^$', book_search, name='search'),
+
 
 ]
