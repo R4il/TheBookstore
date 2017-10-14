@@ -1,38 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends 'layout.html' %}
+{% load bootstrap3 %}
 
-</head>
-<body>
-<div class="container">
-    <br/>
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% block title %} Book Search {% endblock %}
 
+{% block content %}
+    <div class="container">
     <h1>Search Results: </h1>
 
     {% for instance in queryset %}
-    <div class="row">
-        <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-                <div class="caption">
-                    <a href='/books/{{ instance.id }}'>
-                        <img src="/static/covers/{{ instance.cover }}" height="160" width="120"/>
-                    </a><br/>
-                    <h3><td>Title: </td>
-                    <a href='/books/{{ instance.id }}'>
-                        {{ instance.title }}</a>
-                    <br/>
-                    <td>Author: </td>
-                    <!-- Need to make this a link to the author.id -->
-                        {{ instance.author }}
-                    </h3>
-                    <br>
-                    <br/>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endfor %}
-</div>
 
-</body>
-</html>
+        <a href='/books/{{ instance.id }}'>
+            <img src="/static/covers/{{ instance.cover }}" height="160" width="120"/></a><br/>
+        <h3><td>Title: </td>
+            <a href='/books/{{ instance.id }}'> {{ instance.title }}</a><br/>
+        <td>Author: </td>
+            <!-- Need to make this a link to the author.id -->
+            {{ instance.author }}
+        </h3>
+        <br/>
+        <br/>
+
+    {% endfor %}
+    <a href="#" class="w3-bar-item w3-button" onClick="javascript:history.go(-1);">Go back</a>
+    </div>
+{% endblock %}

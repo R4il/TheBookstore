@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-
+import books
 from . import views
 
 urlpatterns = [
@@ -26,5 +26,5 @@ urlpatterns = [
     url(r"^accounts/", include("django.contrib.auth.urls")),
     url(r'^admin/', admin.site.urls),
     url(r'^', include('send_email.urls')),
-    url(r'^search/', include('books.searchurl', namespace='search')),
+    url(r'search', books.views.book_search, name='search'),
 ]
