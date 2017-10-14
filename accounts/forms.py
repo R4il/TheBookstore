@@ -148,14 +148,15 @@ class UserCreateForm(UserCreationForm):
 
 
 class EditCreditCardForm(ModelForm):
-    credit_card = forms.CharField(label = 'Credit Card')
     exp_date = forms.CharField(label = 'Expiration Date')
     cvv = forms.CharField(label = 'CVV')
     owner_name = forms.CharField(label = 'Owner name')
 
+    type = "AmEx"
+
     # verifies the credit card number and type
-    def clean_credit_card(self):
-       cc = self.cleaned_data['credit_card']
+    def clean_credit_card_number(self):
+       cc = self.cleaned_data['credit_card_number']
        if (verifyCardNumber(cc) == False):  # if the card number is invalid, don't even bother
            raise forms.ValidationError('Card number is invalid!')
        else:  # otherwise
@@ -163,6 +164,7 @@ class EditCreditCardForm(ModelForm):
            for pair in verificationTable:
                if (re.match(pair[0], ccn)):  # if the number matches a regex in the table
                    if (len(ccn) in pair[2]):  # make sure it's got a valid length
+                       type = pair[1]
                        return "Valid card - type: " + pair[
                            1]  # it's both a valid number and a valid type. Let it through
                    else:
@@ -172,15 +174,13 @@ class EditCreditCardForm(ModelForm):
 
     def clean_exp_date(self):
         ed = self.cleaned_data['exp_date']
-        if(re.match("^(0[1-9]|1[0-2])\/([0-9]{2}$", ed)):
+        if(re.match("^(0[1-9]|1[0-2])\/([0-9]{2}$)", ed)):
             return "Valid expiration date"
         else:
             raise forms.ValidationError("Invalid expiration date! Use format: MM/YY")
 
     def clean_cvv(self):
         cv = self.cleaned_data['cvv']
-        cc = self.cleaned_data['credit_card']
-        type = getCardType(cc)
         if(re.match("^[0-9]{3}$", cv)):
             if(type == "AmEx"):
                 raise forms.ValidationError("CVV for AmEx must be 4 digits")
@@ -194,9 +194,14 @@ class EditCreditCardForm(ModelForm):
         else:
             raise forms.ValidationError("Invalid CVV, must be numbers only with 3 or 4 digits depending on card type")
 
+    def clean_ownername(self):
+        return("any non-empty ownername is fine")
+
     class Meta:
         model = CreditCard
         fields = ['credit_card_number', 'exp_date', 'cvv', 'owner_name']
+
+
 
 class EditUserProfileForm(ModelForm):
     first_name = forms.CharField(label='First Name')

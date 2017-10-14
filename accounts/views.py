@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.csrf import csrf_protect
-from django.views.generic import DeleteView, CreateView, RedirectView, FormView
+from django.views.generic import DeleteView, CreateView, RedirectView, FormView, UpdateView
 from .forms import EditUserProfileForm, EditCreditCardForm, UserCreateForm, AddressForm, LoginForm, ChangePassword
 from .models import User, CreditCard, Address
 from django.contrib import messages
@@ -103,9 +103,18 @@ class SignUpView(CreateView):
         return super(SignUpView, self).form_valid(form)
 
 class EditCreditCardView(CreateView):
-    form_class = EditCreditCardForm
     model = CreditCard
-    #this is incomplete
+    form_class = EditCreditCardForm
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.save()
+        return super(EditCreditCardView, self).form_valid(form)
+
+    def get_success_url(self):
+        messages.success(self.request, 'CCN profile was successfully created.')
+        return reverse('accounts:displayCC')
+
 
 class LogoutView(RedirectView):
     url = reverse_lazy("index")
@@ -160,5 +169,6 @@ class AddressCreate(CreateView):
     def get_success_url(self):
         messages.success(self.request, 'Address was successfully created.')
         return reverse('accounts:displayAddress')
+
 
 

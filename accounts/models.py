@@ -68,11 +68,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         db_table = 'users'
 
 class CreditCard(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     credit_card_number = models.CharField(max_length = 25, primary_key=True, default=None)
-    cvv = models.CharField(max_length = 4, default=None)
-    exp_date = models.CharField(max_length = 5, default=None)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    cvv = models.CharField(max_length = 25, default=None)
+    exp_date = models.CharField(max_length = 25, default=None)
     owner_name = models.CharField(max_length = 50, default=None) #owner name is independent from user!
+
+    def __str__(self):
+        return "@{}".format(self.user.nickname) + " ccn : " + self.credit_card_number
 
     class Meta:
         managed = True
