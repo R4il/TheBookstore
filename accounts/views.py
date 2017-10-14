@@ -3,9 +3,9 @@ from django.core.urlresolvers import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.csrf import csrf_protect
-from django.views.generic import DeleteView, CreateView, RedirectView
-from .forms import EditUserProfileForm, UserCreateForm, AddressForm, LoginForm, ChangePassword
-from .models import User, Address
+from django.views.generic import DeleteView, CreateView, RedirectView, FormView, UpdateView
+from .forms import EditUserProfileForm, EditCreditCardForm, UserCreateForm, AddressForm, LoginForm, ChangePassword
+from .models import User, CreditCard, Address
 from django.contrib import messages
 
 
@@ -57,7 +57,7 @@ def manage_account(request):
     user = User.objects.get(pk=online_user.user_id)
     form = EditUserProfileForm(request.POST or None, initial={'first_name': online_user.first_name,
                                                     'last_name': online_user.last_name, 'nickname': online_user.nickname,
-                                                    'email_address': online_user.email_address, 'credit_card': online_user.credit_card}, instance=request.user)
+                                                    'email_address': online_user.email_address}, instance=request.user)
 
     if request.method == 'POST':
         if form.is_valid():
@@ -65,7 +65,6 @@ def manage_account(request):
             user.last_name = form.cleaned_data['last_name']
             user.nickname = form.cleaned_data['nickname']
             user.email_address = form.cleaned_data['email_address']
-            user.credit_card = form.cleaned_data['credit_card']
 
             user.save()
 
@@ -102,6 +101,19 @@ class SignUpView(CreateView):
         self.request.session['fOrderId'] = future_cart.id
 
         return super(SignUpView, self).form_valid(form)
+
+class EditCreditCardView(CreateView):
+    model = CreditCard
+    form_class = EditCreditCardForm
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.save()
+        return super(EditCreditCardView, self).form_valid(form)
+
+    def get_success_url(self):
+        messages.success(self.request, 'CCN profile was successfully created.')
+        return reverse('accounts:displayCC')
 
 
 class LogoutView(RedirectView):
@@ -157,5 +169,6 @@ class AddressCreate(CreateView):
     def get_success_url(self):
         messages.success(self.request, 'Address was successfully created.')
         return reverse('accounts:displayAddress')
+
 
 
