@@ -150,30 +150,45 @@ border-radius: 5px;
 <div class="row">
   <div class="col-md-3">
       <img src="/static/covers/{{ book.cover }}" height= 400 class=".w3-image" hspace="70" style="float:left" />
-</div>
+    </div>
       <div class="col-md-8">
           <p></p>
-<page size="A4">
+    <page size="A4">
 
-      <ul class="w3-ul" style="display: inline">
-         <li>By:<a href="/books/author/{{book.author.id}}">{{book.author.first}} {{book.author.last}}</a></li>
-         <li>Genre: {{book.genre}}</li>
-         <li>Published by: {{book.publisher}}</li>
-         <li>Rating: {{book.rating}}</li>
-         <li>Price: {{book.price}}$</li>
-      </ul>
-   <h3>
-      {{book.about}}
-   </h3>
-    <a href="#" class="w3-bar-item w3-button"  style="padding-left:15px" onClick="javascript:history.go(-1);">Wish List</a>
-    <a class="w3-bar-item w3-button"  href="#" data-target="#product_view" style="padding-left:15px" data-toggle="modal">Add to Cart</a>
-    <a class="w3-bar-item w3-button"  href="{% url 'review_book' book.id %}" style="padding-left:15px" data-target="#theModal" data-toggle="modal">Submit Review</a>
-</page>
-          </div>
+          <ul class="w3-ul" style="display: inline">
+             <li>By:<a href="/books/author/{{book.author.id}}">{{book.author.first}} {{book.author.last}}</a></li>
+             <li>Genre: {{book.genre}}</li>
+             <li>Published by: {{book.publisher}}</li>
+             <li>Rating: {{book.rating}}</li>
+             <li>User Rating: {{user_rating}}</li>
+             <li>Price: {{book.price}}$</li>
+          </ul>
+       <h3>
+          {{book.about}}
+       </h3>
+        <a href="#" class="w3-bar-item w3-button"  style="padding-left:15px" onClick="javascript:history.go(-1);">Go back</a>
+        <a class="w3-bar-item w3-button"  href="#" data-target="#product_view" style="padding-left:15px" data-toggle="modal">Add to Cart</a>
+        <a class="w3-bar-item w3-button"  href="#theModal" style="padding-left:15px" data-target="#theModal" data-toggle="modal">Submit Review</a>
+    </page>
+</div>
 </div>
 <div class="modal fade text-center" id="theModal">
   <div class="modal-dialog">
     <div class="modal-content">
+        <form class="well" method="post" action="/contact/edit/{{ item.id }}">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3>Add Review</h3>
+          </div>
+          <div class="modal-body">
+               {% csrf_token %}
+               {{form.as_p}}
+          </div>
+          <div class="modal-footer">
+       <input class="btn btn-primary" type="submit" value="Save" />
+       <input name="cancel" class="btn" type="submit" value="Cancel"/>
+  </div>
+</form>
     </div>
   </div>
 </div>
@@ -186,17 +201,17 @@ border-radius: 5px;
             <div id="carousel-reviews" class="carousel slide" data-ride="carousel">
                <div class="carousel-inner">
                   <div class="item active">
-                     {% for reviews in review %}
+                     {% for review in reviews %}
                      {% if forloop.counter > 3 %}
                      {% else %}
                      {% if forloop.counter == 1 %}
                      <div class="col-md-4 col-sm-6">
                         <div class="block-text rel zmin">
-                           <a title="" href="#"> {{reviews.title}}</a>
-                           <div class="mark"> My rating: {{reviews.rating}}
+                           <a title="" href="#"> {{review.title}}</a>
+                           <div class="mark"> My rating: {{review.rating}}
                               <span class="rating-input">
                               {% for i in "12345" %}
-                              {% if reviews.rating >= forloop.counter %}
+                              {% if review.rating >= forloop.counter %}
                               <span class="glyphicon glyphicon-star"></span>
                               {% else %}
                               <span class="glyphicon glyphicon-star-empty"></span>
@@ -204,24 +219,24 @@ border-radius: 5px;
                               {% endfor %}
                               </span>
                            </div>
-                            <p>{{reviews.body}}</p>
-                            <p> -{{reviews.user}}</p>
+                            <p>{{review.body}}</p>
+                            <p> -{{review.user}}</p>
                            <ins class="ab zmin block"></ins>
                         </div>
                         <div class="person-text rel">
                            <img class="img-circle" src="/static/pics/jose.jpg" />
-                           <i>{{reviews.user.last_login}}</i>
+                           <i>{{review.user.last_login}}</i>
                         </div>
                      </div>
                      {% endif %}
                      {% if forloop.counter == 2 %}
                      <div class="col-md-4 col-sm-6 hidden-xs">
                         <div class="block-text rel zmin">
-                           <a title="" href="#"> {{reviews.title}}</a>
-                           <div class="mark"> My rating: {{reviews.rating}}
+                           <a title="" href="#"> {{review.title}}</a>
+                           <div class="mark"> My rating: {{review.rating}}
                               <span class="rating-input">
                               {% for i in "12345" %}
-                              {% if reviews.rating >= forloop.counter %}
+                              {% if review.rating >= forloop.counter %}
                               <span class="glyphicon glyphicon-star"></span>
                               {% else %}
                               <span class="glyphicon glyphicon-star-empty"></span>
@@ -229,24 +244,24 @@ border-radius: 5px;
                               {% endfor %}
                               </span>
                            </div>
-                            <p>{{reviews.body}}</p>
-                            <p> -{{reviews.user}}</p>
+                            <p>{{review.body}}</p>
+                            <p> -{{review.user}}</p>
                            <ins class="ab zmin block"></ins>
                         </div>
                         <div class="person-text rel">
                            <img class="img-circle" src="/static/pics/jose.jpg" />
-                           <i>{{reviews.user.last_login}}</i>
+                           <i>{{review.user.last_login}}</i>
                         </div>
                      </div>
                      {% endif %}
                      {% if forloop.counter == 3 %}
                      <div class="col-md-4 col-sm-6 hidden-sm hidden-xs">
                         <div class="block-text rel zmin">
-                           <a title="" href="#"> {{reviews.title}}</a>
-                           <div class="mark"> My rating: {{reviews.rating}}
+                           <a title="" href="#"> {{review.title}}</a>
+                           <div class="mark"> My rating: {{review.rating}}
                               <span class="rating-input">
                               {% for i in "12345" %}
-                              {% if reviews.rating >= forloop.counter %}
+                              {% if review.rating >= forloop.counter %}
                               <span class="glyphicon glyphicon-star"></span>
                               {% else %}
                               <span class="glyphicon glyphicon-star-empty"></span>
@@ -254,13 +269,13 @@ border-radius: 5px;
                               {% endfor %}
                               </span>
                            </div>
-                            <p>{{reviews.body}}</p>
-                            <p> -{{reviews.user}}</p>
+                            <p>{{review.body}}</p>
+                            <p> -{{review.user}}</p>
                            <ins class="ab zmin block"></ins>
                         </div>
                         <div class="person-text rel">
                            <img class="img-circle" src="/static/pics/jose.jpg" />
-                           <i>{{reviews.user.last_login}}</i>
+                           <i>{{review.user.last_login}}</i>
                         </div>
                      </div>
                      {% endif %}
@@ -269,7 +284,7 @@ border-radius: 5px;
                   </div>
 
                   <div class="item">
-                  {% for reviews in review %}
+                  {% for review in reviews %}
                     {% if forloop.counter < 7 %}
                   {% if forloop.counter > 3 %}
                   {% if forloop.counter0|modulo3:3 %}
@@ -278,11 +293,11 @@ border-radius: 5px;
                      {% if forloop.counter0|modulo3:3 %}
                      <div class="col-md-4 col-sm-6">
                         <div class="block-text rel zmin">
-                           <a title="" href="#"> {{reviews.title}}1</a>
-                           <div class="mark"> My rating: {{reviews.rating}}
+                           <a title="" href="#"> {{review.title}}1</a>
+                           <div class="mark"> My rating: {{review.rating}}
                               <span class="rating-input">
                               {% for i in "12345" %}
-                              {% if reviews.rating >= forloop.counter %}
+                              {% if review.rating >= forloop.counter %}
                               <span class="glyphicon glyphicon-star"></span>
                               {% else %}
                               <span class="glyphicon glyphicon-star-empty"></span>
@@ -290,23 +305,23 @@ border-radius: 5px;
                               {% endfor %}
                               </span>
                            </div>
-                            <p>{{reviews.body}}</p>
-                            <p> -{{reviews.user}}</p>
+                            <p>{{review.body}}</p>
+                            <p> -{{review.user}}</p>
                            <ins class="ab zmin block"></ins>
                         </div>
                         <div class="person-text rel">
                            <img class="img-circle" src="/static/pics/jose.jpg" />
-                           <i>{{reviews.user.last_login}}</i>
+                           <i>{{review.user.last_login}}</i>
                         </div>
                      </div>
                      {% elif forloop.counter0|modulo:3 %}
                      <div class="col-md-4 col-sm-6 hidden-xs">
                         <div class="block-text rel zmin">
-                           <a title="" href="#"> {{reviews.title}}</a>
-                           <div class="mark"> My rating: {{reviews.rating}}
+                           <a title="" href="#"> {{review.title}}</a>
+                           <div class="mark"> My rating: {{review.rating}}
                               <span class="rating-input">
                               {% for i in "12345" %}
-                              {% if reviews.rating >= forloop.counter %}
+                              {% if review.rating >= forloop.counter %}
                               <span class="glyphicon glyphicon-star"></span>
                               {% else %}
                               <span class="glyphicon glyphicon-star-empty"></span>
@@ -314,37 +329,37 @@ border-radius: 5px;
                               {% endfor %}
                               </span>
                            </div>
-                            <p>{{reviews.body}}</p>
-                            <p> -{{reviews.user}}</p>
+                            <p>{{review.body}}</p>
+                            <p> -{{review.user}}</p>
                            <ins class="ab zmin block"></ins>
                         </div>
                         <div class="person-text rel">
                            <img class="img-circle" src="/static/pics/jose.jpg" />
-                           <i>{{reviews.user.last_login}}</i>
+                           <i>{{review.user.last_login}}</i>
                         </div>
                      </div>
                      {% elif forloop.counter0|modulo2:3 %}
                      <div class="col-md-4 col-sm-6 hidden-sm hidden-xs">
                         <div class="block-text rel zmin">
-                           <a title="" href="#"> {{reviews.title}}</a>
-                           <div class="mark"> My rating: {{reviews.rating}}
+                           <a title="" href="#"> {{review.title}}</a>
+                           <div class="mark"> My rating: {{review.rating}}
                               <span class="rating-input">
-                              {% for i in "12345" %}
-                              {% if reviews.rating >= forloop.counter %}
-                              <span class="glyphicon glyphicon-star"></span>
-                              {% else %}
-                              <span class="glyphicon glyphicon-star-empty"></span>
-                              {% endif %}
-                              {% endfor %}
+                                  {% for i in "12345" %}
+                                      {% if review.rating >= forloop.counter %}
+                                        <span class="glyphicon glyphicon-star"></span>
+                                      {% else %}
+                                        <span class="glyphicon glyphicon-star-empty"></span>
+                                      {% endif %}
+                                  {% endfor %}
                               </span>
                            </div>
-                            <p>{{reviews.body}}</p>
-                            <p> -{{reviews.user}}</p>
+                            <p>{{review.body}}</p>
+                            <p> -{{review.user}}</p>
                            <ins class="ab zmin block"></ins>
                         </div>
                         <div class="person-text rel">
                            <img class="img-circle" src="/static/pics/jose.jpg" />
-                           <i>{{reviews.user.last_login}}</i>
+                           <i>{{review.user.last_login}}</i>
                         </div>
                      </div>
                      {% endif %}
@@ -385,15 +400,15 @@ border-radius: 5px;
                         <h3 class="cost"><span class="glyphicon glyphicon-usd"></span> {{book.price}}</h3>
                         <h4>Product Id: <span>{{book.id}}</span></h4>
                         <div class="rating">
-                              <span class="rating-input">
-                              {% for i in "12345" %}
-                              {% if book.rating >= forloop.counter %}
-                              <span class="glyphicon glyphicon-star"></span>
-                              {% else %}
-                              <span class="glyphicon glyphicon-star-empty"></span>
-                              {% endif %}
-                              {% endfor %}
-                              </span>
+                            <span class="rating-input">
+                                {% for i in "12345" %}
+                                    {% if book.rating >= forloop.counter %}
+                                        <span class="glyphicon glyphicon-star"></span>
+                                    {% else %}
+                                        <span class="glyphicon glyphicon-star-empty"></span>
+                                    {% endif %}
+                                {% endfor %}
+                            </span>
                         </div>
                         <p1>{{book.about}}</p1>
                         <br>

@@ -43,12 +43,21 @@ def authors(request):
 def books_details(request, book_id):
     book = Book.objects.get(pk=book_id)
     author = Author.objects.get(pk=book.author_id)
-    review = Review.objects.filter(book=book_id)
+    reviews = Review.objects.filter(book=book_id)
+    if len(reviews):
+        user_rating = 0
+        for review in reviews:
+            user_rating += review.rating
+        user_rating = round(user_rating / len(reviews), 2)
+    else:
+        user_rating = 'Unreviewed'
+        
     template = loader.get_template('books/booksDetails.html')
     context = {
         'book': book,
         'author': author,
-        'review':review,
+        'reviews': reviews,
+        'user_rating': user_rating,
     }
     return HttpResponse(template.render(context, request))
 
