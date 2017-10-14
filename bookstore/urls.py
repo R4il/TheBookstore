@@ -27,4 +27,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('send_email.urls')),
     url(r'search', books.views.book_search, name='search'),
+    url(r'author/id/(?P<author_id>[0-9]+)/$', books.views.search_byauthor, name='search_byauthor'),
+    # url(r'genre', books.views.genre, name='genre'), still working on this
 ]

@@ -15,16 +15,32 @@ import logging
 
 
 def book_search(request):
-    queryset = Book.objects.all()
+    queryset = Book.objects.all().order_by("title")
     query = request.GET.get("bookSearch")
     if query:
         queryset = queryset.filter(title__icontains=query)
-
     context = {
         "queryset": queryset,
     }
-
     return render(request, 'searchlayout.html', context)
+
+
+def search_byauthor(request, author_id):
+    all_books = Book.objects.filter(author_id=author_id)
+
+    template = loader.get_template('books/listBooks.html')
+    context = {
+        'all_books': all_books,
+    }
+    return HttpResponse(template.render(context, request))
+
+
+#def genre(request):
+#    genres = Book.objects.order_by('genre').distinct()
+#    context = {
+#        'genres': genres,
+#    }
+#    return render(request, 'genre.html', context)
 
 
 def books(request):

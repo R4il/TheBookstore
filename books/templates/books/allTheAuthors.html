@@ -10,7 +10,8 @@
     <ul>
         {% for author in all_authors %}
         <li>
-            <a href="/books/author/{{author.id}}">{{author.first}} {{author.last}}</a>
+            <!--<a href="/books/author/{{author.id}}">{{author.last}}, {{author.first}}</a>-->
+            <a href='/author/id/{{ author.id }}'> {{ author.last }}, {{ author.first }}</a>
         </li>
         <br>
         {% endfor %}
