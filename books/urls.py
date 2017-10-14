@@ -21,6 +21,6 @@ urlpatterns = [
     # /books/review/id/
     url(r'review/(?P<book_id>[0-9]+)/$', ReviewBookView.as_view(), name='review_book'),
     
-    url(r'review/', ReviewBookView.as_view(), name='review_book_form'),
+    url(r'review_denied/', review_denied, name='review_denied'),
     
 ]

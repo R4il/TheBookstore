@@ -148,51 +148,55 @@ border-radius: 5px;
       <ul><h1>{{book.title}}</h1></ul>
 
 <div class="row">
-  <div class="col-md-3">
-      <img src="/static/covers/{{ book.cover }}" height= 400 class=".w3-image" hspace="70" style="float:left" />
+    <div class="col-md-3">
+        <img src="/static/covers/{{ book.cover }}" height= 400 class=".w3-image" hspace="70" style="float:left" />
     </div>
-      <div class="col-md-8">
-          <p></p>
-    <page size="A4">
+    <div class="col-md-8">
+        <p></p>
+        <page size="A4">
+            <ul class="w3-ul" style="display: inline">
+                <li>By:<a href="/books/author/{{book.author.id}}">{{book.author.first}} {{book.author.last}}</a></li>
+                <li>Genre: {{book.genre}}</li>
+                <li>Published by: {{book.publisher}}</li>
+                <li>Rating: {{book.rating}}</li>
+                <li>User Rating: {{user_rating}}</li>
+                <li>Price: {{book.price}}$</li>
+            </ul>
+            <h3>
+                 {{book.about}}
+            </h3>
+            <a href="#" class="w3-bar-item w3-button"  style="padding-left:15px" onClick="javascript:history.go(-1);">Go back</a>
+            <a class="w3-bar-item w3-button"  href="#" data-target="#product_view" style="padding-left:15px" data-toggle="modal">Add to Cart</a>
 
-          <ul class="w3-ul" style="display: inline">
-             <li>By:<a href="/books/author/{{book.author.id}}">{{book.author.first}} {{book.author.last}}</a></li>
-             <li>Genre: {{book.genre}}</li>
-             <li>Published by: {{book.publisher}}</li>
-             <li>Rating: {{book.rating}}</li>
-             <li>User Rating: {{user_rating}}</li>
-             <li>Price: {{book.price}}$</li>
-          </ul>
-       <h3>
-          {{book.about}}
-       </h3>
-        <a href="#" class="w3-bar-item w3-button"  style="padding-left:15px" onClick="javascript:history.go(-1);">Go back</a>
-        <a class="w3-bar-item w3-button"  href="#" data-target="#product_view" style="padding-left:15px" data-toggle="modal">Add to Cart</a>
-        <a class="w3-bar-item w3-button"  href="/books/review" style="padding-left:15px" >Submit Review</a>
-    </page>
-</div>
+            {% if purchased %}
+            <a class="w3-bar-item w3-button"  href="/books/review/{{ book.id }}" style="padding-left:15px" >Submit Review</a>
+            {% else %}
+            <a class="w3-bar-item w3-button"  href="/books/review_denied" style="padding-left:15px" >Submit Review</a>
+            {% endif %}
+        </page>
+    </div>
 </div>
 <div class="modal fade text-center" id="theModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-        <form class="well" method="post" action="/contact/edit/{{ item.id }}">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">×</button>
-            <h3>Add Review</h3>
-          </div>
-          <div class="modal-body">
-               {% csrf_token %}
-               {{form.as_p}}
-          </div>
-          <div class="modal-footer">
-       <input class="btn btn-primary" type="submit" value="Save" />
-       <input name="cancel" class="btn" type="submit" value="Cancel"/>
-  </div>
-</form>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="well" method="post" action="/contact/edit/{{ item.id }}">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3>Add Review</h3>
+                </div>
+                <div class="modal-body">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                </div>
+                <div class="modal-footer">
+                    <input class="btn btn-primary" type="submit" value="Save" />
+                    <input name="cancel" class="btn" type="submit" value="Cancel"/>
+                </div>
+            </form>
+        </div>
     </div>
-  </div>
 </div>
-
+<div>
    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
    <div class="carousel-reviews broun-block">
@@ -297,20 +301,36 @@ border-radius: 5px;
                            <div class="mark"> My rating: {{review.rating}}
                               <span class="rating-input">
                               {% for i in "12345" %}
-                              {% if review.rating >= forloop.counter %}
-                              <span class="glyphicon glyphicon-star"></span>
-                              {% else %}
-                              <span class="glyphicon glyphicon-star-empty"></span>
-                              {% endif %}
+                                {% if review.rating >= forloop.counter %}
+                                  <span class="glyphicon glyphicon-star"></span>
+                                {% else %}
+                                   <span class="glyphicon glyphicon-star-empty"></span>
+                                {% endif %}
                               {% endfor %}
                               </span>
                            </div>
                             <p>{{review.body}}</p>
-                            <p> -{{review.user}}</p>
+                            {% if review.anonymous %}
+                                <p> -Anonymous</p>
+                            {% else %}
+                                <p> -{{review.user}}</p>
+                            {% endif %}
                            <ins class="ab zmin block"></ins>
                         </div>
                         <div class="person-text rel">
-                           <img class="img-circle" src="/static/pics/jose.jpg" />
+                            {% if review.anonymous %}
+                                <p> -Anonymous</p>
+                            {% else %}
+                                <p> -{{review.user}}</p>
+                            {% endif %}
+                           <ins class="ab zmin block"></ins>
+                        </div>
+                        <div class="person-text rel">
+                            {% if review.anonymous %}
+                                <img class="img-circle" src="/static/pics/a.jpg" />
+                            {% else %}
+                                <img class="img-circle" src="/static/pics/jose.jpg" />
+                            {% endif %}
                            <i>{{review.user.last_login}}</i>
                         </div>
                      </div>
@@ -330,11 +350,19 @@ border-radius: 5px;
                               </span>
                            </div>
                             <p>{{review.body}}</p>
-                            <p> -{{review.user}}</p>
+                            {% if review.anonymous %}
+                                <p> -Anonymous</p>
+                            {% else %}
+                                <p> -{{review.user}}</p>
+                            {% endif %}
                            <ins class="ab zmin block"></ins>
                         </div>
                         <div class="person-text rel">
-                           <img class="img-circle" src="/static/pics/jose.jpg" />
+                            {% if review.anonymous %}
+                                <img class="img-circle" src="/static/pics/a.jpg" />
+                            {% else %}
+                                <img class="img-circle" src="/static/pics/jose.jpg" />
+                            {% endif %}
                            <i>{{review.user.last_login}}</i>
                         </div>
                      </div>
@@ -354,11 +382,19 @@ border-radius: 5px;
                               </span>
                            </div>
                             <p>{{review.body}}</p>
-                            <p> -{{review.user}}</p>
+                            {% if review.anonymous %}
+                                <p> -Anonymous</p>
+                            {% else %}
+                                <p> -{{review.user}}</p>
+                            {% endif %}
                            <ins class="ab zmin block"></ins>
                         </div>
                         <div class="person-text rel">
-                           <img class="img-circle" src="/static/pics/jose.jpg" />
+                            {% if review.anonymous %}
+                                <img class="img-circle" src="/static/pics/a.jpg" />
+                            {% else %}
+                                <img class="img-circle" src="/static/pics/jose.jpg" />
+                            {% endif %}
                            <i>{{review.user.last_login}}</i>
                         </div>
                      </div>

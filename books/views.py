@@ -66,6 +66,11 @@ def books_details(request, book_id):
     request.session['book_id'] = book_id
     author = Author.objects.get(pk=book.author_id)
     reviews = Review.objects.filter(book=book_id)
+    order = PreviousOrder.objects.filter(user=request.user, book=book_id)
+    if len(order) == 0:
+        request.session['purchased'] = False
+    else:
+        request.session['purchased'] = True
     if len(reviews):
         user_rating = 0
         for review in reviews:
@@ -80,6 +85,7 @@ def books_details(request, book_id):
         'author': author,
         'reviews': reviews,
         'user_rating': user_rating,
+        'purchased': request.session['purchased'],
     }
     return HttpResponse(template.render(context, request))
 
@@ -129,10 +135,14 @@ def review_book(request, book_id):
             return render(request, 'reviewForm.html', {'form': form})
 
 
+def review_denied(request):
+    return render(request, 'reviewDenied.html')
+
+
 class ReviewBookView(CreateView):
     model = Review
     form_class = ReviewForm
-
+    
     def form_valid(self, form):
         if 'book_id' in self.request.session:
             book_id = self.request.session['book_id']
@@ -140,9 +150,7 @@ class ReviewBookView(CreateView):
             return
         book = Book.objects.get(pk=book_id)
         user = self.request.user
-        order = PreviousOrder.objects.filter(user=user.user_id, book=book_id)
-        if len(order) == 0:
-            return render(self.request, 'reviewDenied.html')
+
         final = form.save(commit=False)
         with transaction.atomic():
             try:
