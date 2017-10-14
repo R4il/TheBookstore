@@ -19,9 +19,8 @@ urlpatterns = [
     url(r'author/(?P<author_id>[0-9]+)/$', author_details, name='author_details'),
 
     # /books/review/id/
-    url(r'review/(?P<book_id>[0-9]+)/$', review_book, name='review_book'),
-
-    # added book search
-    #url(r'^$', book_search, name='search'),
-
+    url(r'review/(?P<book_id>[0-9]+)/$', ReviewBookView.as_view(), name='review_book'),
+    
+    url(r'review/', ReviewBookView.as_view(), name='review_book_form'),
+    
 ]

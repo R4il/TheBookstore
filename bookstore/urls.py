@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^about/$', views.about, name='about'),
     url(r'^accounts/', include('accounts.urls', namespace='accounts')),
-    url(r"^books/", include("books.urls")),
+    url(r"^books/", include("books.urls", namespace='books')),
     url(r"^accounts/", include("django.contrib.auth.urls")),
     url(r'^admin/', admin.site.urls),
     url(r'^', include('send_email.urls')),

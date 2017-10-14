@@ -8,11 +8,11 @@ class ReviewForm(forms.ModelForm):
         fields = ['rating', 'title', 'body', 'anonymous']
         labels = {
             'title': 'The review Title',
-            'anonymous': 'Do you wish to remain anonymous?',
+            'anonymous': '',
         }
         help_texts = {
             'rating': '1-5 rating.',
-            'anonymous': 'shhhh?',
+            'anonymous': 'Do you wish to remain anonymous?',
         }
         error_messages = {
             'rating': {
@@ -25,3 +25,4 @@ class ReviewForm(forms.ModelForm):
         if cleaned_data.get("rating") > 5 or cleaned_data.get("rating") < 0:
             raise forms.ValidationError("Rating most be between 0 and 5")
         return cleaned_data['rating']
+
