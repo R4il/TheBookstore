@@ -4,6 +4,7 @@ from .forms import ReviewForm
 from purchases.models import PreviousOrder
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.db.models import Q, Count
 import logging
 
 # Create your views here.
@@ -11,11 +12,14 @@ import logging
 
 def book_search(request):
     queryset = Book.objects.all().order_by("title")
+    authorset = Author.objects.all().order_by("last")
     query = request.GET.get("bookSearch")
     if query:
         queryset = queryset.filter(title__icontains=query)
+        authorset = authorset.filter(Q(last__icontains=query) | Q(first__icontains=query))
     context = {
         "queryset": queryset,
+        "authorset": authorset,
     }
     return render(request, 'searchlayout.html', context)
 
@@ -30,12 +34,13 @@ def search_byauthor(request, author_id):
     return HttpResponse(template.render(context, request))
 
 
-#def genre(request):
-#    genres = Book.objects.order_by('genre').distinct()
-#    context = {
-#        'genres': genres,
-#    }
-#    return render(request, 'genre.html', context)
+def genre(request):
+    genres = Book.objects.values('genre').annotate(genre_count=Count('genre')).filter(genre_count__gt=1)
+    #genres = Book.objects.order_by('genre').distinct()
+    context = {
+        'genres': genres,
+    }
+    return render(request, 'genre.html', context)
 
 
 def books(request):
