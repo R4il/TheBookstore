@@ -102,20 +102,6 @@ class SignUpView(CreateView):
 
         return super(SignUpView, self).form_valid(form)
 
-class EditCreditCardView(CreateView):
-    model = CreditCard
-    form_class = EditCreditCardForm
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        form.save()
-        return super(EditCreditCardView, self).form_valid(form)
-
-    def get_success_url(self):
-        messages.success(self.request, 'CCN profile was successfully created.')
-        return reverse('accounts:displayCC')
-
-
 class LogoutView(RedirectView):
     url = reverse_lazy("index")
 
@@ -128,6 +114,43 @@ class LogoutView(RedirectView):
 def change_password(request):
     return render(request,'#', {'form': form})
 
+#########################################################################################################
+##                                   CREDIT CARD FUNCTIONS                                             ##
+########################################################################################################
+
+def display_cc(request):
+    online_user_id = request.user.user_id
+    credit_cards = CreditCard.objects.filter(user_id=online_user_id)
+    return render(request, 'accounts/displaycc.html', {'credit_cards': credit_cards})
+
+class CreateCreditCardView(CreateView):
+    model = CreditCard
+    form_class = EditCreditCardForm
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.save()
+        return super(CreateCreditCardView, self).form_valid(form)
+
+    def get_success_url(self):
+        messages.success(self.request, 'CCN profile was successfully created.')
+        return reverse('accounts:displaycc')
+
+##Needs to be done
+@csrf_protect
+def update_cc(request):
+    return render(request, '#', {'form': form})
+
+class CreditCardDelete(DeleteView):
+    model = CreditCard
+
+    def get_success_url(self):
+        messages.success(self.request, 'Credit card info was successfully removed.')
+        return reverse('accounts:displaycc')
+
+    def get_object(self):
+        creditcard_id = self.request.POST.get('cc_id')
+        return get_object_or_404(CreditCard, pk=creditcard_id)
 
 #########################################################################################################
 ##                                   ADDRESS FUNCTIONS                                                 ##
@@ -143,7 +166,6 @@ def display_address(request):
 def update_address(request):
     return render(request, '#', {'form': form})
 
-
 class AddressDelete(DeleteView):
     model = Address
 
@@ -154,7 +176,6 @@ class AddressDelete(DeleteView):
     def get_object(self):
         address_id = self.request.POST.get('addr_id')
         return get_object_or_404(Address, pk=address_id)
-
 
 class AddressCreate(CreateView):
     template_name = 'accounts/addAddress.html'

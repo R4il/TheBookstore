@@ -152,8 +152,6 @@ class EditCreditCardForm(ModelForm):
     cvv = forms.CharField(label = 'CVV')
     owner_name = forms.CharField(label = 'Owner name')
 
-    type = "AmEx"
-
     # verifies the credit card number and type
     def clean_credit_card_number(self):
        cc = self.cleaned_data['credit_card_number']
@@ -164,9 +162,8 @@ class EditCreditCardForm(ModelForm):
            for pair in verificationTable:
                if (re.match(pair[0], ccn)):  # if the number matches a regex in the table
                    if (len(ccn) in pair[2]):  # make sure it's got a valid length
-                       type = pair[1]
-                       return "Valid card - type: " + pair[
-                           1]  # it's both a valid number and a valid type. Let it through
+                       cardtype = pair[1]
+                       return ccn # to keep consistency the "entered" ccn is the space and dash fixed one
                    else:
                        raise forms.ValidationError("Invalid card length! Valid lengths for " + pair[1] + " cards: " + createCommaString(pair[2]))
            else:  # otherwise it's a valid number but it's not an accepted type, alert the users as to which types are supported
@@ -175,27 +172,27 @@ class EditCreditCardForm(ModelForm):
     def clean_exp_date(self):
         ed = self.cleaned_data['exp_date']
         if(re.match("^(0[1-9]|1[0-2])\/([0-9]{2}$)", ed)):
-            return "Valid expiration date"
+            return ed
         else:
             raise forms.ValidationError("Invalid expiration date! Use format: MM/YY")
 
     def clean_cvv(self):
         cv = self.cleaned_data['cvv']
+        cardtype = "Visa" # HOLDER CODE, TEMPORARY
         if(re.match("^[0-9]{3}$", cv)):
-            if(type == "AmEx"):
-                raise forms.ValidationError("CVV for AmEx must be 4 digits")
+            if(cardtype == "AmEx"):
+                #raise forms.ValidationError(str.format("CVV for type {} must be 4 digits", cardtype))
+                raise forms.ValidationError("CVV for Amex must be 3 digits")
             else:
-                return("Valid cvv")
-        elif(re.match("^[0-9]{3}$", cv)):
-            if(type != "AmEx"):
+                return cv
+        elif(re.match("^[0-9]{4}$", cv)):
+            if(cardtype != "AmEx"):
+                # raise forms.ValidationError(str.format("Cvv for type {} must be 4 digits", cardtype))
                 raise forms.ValidationError("CVV for Visa, MasterCard, Discover must be 3 digits")
             else:
-                return("Valid cvv")
+                return cv
         else:
             raise forms.ValidationError("Invalid CVV, must be numbers only with 3 or 4 digits depending on card type")
-
-    def clean_ownername(self):
-        return("any non-empty ownername is fine")
 
     class Meta:
         model = CreditCard

@@ -1,7 +1,6 @@
 from django.conf.urls import url,include
 from .views import *
 
-
 urlpatterns = [
     url(r'^login/$', login_view, name='login'),
     url(r'logout/$', LogoutView.as_view(), name='logout'),
@@ -12,5 +11,8 @@ urlpatterns = [
     url(r'deleteAddress/', AddressDelete.as_view(), name='deleteAddress'),
     url(r'addAddress/', AddressCreate.as_view(), name='addAddress'),
     url(r'updateAddress/', update_address, name='updateAddress'),
-    url(r'managecc/', EditCreditCardView.as_view(), name='managecc')
+    url(r'createcc/', CreateCreditCardView.as_view(), name='createcc'),
+    url(r'displaycc/', display_cc, name='displaycc'),
+    url(r'deletecc/', CreditCardDelete.as_view(), name='deletecc'),
+    url(r'updatecc/', update_cc, name='updatecc')
 ]
