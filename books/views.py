@@ -3,8 +3,13 @@ from .models import Book, Author, Review, Book_Genre
 from .forms import ReviewForm
 from purchases.models import PreviousOrder
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.views.generic import DeleteView, CreateView, RedirectView, FormView, UpdateView
+from django.contrib import messages
+from django.core.urlresolvers import reverse_lazy, reverse
+from django.db import transaction
 from django.db.models import Q, Count
+
 import logging
 
 # Create your views here.
@@ -85,13 +90,29 @@ def authors(request):
 
 def books_details(request, book_id):
     book = Book.objects.get(pk=book_id)
+    request.session['book_id'] = book_id
     author = Author.objects.get(pk=book.author_id)
-    review = Review.objects.filter(book=book_id)
+    reviews = Review.objects.filter(book=book_id)
+    order = PreviousOrder.objects.filter(user=request.user, book=book_id)
+    if len(order) == 0:
+        request.session['purchased'] = False
+    else:
+        request.session['purchased'] = True
+    if len(reviews):
+        user_rating = 0
+        for review in reviews:
+            user_rating += review.rating
+        user_rating = round(user_rating / len(reviews), 2)
+    else:
+        user_rating = 'Unreviewed'
+        
     template = loader.get_template('books/booksDetails.html')
     context = {
         'book': book,
         'author': author,
-        'review':review,
+        'reviews': reviews,
+        'user_rating': user_rating,
+        'purchased': request.session['purchased'],
     }
     return HttpResponse(template.render(context, request))
 
@@ -140,4 +161,39 @@ def review_book(request, book_id):
             form = ReviewForm()
             return render(request, 'reviewForm.html', {'form': form})
 
+
+def review_denied(request):
+    return render(request, 'reviewDenied.html')
+
+
+class ReviewBookView(CreateView):
+    model = Review
+    form_class = ReviewForm
+    
+    def form_valid(self, form):
+        if 'book_id' in self.request.session:
+            book_id = self.request.session['book_id']
+        else:
+            return
+        book = Book.objects.get(pk=book_id)
+        user = self.request.user
+
+        final = form.save(commit=False)
+        with transaction.atomic():
+            try:
+                obj = Review.objects.get(user=user, book=book)
+                obj.rating = final.rating
+                obj.title = final.title
+                obj.body = final.body
+                obj.anonymous = final.anonymous
+                obj.save()
+            except Review.DoesNotExist:
+                obj = Review(user=user, book=book, rating=final.rating,
+                             title=final.title, body=final.body, anonymous=final.anonymous)
+                obj.save()
+            return HttpResponseRedirect(f'/books/{book_id}')
+        
+    def get_success_url(self):
+        messages.success(self.request, 'Review was added to db.')
+        return redirect('/books/')
 
