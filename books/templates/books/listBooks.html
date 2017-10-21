@@ -17,10 +17,26 @@
         </li>
         <br>
         {% endfor %}
-    </ul>
 
-    <div>&nbsp;</div>
+    <div class="pagination">
+    <span class="step-links">
+        {% if all_books.has_previous %}
+            <a href="?page={{ all_books.previous_page_number }}"><font color="blue"><bold>Previous</bold></font></a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ all_books.number }} of {{ all_books.paginator.num_pages }}.
+        </span>
+
+        {% if all_books.has_next %}
+        <a href="?page={{ all_books.next_page_number }}"><font color="blue"><bold>Next</bold></font></a>
+        {% endif %}
+    </span>
+    </div>
+    <br/>
     <a href="#" class="w3-bar-item w3-button" onClick="javascript:history.go(-1);">Go back</a>
+
+    </ul>
 {% endblock %}
 
 
