@@ -8,21 +8,34 @@
 
 {% block content %}
     <div class="container">
-    <h1>Search Results: </h1>
+        <h1><font color="red"><bold>Books Search Results: </bold></font></h1>
 
-    {% for instance in queryset %}
+    {% if queryset %}
+        {% for instance in queryset %}
+            <a href='/books/{{ instance.id }}'>
+                <img src="/static/covers/{{ instance.cover }}" height="160" width="120"/></a><br/>
+            <h3><td>Title: </td>
+                <a href='/books/{{ instance.id }}'> {{ instance.title }}</a><br/>
+            <td>Author: </td>
+                <a href='/books/author/{{ instance.author.id }}'> {{ instance.author }}</a>
+            </h3>
+            <br/>
+        {% endfor %}
+    {% else %}
+        <td>No results available</td>
+    {% endif %}
 
-        <a href='/books/{{ instance.id }}'>
-            <img src="/static/covers/{{ instance.cover }}" height="160" width="120"/></a><br/>
-        <h3><td>Title: </td>
-            <a href='/books/{{ instance.id }}'> {{ instance.title }}</a><br/>
-        <td>Author: </td>
-            <a href='/books/author/{{ instance.author.id }}'> {{ instance.author }}</a>
-        </h3>
-        <br/>
-        <br/>
+    <h1><font color="red"><bold>Author Search Results: </bold></font></h1>
 
-    {% endfor %}
+     {% if authorset %}
+        {% for author in authorset %}
+                <a href='/author/id/{{ author.id }}'>{{ author.last }}, {{ author.first }}</a><br/>
+        {% endfor %}
+     {% else %}
+        <td>No results available</td><br/>
+     {% endif %}
+
+    <br/>
     <a href="#" class="w3-bar-item w3-button" onClick="javascript:history.go(-1);">Go back</a>
     </div>
 {% endblock %}

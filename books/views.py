@@ -1,5 +1,5 @@
 from django.template import loader
-from .models import Book, Author, Review
+from .models import Book, Author, Review, Book_Genre
 from .forms import ReviewForm
 from purchases.models import PreviousOrder
 from django.http import HttpResponse, HttpResponseRedirect
@@ -8,6 +8,7 @@ from django.views.generic import DeleteView, CreateView, RedirectView, FormView,
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.db import transaction
+from django.db.models import Q, Count
 
 import logging
 
@@ -16,11 +17,14 @@ import logging
 
 def book_search(request):
     queryset = Book.objects.all().order_by("title")
+    authorset = Author.objects.all().order_by("last")
     query = request.GET.get("bookSearch")
     if query:
         queryset = queryset.filter(title__icontains=query)
+        authorset = authorset.filter(Q(last__icontains=query) | Q(first__icontains=query))
     context = {
         "queryset": queryset,
+        "authorset": authorset,
     }
     return render(request, 'searchlayout.html', context)
 
@@ -35,12 +39,35 @@ def search_byauthor(request, author_id):
     return HttpResponse(template.render(context, request))
 
 
-#def genre(request):
-#    genres = Book.objects.order_by('genre').distinct()
-#    context = {
-#        'genres': genres,
-#    }
-#    return render(request, 'genre.html', context)
+def genre(request):
+    genres = Book_Genre.objects.all().order_by("genre")
+    context = {
+        'genres': genres,
+    }
+    return render(request, 'genre.html', context)
+
+
+def booksbygenre(request, book_genre_id):
+    all_books = Book.objects.filter(book_genre_id=book_genre_id).order_by("title")
+
+    template = loader.get_template('books/listBooks.html')
+    context = {
+        'all_books': all_books,
+    }
+
+    return HttpResponse(template.render(context, request))
+
+
+def bestsellers(request):
+    all_books = Book.objects.filter(best_seller__icontains='Y').order_by("title")
+
+    # will create different template for this results 'bestsellers.html'
+    template = loader.get_template('books/listBooks.html')
+    context = {
+        'all_books': all_books,
+    }
+
+    return HttpResponse(template.render(context, request))
 
 
 def books(request):

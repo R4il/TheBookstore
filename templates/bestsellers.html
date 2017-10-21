@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bestsellers</title>
+</head>
+<body>
+    <container>
+
+    {% for instance in all_books %}
+        <h3>{{ instance.title }}</h3><br/>
+    {% endfor %}
+    </container>
+</body>
+</html>
