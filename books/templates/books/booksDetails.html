@@ -224,11 +224,19 @@ border-radius: 5px;
                               </span>
                            </div>
                             <p>{{review.body}}</p>
-                            <p> -{{review.user}}</p>
+                            {% if review.anonymous %}
+                                <p> -Anonymous</p>
+                            {% else %}
+                                <p> -{{review.user}}</p>
+                            {% endif %}
                            <ins class="ab zmin block"></ins>
                         </div>
                         <div class="person-text rel">
-                           <img class="img-circle" src="/static/pics/jose.jpg" />
+                            {% if review.anonymous %}
+                                <img class="img-circle" src="/static/pics/a.jpg" />
+                            {% else %}
+                                <img class="img-circle" src="/static/pics/jose.jpg" />
+                            {% endif %}
                            <i>{{review.user.last_login}}</i>
                         </div>
                      </div>
@@ -249,11 +257,19 @@ border-radius: 5px;
                               </span>
                            </div>
                             <p>{{review.body}}</p>
-                            <p> -{{review.user}}</p>
+                            {% if review.anonymous %}
+                                <p> -Anonymous</p>
+                            {% else %}
+                                <p> -{{review.user}}</p>
+                            {% endif %}
                            <ins class="ab zmin block"></ins>
                         </div>
                         <div class="person-text rel">
-                           <img class="img-circle" src="/static/pics/jose.jpg" />
+                            {% if review.anonymous %}
+                                <img class="img-circle" src="/static/pics/a.jpg" />
+                            {% else %}
+                                <img class="img-circle" src="/static/pics/jose.jpg" />
+                            {% endif %}
                            <i>{{review.user.last_login}}</i>
                         </div>
                      </div>
@@ -274,11 +290,19 @@ border-radius: 5px;
                               </span>
                            </div>
                             <p>{{review.body}}</p>
-                            <p> -{{review.user}}</p>
+                            {% if review.anonymous %}
+                                <p> -Anonymous</p>
+                            {% else %}
+                                <p> -{{review.user}}</p>
+                            {% endif %}
                            <ins class="ab zmin block"></ins>
                         </div>
                         <div class="person-text rel">
-                           <img class="img-circle" src="/static/pics/jose.jpg" />
+                            {% if review.anonymous %}
+                                <img class="img-circle" src="/static/pics/a.jpg" />
+                            {% else %}
+                                <img class="img-circle" src="/static/pics/jose.jpg" />
+                            {% endif %}
                            <i>{{review.user.last_login}}</i>
                         </div>
                      </div>
