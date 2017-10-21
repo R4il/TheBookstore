@@ -7,11 +7,12 @@
 {% block title %} Book Search {% endblock %}
 
 {% block content %}
+    <title>Genres</title>
     <div class="container">
         <h1><font color="red"><bold>Genre Results: </bold></font></h1><br/>
 
     {% for instance in genres %}
-        <h3>{{ instance.genre }}</h3><br/>
+        <h3><a href='/fix/id/{{ instance.id }}'>{{ instance.genre }}</a></h3><br/>
     {% endfor %}
     <a href="#" class="w3-bar-item w3-button" onClick="javascript:history.go(-1);">Go back</a>
     </div>

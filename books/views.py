@@ -1,5 +1,5 @@
 from django.template import loader
-from .models import Book, Author, Review
+from .models import Book, Author, Review, Book_Genre
 from .forms import ReviewForm
 from purchases.models import PreviousOrder
 from django.http import HttpResponse, HttpResponseRedirect
@@ -35,12 +35,34 @@ def search_byauthor(request, author_id):
 
 
 def genre(request):
-    genres = Book.objects.values('genre').annotate(genre_count=Count('genre')).filter(genre_count__gt=1)
-    #genres = Book.objects.order_by('genre').distinct()
+    genres = Book_Genre.objects.all().order_by("genre")
     context = {
         'genres': genres,
     }
     return render(request, 'genre.html', context)
+
+
+def booksbygenre(request, book_genre_id):
+    all_books = Book.objects.filter(book_genre_id=book_genre_id).order_by("title")
+
+    template = loader.get_template('books/listBooks.html')
+    context = {
+        'all_books': all_books,
+    }
+
+    return HttpResponse(template.render(context, request))
+
+
+def bestsellers(request):
+    all_books = Book.objects.filter(best_seller__icontains='Y').order_by("title")
+
+    # will create different template for this results 'bestsellers.html'
+    template = loader.get_template('books/listBooks.html')
+    context = {
+        'all_books': all_books,
+    }
+
+    return HttpResponse(template.render(context, request))
 
 
 def books(request):
