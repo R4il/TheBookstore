@@ -8,7 +8,7 @@ from django.views.generic import DeleteView, CreateView, RedirectView, FormView,
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.db import transaction
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 import logging
