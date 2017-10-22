@@ -1,5 +1,5 @@
 from django.template import loader
-from .models import Book, Author, Review, Book_Genre
+from .models import Book, Author, Review, Genre
 from .forms import ReviewForm
 from purchases.models import PreviousOrder
 from django.http import HttpResponse, HttpResponseRedirect
@@ -8,7 +8,8 @@ from django.views.generic import DeleteView, CreateView, RedirectView, FormView,
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.db import transaction
-from django.db.models import Q, Count
+from django.db.models import Q
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 import logging
 
@@ -40,34 +41,53 @@ def search_byauthor(request, author_id):
 
 
 def genre(request):
-    genres = Book_Genre.objects.all().order_by("genre")
+    genres = Genre.objects.all().order_by("genre")
     context = {
         'genres': genres,
     }
     return render(request, 'genre.html', context)
 
 
-def booksbygenre(request, book_genre_id):
-    all_books = Book.objects.filter(book_genre_id=book_genre_id).order_by("title")
+def booksbygenre(request, genre_id):
+    all_books = Book.objects.filter(genre_id=genre_id).order_by("title")
+    paginator = Paginator(all_books, 10)  # Show 10 contacts per page
 
-    template = loader.get_template('books/listBooks.html')
+    page = request.GET.get('page')
+    try:
+        books = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        books = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        books = paginator.page(paginator.num_pages)
+
     context = {
-        'all_books': all_books,
+        "all_books": books
     }
 
-    return HttpResponse(template.render(context, request))
+    return render(request, "books/listBooks.html", context)
 
 
 def bestsellers(request):
     all_books = Book.objects.filter(best_seller__icontains='Y').order_by("title")
+    paginator = Paginator(all_books, 10) # Show 10 contacts per page
 
-    # will create different template for this results 'bestsellers.html'
-    template = loader.get_template('books/listBooks.html')
+    page = request.GET.get('page')
+    try:
+        books = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        books = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        books = paginator.page(paginator.num_pages)
+
     context = {
-        'all_books': all_books,
+        "all_books": books
     }
 
-    return HttpResponse(template.render(context, request))
+    return render(request, "books/listBooks.html", context)
 
 
 def books(request):

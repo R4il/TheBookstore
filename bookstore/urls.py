@@ -29,6 +29,6 @@ urlpatterns = [
     url(r'search', books.views.book_search, name='search'),
     url(r'author/id/(?P<author_id>[0-9]+)/$', books.views.search_byauthor, name='search_byauthor'),
     url(r'genre', books.views.genre, name='genre'),
-    url(r'fix/id/(?P<book_genre_id>[0-9]+)/$', books.views.booksbygenre, name='booksbygenre'), # problem if i change 'fix' to 'genre'
+    url(r'fix/id/(?P<genre_id>[0-9]+)/$', books.views.booksbygenre, name='booksbygenre'), # problem if i change 'fix' to 'genre'
     url(r'bestsellers', books.views.bestsellers, name='bestsellers'),
 ]

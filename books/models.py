@@ -14,7 +14,7 @@ class Author(models.Model):
     def __str__(self):
         return f'{self.first} {self.last}'
 
-class Book_Genre(models.Model):
+class Genre(models.Model):
     id = models.AutoField(primary_key=True)
     genre = models.CharField(max_length=50)
 
@@ -39,7 +39,7 @@ class Book(models.Model):
     publisher = models.CharField(max_length=255)
     about = models.CharField(max_length=3000)
     cover = models.CharField(max_length=255, default="nocover.jpg")
-    book_genre = models.ForeignKey(Book_Genre, on_delete=models.CASCADE, null=True)
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE, null=True)
     best_seller = models.CharField(max_length=3, choices=BS_OPTIONS, default=NO)
 
     def __str__(self):
