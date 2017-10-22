@@ -32,7 +32,6 @@ class Book(models.Model):
 
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=255)
-    genre = models.CharField(max_length=30)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     price = models.DecimalField(decimal_places=2, max_digits=5)
     rating = models.DecimalField(decimal_places=2, max_digits=3)
