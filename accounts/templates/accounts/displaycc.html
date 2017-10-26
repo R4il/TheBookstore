@@ -19,8 +19,8 @@
     <h2>My Credit Cards</h2>
     <p style="padding:20px;"></p>
     {% for cc in credit_cards %}
-        <h3>CreditCard {{ forloop.counter }}</h3>
-        <h4>{{ cc.credit_credit_number }}</h4>
+        <h3>Credit Card {{ forloop.counter }}</h3>
+        <h4>{{ cc.credit_card_number }}</h4>
         <p style="padding:3px;"></p>
         <div class="row">
             <div class="col-sm-3">
@@ -32,7 +32,7 @@
             </div>
             <div class="col-sm-3 col-sm-pull-1">
                 <form action="{% url 'accounts:deletecc' %}" method="POST" class="form-inline">
-                    {%  csrf_token %}
+                    {% csrf_token %}
                     <input type="hidden" value="{{ cc.id }}" name="cc_id">
                     <button type="submit" class="btn btn-md btn-danger">Remove Credit Card</button>
                 </form>

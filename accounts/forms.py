@@ -201,8 +201,8 @@ class EditCreditCardForm(ModelForm):
 
 
 class EditUserProfileForm(ModelForm):
-    first_name = forms.CharField(label='First Name')
-    last_name = forms.CharField(label='Last Name')
+    first_name = forms.CharField(label='First Name', required=False)
+    last_name = forms.CharField(label='Last Name', required=False)
     nickname = forms.CharField(label='Nickname')
     email_address = forms.EmailField(label="Email Address")
 
