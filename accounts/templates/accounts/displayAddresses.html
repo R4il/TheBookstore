@@ -32,7 +32,7 @@
             </div>
             <div class="col-sm-3 col-sm-pull-1">
                 <form action="{% url 'accounts:deleteAddress' %}" method="POST" class="form-inline">
-                    {%  csrf_token %}
+                    {% csrf_token %}
                     <input type="hidden" value="{{ address.id }}" name="addr_id">
                     <button type="submit" class="btn btn-md btn-danger">Remove Address</button>
                 </form>

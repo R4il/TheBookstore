@@ -68,7 +68,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         db_table = 'users'
 
 class CreditCard(models.Model):
-    credit_card_number = models.CharField(max_length = 25, primary_key=True, default=None)
+    credit_card_number = models.CharField(max_length = 25, default=None)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     cvv = models.CharField(max_length = 25, default=None)
     exp_date = models.CharField(max_length = 25, default=None)
