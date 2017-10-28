@@ -6,238 +6,221 @@
 {% bootstrap_javascript %}
 {% block title %}Author Listing: {% endblock %}
 {% block content %}
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style type="text/css">
-      .carousel-control.left,.carousel-control.right  {background:none;width:25px;}
-      .carousel-control.left {left:-20px;}
-      .carousel-control.right {right:-25px;}
-      .block-text {
-      background-color: #fff;
-      border-radius: 5px;
-      box-shadow: 0 3px 0 #2c2222;
-      color: #626262;
-      font-size: 14px;
-      margin-top: 27px;
-      padding: 15px 18px;
-  width: 350px;
-    margin-bottom: 0.5cm;
-  box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
-      }
-      .block-text a {
-        width: 200px;
-      color: #7d4702;
-      font-size: 20px;
-      font-weight: bold;
-      line-height: 21px;
-      text-decoration: none;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      }
-      .mark {
-      padding: 12px 0;background:none;
-      }
-      .block-text p {
-      color: #585858;
-      font-family: Georgia;
-      font-style: italic;
-      line-height: 20px;
-      }
-      .block-text ins {
-      bottom: -44px;
-      left: 10%;
-      margin-left: -60px;
-      }
-      .block {
-      display: block;
-      }
-      .zmin {
-      z-index: 1;
-      }
-      .ab {
-      position: absolute;
-      }
-      .person-text {
-      padding: 10px 0 0;
-      text-align: center;
-      z-index: 2;
-      }
-      .person-text a {
-      color: #ffcc00;
-      display: block;
-      font-size: 14px;
-      margin-top: 3px;
-      text-decoration: underline;
-      }
-      .person-text i {
-      color: #fff;
-      font-family: Georgia;
-      font-size: 13px;
-      }
-      .rel {
-      position: relative;
-      }
-      .img-circle {
-      border-radius: 50%;
-      }
-      a {
-      width=100;
-      }
-            h1 {
-     font-size: 20
-      overflow: hidden;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
-      color: #7d4702;
-      font-weight: bold;
-      line-height: 40px;
-      text-decoration: none;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 
-      }
+ .badgescard, .firstinfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-                  h3 {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 4;
-      -webkit-box-orient: vertical;
-      padding-left:15px;
+html {
+  height: 100%;
+}
 
-      }
-      p {
-      width: 300px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      }
-      p1 {
-      width: 300px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 8;
-      -webkit-box-orient: vertical;
-      }
-      p2 {
-      width: 500px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 8;
-      -webkit-box-orient: vertical;
-      }
-
-      body {
+body {
+  font-family: 'Open Sans', sans-serif;
+  width: 100%;
+  min-height: 100%;
   background: rgb(204,204,204);
+  font-size: 16px;
+  overflow: hidden;
 }
-page {
-  background: white;
-  display: block;
-  margin: 0 auto;
-  margin-bottom: 0.5cm;
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+.content {
+  position: relative;
+  animation: animatop 0.9s cubic-bezier(0.425, 1.14, 0.47, 1.125) forwards;
+}
+
+.card {
+  width: 800px;
+  min-height: 100px;
+  padding: 20px;
+  border-radius: 3px;
+  background-color: white;
   box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+  position: relative;
+  overflow: hidden;
 }
-page[size="A4"] {
-border-radius: 5px;
-  width: 23cm;
-  height: 10cm;
+.card:after {
+  content: '';
+  display: block;
+  width: 190px;
+  height: 300px;
+  background: #f1f1f1;
+  position: absolute;
+  animation: rotatemagic 0.75s cubic-bezier(0.425, 1.04, 0.47, 1.105) 1s both;
+}
 
+.badgescard {
+  padding: 10px 20px;
+  border-radius: 3px;
+  background-color: #ECECEC;
+  width: 480px;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  z-index: -1;
+  left: 10px;
+  bottom: 10px;
+  animation: animainfos 0.5s cubic-bezier(0.425, 1.04, 0.47, 1.105) 0.75s forwards;
 }
-@media print {
-  body, page {
-    margin: 0;
-    box-shadow: 0;
+.badgescard span {
+  font-size: 1.6em;
+  margin: 0px 6px;
+  opacity: 0.6;
+}
+
+.firstinfo {
+  flex-direction: row;
+  z-index: 2;
+  position: relative;
+}
+.firstinfo img {
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+}
+.firstinfo .profileinfo {
+  padding: 0px 20px;
+}
+.firstinfo .profileinfo h1 {
+  font-size: 1.8em;
+}
+.firstinfo .profileinfo h3 {
+  font-size: 1.2em;
+  color: inherit;
+  font-style: italic;
+}
+.firstinfo .profileinfo p.bio {
+  padding: 10px 0px;
+  color: #5A5A5A;
+  font-style: initial;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+   -webkit-box-orient: vertical;
+}
+
+@keyframes animatop {
+  0% {
+    opacity: 0;
+    bottom: -500px;
   }
-  .button2:hover {
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  100% {
+    opacity: 1;
+    bottom: 0px;
+  }
+}
+@keyframes animainfos {
+  0% {
+    bottom: 10px;
+  }
+  100% {
+    bottom: -42px;
+  }
+}
+@keyframes rotatemagic {
+  0% {
+    opacity: 0;
+    transform: rotate(0deg);
+    top: -24px;
+    left: -253px;
+  }
+  100% {
+    transform: rotate(-30deg);
+    top: -24px;
+    left: -78px;
+  }
 }
 
-   </style>
-    <ul>
 
-		<page>
+</Style>
+
+
 <div class="w3-col w3-container m2 ">
 </div>
-			<div class="w3-col w3-container m9 ">
-
-	<ul class="pagination ">
-		<li><a href="#">A</a></li>
-		<li><a href="#">B</a></li>
-		<li><a href="#">C</a></li>
-		<li><a href="#">D</a></li>
-		<li><a href="#">E</a></li>
-		<li><a href="#">F</a></li>
-		<li><a href="#">G</a></li>
-		<li><a href="#">H</a></li>
-		<li><a href="#">I</a></li>
-		<li><a href="#">J</a></li>
-		<li><a href="#">K</a></li>
-		<li><a href="#">L</a></li>
-		<li><a href="#">M</a></li>
-		<li><a href="#">N</a></li>
-		<li><a href="#">O</a></li>
-		<li><a href="#">P</a></li>
-		<li><a href="#">Q</a></li>
-		<li><a href="#">R</a></li>
-		<li><a href="#">S</a></li>
-		<li><a href="#">T</a></li>
-		<li><a href="#">U</a></li>
-		<li><a href="#">V</a></li>
-		<li><a href="#">W</a></li>
-		<li><a href="#">X</a></li>
-		<li><a href="#">Y</a></li>
-		<li><a href="#">Z</a></li>
-
-	</ul>
-
-</div>
-<div class="w3-col w3-container m1 ">
-</div>
-			</page>
-
-
-        {% for author in all_authors %}
-		 <div class="container">
-			 <page></page>
-            <!--<a href="/books/author/{{author.id}}">{{author.last}}, {{author.first}}</a>-->
-                              <div class="w3-col w3-container m4 ">
-
-
-									  <br>
-             <h1><a href='/author/id/{{ author.id }}'>{{ author.last }}, {{ author.first }}</a></h1>
-   <br>
-									  <br><br><br>
-
-								  </div>
-
-<hr>
-
-			<div class="w3-col w3-container m8 ">
-				<p></p>
-				<p></p>
-				<page>
-                 <h3>
-                    {{author.about}}
-                </h3>
-					</page>
-			</div>
-
-
-        <br>
-		 </div>
-		<br>
-
-
-        {% endfor %}
+<div class="w3-col w3-container m8 ">
+    <ul class="breadcrumb">
+        <li><a href="#">A</a></li>
+        <li><a href="#">B</a></li>
+        <li><a href="#">C</a></li>
+        <li><a href="#">D</a></li>
+        <li><a href="#">E</a></li>
+        <li><a href="#">F</a></li>
+        <li><a href="#">G</a></li>
+        <li><a href="#">H</a></li>
+        <li><a href="#">I</a></li>
+        <li><a href="#">J</a></li>
+        <li><a href="#">K</a></li>
+        <li><a href="#">L</a></li>
+        <li><a href="#">M</a></li>
+        <li><a href="#">N</a></li>
+        <li><a href="#">O</a></li>
+        <li><a href="#">P</a></li>
+        <li><a href="#">Q</a></li>
+        <li><a href="#">R</a></li>
+        <li><a href="#">S</a></li>
+        <li><a href="#">T</a></li>
+        <li><a href="#">U</a></li>
+        <li><a href="#">V</a></li>
+        <li><a href="#">W</a></li>
+        <li><a href="#">X</a></li>
+        <li><a href="#">Y</a></li>
+        <li><a href="#">Z</a></li>
     </ul>
+</div>
+<div class="w3-col w3-container m2 ">
+</div>
 
+
+<div class="container">
+    <div class="w3-col w3-container m2 ">
+    </div>
+    <div class="w3-col w3-container m7 ">
+        {% for author in all_authors %}
+
+
+        <div class="content">
+            <div class="card">
+                <div class="firstinfo"><img src="/static/autpics/{{author.profile_pic}}"/>
+                    <div class="profileinfo">
+                        <h1>{{ author.last }}, {{ author.first }}</h1>
+                        <h3>Author</h3>
+                        <p class="bio"> {{author.about}}</p>
+                        <button type="button" class="w3-bar-item w3-button" data-toggle="modal" data-target="#authorModel">Read More...</button>
+                        <a href="#my_modal" data-toggle="modal" data-book-id="{{author.id}}">Open Modal</a>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+
+
+            {% endfor %}
+        </div>
+        <div class="w3-col w3-container m3 ">
+        </div>
+    </div>
+    <div class="badgescard"><span class="devicons devicons-django"></span><span
+            class="devicons devicons-python"> </span><span class="devicons devicons-codepen"></span><span
+            class="devicons devicons-javascript_badge"></span><span class="devicons devicons-gulp"></span><span
+            class="devicons devicons-angular"></span><span class="devicons devicons-sass"> </span></div>
+</div>
+<script>
+//triggered when modal is about to be shown
+$('#my_modal').on('show.bs.modal', function(e) {
+
+    //get data-id attribute of the clicked element
+    var authorid = $(e.relatedTarget).data('author-id');
+
+    //populate the textbox
+    $(e.currentTarget).find('input[name="authorid"]').val(authorid);
+});
+</script>
 {% endblock %}

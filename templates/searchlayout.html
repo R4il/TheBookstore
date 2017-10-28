@@ -7,35 +7,218 @@
 {% block title %} Book Search {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <h1><font color="red"><bold>Books Search Results: </bold></font></h1>
+<style type="text/css">
 
-    {% if queryset %}
-        {% for instance in queryset %}
-            <a href='/books/{{ instance.id }}'>
-                <img src="/static/covers/{{ instance.cover }}" height="160" width="120"/></a><br/>
-            <h3><td>Title: </td>
-                <a href='/books/{{ instance.id }}'> {{ instance.title }}</a><br/>
-            <td>Author: </td>
-                <a href='/books/author/{{ instance.author.id }}'> {{ instance.author }}</a>
-            </h3>
-            <br/>
-        {% endfor %}
-    {% else %}
-        <td>No results available</td>
-    {% endif %}
+ .badgescard, .firstinfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-    <h1><font color="red"><bold>Author Search Results: </bold></font></h1>
+html {
+  height: 100%;
+}
 
-     {% if authorset %}
-        {% for author in authorset %}
-                <a href='/author/id/{{ author.id }}'>{{ author.last }}, {{ author.first }}</a><br/>
-        {% endfor %}
-     {% else %}
-        <td>No results available</td><br/>
-     {% endif %}
+body {
+  font-family: 'Open Sans', sans-serif;
+  width: 100%;
+  min-height: 100%;
+  background: rgb(204,204,204);
+  font-size: 16px;
+  overflow: hidden;
+}
 
-    <br/>
-    <a href="#" class="w3-bar-item w3-button" onClick="javascript:history.go(-1);">Go back</a>
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+.content {
+  position: relative;
+  animation: animatop 0.9s cubic-bezier(0.425, 1.14, 0.47, 1.125) forwards;
+}
+
+.card {
+  width: 800px;
+  min-height: 100px;
+  padding: 20px;
+  border-radius: 3px;
+  background-color: white;
+  box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+  position: relative;
+  overflow: hidden;
+}
+.card:after {
+  content: '';
+  display: block;
+  width: 190px;
+  height: 300px;
+  background: #f1f1f1;
+  position: absolute;
+  animation: rotatemagic 0.75s cubic-bezier(0.425, 1.04, 0.47, 1.105) 1s both;
+}
+
+.badgescard {
+  padding: 10px 20px;
+  border-radius: 3px;
+  background-color: #ECECEC;
+  width: 480px;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  z-index: -1;
+  left: 10px;
+  bottom: 10px;
+  animation: animainfos 0.5s cubic-bezier(0.425, 1.04, 0.47, 1.105) 0.75s forwards;
+}
+.badgescard span {
+  font-size: 1.6em;
+  margin: 0px 6px;
+  opacity: 0.6;
+}
+
+.firstinfo {
+  flex-direction: row;
+  z-index: 2;
+  position: relative;
+}
+.firstinfo img {
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+}
+.firstinfo .profileinfo {
+  padding: 0px 20px;
+}
+.firstinfo .profileinfo h1 {
+  font-size: 1.8em;
+    overflow: hidden;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+   -webkit-box-orient: vertical;
+}
+.firstinfo .profileinfo h3 {
+  font-size: 1.2em;
+  color: inherit;
+  font-style: italic;
+}
+.firstinfo .profileinfo p.bio {
+  padding: 10px 0px;
+  color: #5A5A5A;
+  font-style: initial;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+   -webkit-box-orient: vertical;
+}
+
+@keyframes animatop {
+  0% {
+    opacity: 0;
+    bottom: -500px;
+  }
+  100% {
+    opacity: 1;
+    bottom: 0px;
+  }
+}
+@keyframes animainfos {
+  0% {
+    bottom: 10px;
+  }
+  100% {
+    bottom: -42px;
+  }
+}
+@keyframes rotatemagic {
+  0% {
+    opacity: 0;
+    transform: rotate(0deg);
+    top: -24px;
+    left: -253px;
+  }
+  100% {
+    transform: rotate(-30deg);
+    top: -24px;
+    left: -78px;
+  }
+}
+
+
+
+
+</Style>
+
+
+<div class="container">
+    <div class="w3-col w3-container m2 ">
     </div>
+    <div class="w3-col w3-container m7 ">
+
+        <div class="content">
+            <div class="card">
+                <div class="firstinfo">
+                    <div class="profileinfo">
+                        {% if authorset %}
+                        <b><h1>Author Search Result:</h1></b>
+                        {% for author in authorset %}
+                        <a href='/books/byauthor/{{ author.id }}'>{{ author.last }}, {{ author.first }}</a><br/>
+                        {% endfor %}
+                        {% else %}
+                        {% if queryset %}
+                        <b><h1>Author Search Result:</h1></b>
+                        <td>No results available</td>
+                        {% else %}
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <br>
+            {% if queryset %}
+            <div class="content">
+                <div class="card">
+                    <div class="firstinfo">
+                        <div class="profileinfo">
+                            <b><h1>Books Search Results:</h1></b>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                {% else %}
+                {% endif %}
+                {% if queryset %}
+                {% for instance in queryset %}
+                <div class="content">
+                    <div class="card">
+                        <div class="firstinfo"><img src="/static/covers/{{ instance.cover }}"/>
+                            <div class="profileinfo">
+                                <h1><a href='/books/books/{{ instance.id }}'> {{ instance.title }}</a></h1>
+                                <h3><a href='/books/byauthor/{{ instance.author.id }}'>Author: {{ instance.author }}</a>
+                                </h3>
+                                <p class="bio"> {{ instance.about }}</p>
+                                <p>Rating: {{instance.rating}}</p>
+                                <br/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                {% endfor %}
+                {% else %}
+                {% if authorset %}
+                {% else %}
+                <td>No results available</td>
+                {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
 {% endblock %}
+
