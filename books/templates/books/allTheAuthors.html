@@ -190,7 +190,7 @@ body {
             <div class="card">
                 <div class="firstinfo"><img src="/static/autpics/{{author.profile_pic}}"/>
                     <div class="profileinfo">
-                        <h1>{{ author.last }}, {{ author.first }}</h1>
+                        <h1><a href='/books/byauthor/{{ author.id }}'>{{ author.last }}, {{ author.first }}</a></h1>
                         <h3>Author</h3>
                         <p class="bio"> {{author.about}}</p>
                         <button type="button" class="w3-bar-item w3-button" data-toggle="modal" data-target="#authorModel">Read More...</button>
