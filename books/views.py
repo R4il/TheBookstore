@@ -107,6 +107,15 @@ def authors(request):
     }
     return HttpResponse(template.render(context, request))
 
+def authorsalpha(request):#tobe done
+    all_authors = Author.objects.all().order_by('last')
+    template = loader.get_template('books/allTheAuthors.html')
+    authors = Author.objects.filter(name__iregex=r"[[:<:]]{0}".format(searchStr))
+    context = {
+        'authoralpha': authoralpha,
+    }
+    return HttpResponse(template.render(context, request))
+
 
 def books_details(request, book_id):
     book = Book.objects.get(pk=book_id)
