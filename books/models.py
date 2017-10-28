@@ -10,9 +10,11 @@ class Author(models.Model):
     first = models.CharField(max_length=50)
     last = models.CharField(max_length=50)
     about = models.CharField(max_length=3000)
-
+    profile_pic = models.CharField(max_length=255, default="writer.jpg")
+    
     def __str__(self):
         return f'{self.first} {self.last}'
+
 
 class Genre(models.Model):
     id = models.AutoField(primary_key=True)
