@@ -85,10 +85,16 @@
       width=100;
       }
             h1 {
+     font-size: 20
       overflow: hidden;
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
+      color: #7d4702;
+      font-weight: bold;
+      line-height: 40px;
+      text-decoration: none;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 
       }
 
@@ -120,6 +126,15 @@
       -webkit-line-clamp: 8;
       -webkit-box-orient: vertical;
       }
+      p2 {
+      width: 500px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 8;
+      -webkit-box-orient: vertical;
+      }
 
       body {
   background: rgb(204,204,204);
@@ -142,37 +157,61 @@ border-radius: 5px;
     margin: 0;
     box-shadow: 0;
   }
+  .button2:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
 }
 
    </style>
-      <ul><h1>{{book.title}}</h1></ul>
 
 <div class="row">
     <div class="col-md-3">
-        <img src="/static/covers/{{ book.cover }}" height= 400 class=".w3-image" hspace="70" style="float:left" />
+        <img src="/static/covers/{{ book.cover }}" height= 400 class=".w3-image" hspace="160" style="float:left" />
     </div>
     <div class="col-md-8">
         <p></p>
         <page size="A4">
+      <ul><h1>{{book.title}}</h1></ul>
             <ul class="w3-ul" style="display: inline">
-                <li>By:<a href="/books/author/{{book.author.id}}">{{book.author.first}} {{book.author.last}}</a></li>
-                <li>Genre: {{book.genre}}</li>
-                <li>Published by: {{book.publisher}}</li>
-                <li>Rating: {{book.rating}}</li>
-                <li>User Rating: {{user_rating}}</li>
-                <li>Price: {{book.price}}$</li>
-            </ul>
-            <h3>
-                 {{book.about}}
-            </h3>
-            <a href="#" class="w3-bar-item w3-button"  style="padding-left:15px" onClick="javascript:history.go(-1);">Go back</a>
-            <a class="w3-bar-item w3-button"  href="#" data-target="#product_view" style="padding-left:15px" data-toggle="modal">Add to Cart</a>
 
-            {% if purchased %}
-            <a class="w3-bar-item w3-button"  href="/books/review/{{ book.id }}" style="padding-left:15px" >Submit Review</a>
-            {% else %}
-            <a class="w3-bar-item w3-button"  href="/books/review_denied" style="padding-left:15px" >Submit Review</a>
-            {% endif %}
+                              <div class="w3-col w3-container m4 ">
+                                  <p></p>
+
+                <li><b>Author</b>:<button type="button" class="w3-bar-item w3-button" data-toggle="modal" data-target="#authorModel">{{book.author.first}} {{book.author.last}}</button>
+
+                <li><b>Genre</b>:<br> <a href="/fix/id/{{ book.genre.id }}">{{book.genre}}</a></li>
+
+                <li><b>Publisher</b>: <br><a href="#">{{book.publisher}}</a></li>
+                <li><b>Rating</b>:<br> Critics: {{book.rating}} <br>Customers: {{user_rating}}</li>
+                <li><b>Price: </b>{{book.price}}$</li>
+  </div>
+
+            </ul>
+            <div class="w3-col w3-container m8 ">
+                <p></p><p></p><p></p><p></p>
+                <p2>
+                    {{book.about}}
+                </p2>
+                <p></p><p></p>
+                  <div class="w3-row margin-bottom-5">
+                      <div class="w3-col s4  w3-center">
+                          <a href="books/byauthor/{{author.id}}" class="w3-bar-item w3-button"  style="padding-left:15px" >Books By Author</a>
+                      </div>
+                      <div class="w3-col s4  w3-center">
+                          <a class="w3-bar-item w3-button"  href="#" data-target="#product_view" style="padding-left:15px" data-toggle="modal">Add to Cart</a>
+                      </div>
+                      <div class="w3-col s4  w3-center">  {% if purchased %}
+                          <a class="w3-bar-item w3-button"  href="/books/review/{{ book.id }}" style="padding-left:15px" >Submit Review</a>
+                          {% else %}
+                          <a class="w3-bar-item w3-button"  href="/books/review_denied" style="padding-left:15px" >Submit Review</a>
+                          {% endif %}</div>
+                  </div>
+              </div>
+
+
+
+
         </page>
     </div>
 </div>
@@ -441,6 +480,27 @@ border-radius: 5px;
          </div>
       </div>
    </div>
+</div>
+
+
+<!-- Modal -->
+<div id="authorModel" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h1>{{book.author.first}} {{book.author.last}}</h1>
+      </div>
+      <div class="modal-body">
+                 <h4>
+                    {{book.author.about}}
+                </h4>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 
