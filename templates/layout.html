@@ -38,8 +38,8 @@
               <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
                  <!--<a href="#" class="w3-bar-item w3-button w3-light-grey"><i class="fa fa-caret-right w3-margin-right"></i>Dropdown?</a>-->
                  <a href="{% url 'accounts:manageAccount' %}" class="w3-bar-item w3-button">Manage Accounts</a>
-                 <a href="#" class="w3-bar-item w3-button">Manage Payment Method</a>
-                 <a href="#" class="w3-bar-item w3-button">Manage Shipping Address</a>
+                 <a href="{% url 'accounts:displaycc' %}" class="w3-bar-item w3-button">Manage Credit Card Info</a>
+                 <a href="{% url 'accounts:displayAddress' %}" class="w3-bar-item w3-button">Manage Shipping Addresses</a>
                  <a href="{% url 'accounts:logout' %}" class="w3-bar-item w3-button">Logout</a>
               </div>
           {% else %}
