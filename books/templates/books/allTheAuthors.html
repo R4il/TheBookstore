@@ -81,8 +81,6 @@ body {
 }
 .firstinfo img {
   border-radius: 50%;
-  width: 120px;
-  height: 120px;
 }
 .firstinfo .profileinfo {
   padding: 0px 20px;
@@ -137,16 +135,39 @@ body {
     top: -24px;
     left: -78px;
   }
+
+
 }
 
+hr {
+  height: 4px;
+  margin-left: 15px;
+  margin-bottom:-3px;
+}
+.hr-primary{
+  background-image: -webkit-linear-gradient(left, rgba(204,204,204,1), rgba(68, 68, 68,.4), rgba(204,204,204,1));
+}
 
+.breadcrumb {
+  background: rgba(245, 245, 245, 0);
+  border: 0px solid rgba(245, 245, 245, 1);
+  border-radius: 25px;
+  display: block;
+  text-align:center;
+}
+
+.btn-bread{
+    margin-top:10px;
+    font-size: 12px;
+
+    border-radius: 3px;
+}
 </Style>
 
 
-<div class="w3-col w3-container m2 ">
-</div>
-<div class="w3-col w3-container m8 ">
-    <ul class="breadcrumb">
+<div class="container">
+        <hr class="hr-primary" />
+        <ol class="breadcrumb bread-primary ">
         <li><a href="#">A</a></li>
         <li><a href="#">B</a></li>
         <li><a href="#">C</a></li>
@@ -173,11 +194,10 @@ body {
         <li><a href="#">X</a></li>
         <li><a href="#">Y</a></li>
         <li><a href="#">Z</a></li>
-    </ul>
-</div>
-<div class="w3-col w3-container m2 ">
-</div>
+    </ol>
 
+
+</div>
 
 <div class="container">
     <div class="w3-col w3-container m2 ">
@@ -188,7 +208,7 @@ body {
 
         <div class="content">
             <div class="card">
-                <div class="firstinfo"><img src="/static/autpics/{{author.profile_pic}}"/>
+                <div class="firstinfo"><img src="/static/autpics/{{author.profile_pic}}"  width="120" height= "120" />
                     <div class="profileinfo">
                         <h1><a href='/books/byauthor/{{ author.id }}'>{{ author.last }}, {{ author.first }}</a></h1>
                         <h3>Author</h3>

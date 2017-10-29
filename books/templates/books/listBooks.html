@@ -82,8 +82,6 @@ body {
 }
 .firstinfo img {
   border-radius: 5%;
-  width: 120px;
-  height: 120px;
 }
 .firstinfo .profileinfo {
   padding: 0px 20px;
@@ -172,7 +170,7 @@ body {
     <li>
         <div class="content">
             <div class="card">
-                <div class="firstinfo"><img src="/static/covers/{{ book.cover }}"/>
+                <div class="firstinfo"><img src="/static/covers/{{ book.cover }}"width="120" height= "120"/>
                     <div class="profileinfo">
                         <h1><a href='/books/{{ book.id }}'> {{ book.title }}</a></h1>
                         <h3><a href='/books/byauthor/{{ book.author.id }}'>Author: {{ book.author }}</a>
