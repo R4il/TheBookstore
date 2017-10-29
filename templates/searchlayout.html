@@ -193,7 +193,7 @@ body {
                 {% for instance in queryset %}
                 <div class="content">
                     <div class="card">
-                        <div class="firstinfo"><img src="/static/covers/{{ instance.cover }}"/>
+                        <div class="firstinfo"><img src="/static/covers/{{ instance.cover }}" width="120" height= "120"/>
                             <div class="profileinfo">
                                 <h1><a href='/books/books/{{ instance.id }}'> {{ instance.title }}</a></h1>
                                 <h3><a href='/books/byauthor/{{ instance.author.id }}'>Author: {{ instance.author }}</a>
