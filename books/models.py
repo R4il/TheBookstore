@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from django.db import models
 from accounts.models import User
+import datetime
 
 # Create your models here.
 
@@ -42,6 +43,7 @@ class Book(models.Model):
     cover = models.CharField(max_length=255, default="nocover.jpg")
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE, null=True)
     best_seller = models.CharField(max_length=3, choices=BS_OPTIONS, default=NO)
+    release_date = models.DateField(default=datetime.date.today)
 
     def __str__(self):
         return self.title
