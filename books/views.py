@@ -122,11 +122,12 @@ def books_details(request, book_id):
     request.session['book_id'] = book_id
     author = Author.objects.get(pk=book.author_id)
     reviews = Review.objects.filter(book=book_id)
-    order = PreviousOrder.objects.filter(user=request.user, book=book_id)
-    if len(order) == 0:
-        request.session['purchased'] = False
-    else:
-        request.session['purchased'] = True
+    if(request.user.is_anonymous == False):
+        order = PreviousOrder.objects.filter(user=request.user, book=book_id)
+        if len(order) == 0:
+            request.session['purchased'] = False
+        else:
+            request.session['purchased'] = True
     if len(reviews):
         user_rating = 0
         for review in reviews:
@@ -136,13 +137,22 @@ def books_details(request, book_id):
         user_rating = 'Unreviewed'
         
     template = loader.get_template('books/booksDetails.html')
-    context = {
-        'book': book,
-        'author': author,
-        'reviews': reviews,
-        'user_rating': user_rating,
-        'purchased': request.session['purchased'],
-    }
+    if (request.user.is_anonymous == False):
+        context = {
+            'book': book,
+            'author': author,
+            'reviews': reviews,
+            'user_rating': user_rating,
+            'purchased': request.session['purchased'],
+        }
+    else:
+        context = {
+            'book': book,
+            'author': author,
+            'reviews': reviews,
+            'user_rating': user_rating,
+            #'purchased': request.session['purchased'],
+        }
     return HttpResponse(template.render(context, request))
 
 
