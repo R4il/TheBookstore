@@ -122,7 +122,10 @@ def books_details(request, book_id):
     request.session['book_id'] = book_id
     author = Author.objects.get(pk=book.author_id)
     reviews = Review.objects.filter(book=book_id)
-    order = PreviousOrder.objects.filter(user=request.user, book=book_id)
+    if request.user.is_anonymous:
+        order = ''
+    else:
+        order = PreviousOrder.objects.filter(user=request.user, book=book_id)
     if len(order) == 0:
         request.session['purchased'] = False
     else:
