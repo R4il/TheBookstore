@@ -180,7 +180,14 @@ body {
                         <h3><a href='/books/byauthor/{{ book.author.id }}'>Author: {{ book.author }}</a>
                         </h3>
                         <p class="bio"> {{ book.about }}</p>
-                        <p>Rating: {{book.rating}}</p>
+                        <p><b>Rating</b>:
+                                                      {% for i in "12345" %}
+                              {% if book.rating >= forloop.counter %}
+                              <span class="glyphicon glyphicon-star"></span>
+                              {% else %}
+                              <span class="glyphicon glyphicon-star-empty"></span>
+                              {% endif %}
+                              {% endfor %}</p>
                     </div>
                 </div>
             </div>
