@@ -47,6 +47,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_login = models.DateTimeField(default=timezone.now)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    cover = models.CharField(max_length=255, default="nouserpic.jpg")
 
     objects = UserManager()
 

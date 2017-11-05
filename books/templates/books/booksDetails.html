@@ -105,6 +105,8 @@ ul li img {
       }
             .img-circle2 {
       border-radius: 3%;
+      width: 64;
+      height: 64;
       }
       a {
       width=100;
@@ -342,7 +344,7 @@ border-radius: 5px;
                                     {% if review.anonymous %}
                                     <img class="img-circle" src="/static/pics/a.jpg"/>
                                     {% else %}
-                                    <img class="img-circle" src="/static/pics/jose.jpg"/>
+                                    <img class="img-circle" src="/static/pics/{{review.user.cover}}" height="128" wifth="128"/>
                                     {% endif %}
                                     <i>{{review.user.last_login}}</i>
                                 </div>
@@ -375,7 +377,7 @@ border-radius: 5px;
                                     {% if review.anonymous %}
                                     <img class="img-circle" src="/static/pics/a.jpg"/>
                                     {% else %}
-                                    <img class="img-circle" src="/static/pics/jose.jpg"/>
+                                    <img class="img-circle" src="/static/pics/{{review.user.cover}}" height="128" wifth="128"/>
                                     {% endif %}
                                     <i>{{review.user.last_login}}</i>
                                 </div>
@@ -408,7 +410,7 @@ border-radius: 5px;
                                     {% if review.anonymous %}
                                     <img class="img-circle" src="/static/pics/a.jpg"/>
                                     {% else %}
-                                    <img class="img-circle" src="/static/pics/jose.jpg"/>
+                                    <img class="img-circle" src="/static/pics/{{review.user.cover}}" height="128" wifth="128"/>
                                     {% endif %}
                                     <i>{{review.user.last_login}}</i>
                                 </div>

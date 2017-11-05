@@ -62,7 +62,7 @@ def genre(request):
 
 def booksbygenre(request, genre_id):
     all_books = Book.objects.filter(genre_id=genre_id).order_by("title")
-    paginator = Paginator(all_books, 10)  # Show 10 contacts per page
+    paginator = Paginator(all_books, 5)  # Show 10 contacts per page
 
     page = request.GET.get('page')
     try:
@@ -83,7 +83,7 @@ def booksbygenre(request, genre_id):
 
 def bestsellers(request):
     all_books = Book.objects.filter(best_seller__icontains='Y').order_by("title")
-    paginator = Paginator(all_books, 10) # Show 10 contacts per page
+    paginator = Paginator(all_books, 5) # Show 10 contacts per page
 
     page = request.GET.get('page')
     try:
@@ -104,7 +104,7 @@ def bestsellers(request):
 
 def books(request):
     all_books = Book.objects.all().order_by("title")
-    paginator = Paginator(all_books, 10)  # Show 10 contacts per page
+    paginator = Paginator(all_books, 5)  # Show 10 contacts per page
 
     page = request.GET.get('page')
     try:
@@ -125,7 +125,7 @@ def books(request):
 
 def authors(request):
     all_authors = Author.objects.all().order_by('last')
-    paginator = Paginator(all_authors, 20)# Show 20 contacts per page
+    paginator = Paginator(all_authors, 5)# Show 20 contacts per page
     page = request.GET.get('page')
 
     try:
