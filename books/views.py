@@ -103,12 +103,24 @@ def bestsellers(request):
 
 
 def books(request):
-    all_books = Book.objects.all()
-    template = loader.get_template('books/listBooks.html')
+    all_books = Book.objects.all().order_by("title")
+    paginator = Paginator(all_books, 10)  # Show 10 contacts per page
+
+    page = request.GET.get('page')
+    try:
+        books = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        books = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        books = paginator.page(paginator.num_pages)
+
     context = {
-        'all_books': all_books,
+        "all_books": books
     }
-    return HttpResponse(template.render(context, request))
+
+    return render(request, "books/browse.html", context)
 
 
 def authors(request):
