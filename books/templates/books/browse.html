@@ -165,60 +165,46 @@ hr {
 </Style>
 
 <div class="container">
-        <hr class="hr-primary" />
-        <ol class="breadcrumb bread-primary ">
-
-        <li><form action="startswith"><input type="submit" name="letter" value="A"></form></li>
-        <li><form action="startswith"><input type="submit" name="letter" value="B"></form></li>
-        <li><form action="startswith"><input type="submit" name="letter" value="C"></form></li>
-        <li><form action="startswith"><input type="submit" name="letter" value="D"></form></li>
-        <li><form action="startswith"><input type="submit" name="letter" value="E"></form></li>
-        <li><form action="startswith"><input type="submit" name="letter" value="F"></form></li>
-        <li><form action="startswith"><input type="submit" name="letter" value="G"></form></li>
-        <li><form action="startswith"><input type="submit" name="letter" value="H"></form></li>
-        <li><form action="startswith"><input type="submit" name="letter" value="I"></form></li>
-        <li><form action="startswith"><input type="submit" name="letter" value="J"></form></li>
-        <li><form action="startswith"><input type="submit" name="letter" value="K"></form></li>
-        <li><form action="startswith"><input type="submit" name="letter" value="L"></form></li>
-        <li><form action="startswith"><input type="submit" name="letter" value="M"></form></li>
-        <li><form action="startswith"><input type="submit" name="letter" value="N"></form></li>
-        <li><form action="startswith"><input type="submit" name="letter" value="O"></form></li>
-        <li><form action="startswith"><input type="submit" name="letter" value="P"></form></li>
-        <li><form action="startswith"><input type="submit" name="letter" value="Q"></form></li>
-        <li><form action="startswith"><input type="submit" name="letter" value="R"></form></li>
-        <li><form action="startswith"><input type="submit" name="letter" value="S"></form></li>
-        <li><form action="startswith"><input type="submit" name="letter" value="T"></form></li>
-        <li><form action="startswith"><input type="submit" name="letter" value="U"></form></li>
-        <li><form action="startswith"><input type="submit" name="letter" value="V"></form></li>
-        <li><form action="startswith"><input type="submit" name="letter" value="W"></form></li>
-        <li><form action="startswith"><input type="submit" name="letter" value="X"></form></li>
-        <li><form action="startswith"><input type="submit" name="letter" value="Y"></form></li>
-        <li><form action="startswith"><input type="submit" name="letter" value="Z"></form></li>
-        <br/><a href="/books/byauthor/">Show all</a>
-    </ol>
-
+    <nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand">Browse</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">Book Title</a></li>
+          <li><a href="#">Author</a></li>
+          <li><a href="#">Price</a></li>
+          <li><a href="#">Book Rating</a></li>
+          <li><a href="#">Release Date</a></li>
+        </ul>
+    </div>
+    </nav>
 </div>
 
 <div class="container">
     <div class="w3-col w3-container m2 ">
     </div>
     <div class="w3-col w3-container m7 ">
-        {% for author in all_authors %}
+        {% for book in all_books %}
 
         <div class="content">
             <div class="card">
-                <div class="firstinfo"><img src="/static/autpics/{{author.profile_pic}}"  width="120" height= "120" />
+                <div class="firstinfo">
+                    <img src="/static/covers/{{ book.cover }}"width="120" height= "120"/>
                     <div class="profileinfo">
-                        <h1><a href='/books/byauthor/{{ author.id }}'>{{ author.last }}, {{ author.first }}</a></h1>
-                        <h3>Author</h3>
-                        <p class="bio"> {{author.about}}</p>
-                        <button type="button" class="w3-bar-item w3-button" data-toggle="modal" data-target="#authorModel">Read More...</button>
-                        <a href="#my_modal" data-toggle="modal" data-book-id="{{author.id}}">Open Modal</a>
+                    <h1><a href='/books/{{ book.id }}'> {{ book.title }}</a></h1>
+                        <h3><a href='/books/byauthor/{{ book.author.id }}'>Author: {{ book.author }}</a>
+                        </h3>
+                        <p class="bio"> {{ book.about }}</p>
+                        <p>Price: ${{ book.price }}</p>
+                        <p>Rating: {{book.rating}}</p>
+                        <p>Release Date: {{ book.release_date }}</p>
                     </div>
                 </div>
             </div>
             <br>
-            {% endfor %}
+        {% endfor %}
         </div>
         <div class="w3-col w3-container m3 ">
         </div>
@@ -234,15 +220,21 @@ hr {
             <div class="card">
                 <div class="firstinfo">
                     <div class="profileinfo">
-                        {% if all_authors.has_previous %}
+                    {% if all_books.paginator.num_pages > 1 %}
+                        {% if all_books.has_previous %}
                             <a class="w3-bar-item w3-button"  href="?page={{ all_books.previous_page_number }}" style="padding-left:15px" >Previous</a>
                         {% endif %}
                         <span class="current">
-                           Page <b>{{ all_authors.number }} </b> of {{ all_authors.paginator.num_pages }}.
+                           Page <b>{{ all_books.number }} </b> of {{ all_books.paginator.num_pages }}.
                         </span>
-                        {% if all_authors.has_next %}
-                            <a class="w3-bar-item w3-button"  href="?page={{ all_authors.next_page_number }}" style="padding-left:15px" >Next</a>
+                        {% if all_books.has_next %}
+                            <a class="w3-bar-item w3-button"  href="?page={{ all_books.next_page_number }}" style="padding-left:15px" >Next</a>
                         {% endif %}
+                    {% else %}
+                        <span class="current">
+                            Page <b> 1 </b> of <b> 1 </b>.
+                        </span>
+                    {% endif %}
                     </div>
                 </div>
             </div>
