@@ -168,34 +168,35 @@ hr {
 <div class="container">
         <hr class="hr-primary" />
         <ol class="breadcrumb bread-primary ">
-        <li><a href="#">A</a></li>
-        <li><a href="#">B</a></li>
-        <li><a href="#">C</a></li>
-        <li><a href="#">D</a></li>
-        <li><a href="#">E</a></li>
-        <li><a href="#">F</a></li>
-        <li><a href="#">G</a></li>
-        <li><a href="#">H</a></li>
-        <li><a href="#">I</a></li>
-        <li><a href="#">J</a></li>
-        <li><a href="#">K</a></li>
-        <li><a href="#">L</a></li>
-        <li><a href="#">M</a></li>
-        <li><a href="#">N</a></li>
-        <li><a href="#">O</a></li>
-        <li><a href="#">P</a></li>
-        <li><a href="#">Q</a></li>
-        <li><a href="#">R</a></li>
-        <li><a href="#">S</a></li>
-        <li><a href="#">T</a></li>
-        <li><a href="#">U</a></li>
-        <li><a href="#">V</a></li>
-        <li><a href="#">W</a></li>
-        <li><a href="#">X</a></li>
-        <li><a href="#">Y</a></li>
-        <li><a href="#">Z</a></li>
-    </ol>
 
+        <li><form action="startswith"><input type="submit" name="letter" value="A"></form></li>
+        <li><form action="startswith"><input type="submit" name="letter" value="B"></form></li>
+        <li><form action="startswith"><input type="submit" name="letter" value="C"></form></li>
+        <li><form action="startswith"><input type="submit" name="letter" value="D"></form></li>
+        <li><form action="startswith"><input type="submit" name="letter" value="E"></form></li>
+        <li><form action="startswith"><input type="submit" name="letter" value="F"></form></li>
+        <li><form action="startswith"><input type="submit" name="letter" value="G"></form></li>
+        <li><form action="startswith"><input type="submit" name="letter" value="H"></form></li>
+        <li><form action="startswith"><input type="submit" name="letter" value="I"></form></li>
+        <li><form action="startswith"><input type="submit" name="letter" value="J"></form></li>
+        <li><form action="startswith"><input type="submit" name="letter" value="K"></form></li>
+        <li><form action="startswith"><input type="submit" name="letter" value="L"></form></li>
+        <li><form action="startswith"><input type="submit" name="letter" value="M"></form></li>
+        <li><form action="startswith"><input type="submit" name="letter" value="N"></form></li>
+        <li><form action="startswith"><input type="submit" name="letter" value="O"></form></li>
+        <li><form action="startswith"><input type="submit" name="letter" value="P"></form></li>
+        <li><form action="startswith"><input type="submit" name="letter" value="Q"></form></li>
+        <li><form action="startswith"><input type="submit" name="letter" value="R"></form></li>
+        <li><form action="startswith"><input type="submit" name="letter" value="S"></form></li>
+        <li><form action="startswith"><input type="submit" name="letter" value="T"></form></li>
+        <li><form action="startswith"><input type="submit" name="letter" value="U"></form></li>
+        <li><form action="startswith"><input type="submit" name="letter" value="V"></form></li>
+        <li><form action="startswith"><input type="submit" name="letter" value="W"></form></li>
+        <li><form action="startswith"><input type="submit" name="letter" value="X"></form></li>
+        <li><form action="startswith"><input type="submit" name="letter" value="Y"></form></li>
+        <li><form action="startswith"><input type="submit" name="letter" value="Z"></form></li>
+        <br/><a href="/books/byauthor/">Show all</a>
+    </ol>
 
 </div>
 
@@ -204,7 +205,6 @@ hr {
     </div>
     <div class="w3-col w3-container m7 ">
         {% for author in all_authors %}
-
 
         <div class="content">
             <div class="card">
@@ -219,9 +219,6 @@ hr {
                 </div>
             </div>
             <br>
-
-
-
             {% endfor %}
         </div>
         <div class="w3-col w3-container m3 ">
@@ -231,6 +228,28 @@ hr {
             class="devicons devicons-python"> </span><span class="devicons devicons-codepen"></span><span
             class="devicons devicons-javascript_badge"></span><span class="devicons devicons-gulp"></span><span
             class="devicons devicons-angular"></span><span class="devicons devicons-sass"> </span></div>
+
+    <li>
+        <div class="content">
+            <div class="card">
+                <div class="firstinfo">
+                    <div class="profileinfo">
+                        {% if all_authors.has_previous %}
+                            <a class="w3-bar-item w3-button"  href="?page={{ all_books.previous_page_number }}" style="padding-left:15px" >Previous</a>
+                        {% endif %}
+                        <span class="current">
+                           Page <b>{{ all_authors.number }} </b> of {{ all_authors.paginator.num_pages }}.
+                        </span>
+                        {% if all_authors.has_next %}
+                            <a class="w3-bar-item w3-button"  href="?page={{ all_authors.next_page_number }}" style="padding-left:15px" >Next</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </li>
+
 </div>
 <script>
 //triggered when modal is about to be shown

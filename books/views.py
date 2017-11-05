@@ -16,6 +16,18 @@ import logging
 # Create your views here.
 
 
+def author_alpha(request):
+    all_authors = Author.objects.all().order_by("last")
+    query = request.GET.get("letter")
+
+    if query:
+        all_authors = all_authors.filter(last__istartswith=query)
+    context = {
+        "all_authors": all_authors,
+    }
+    return render(request, 'books/allTheAuthors.html', context)
+
+
 def book_search(request):
     queryset = Book.objects.all().order_by("title")
     authorset = Author.objects.all().order_by("last")
@@ -101,11 +113,24 @@ def books(request):
 
 def authors(request):
     all_authors = Author.objects.all().order_by('last')
+    paginator = Paginator(all_authors, 20)# Show 20 contacts per page
+    page = request.GET.get('page')
+
+    try:
+        all_authors = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        all_authors = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        all_authors = paginator.page(paginator.num_pages)
+
     template = loader.get_template('books/allTheAuthors.html')
     context = {
         'all_authors': all_authors,
     }
     return HttpResponse(template.render(context, request))
+
 
 def authorsalpha(request):#tobe done
     all_authors = Author.objects.all().order_by('last')
