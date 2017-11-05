@@ -51,7 +51,17 @@
           <br>
           <a href="/bestsellers/" class="w3-bar-item w3-button">Best Sellers</a>
           <a href="/books/byauthor/" class="w3-bar-item w3-button">Books By Author</a>
-          <a href="/genre/" class="w3-bar-item w3-button">Books By Genre</a>
+<div class="w3-dropdown-hover ">
+  <button class="w3-bar-item w3-button">Books By Genre🡇</button>
+  <div class="w3-dropdown-content w3-bar-block w3-border">
+        <!--{% for instance in genres %}
+      <a href='/fix/id/{{ instance.id }}' class="w3-bar-item w3-button" >1 {{ instance.genre }}</a>
+ {% endfor %}-->
+    <a href="/fix/id/1" class="w3-bar-item w3-button">Fantasy</a>
+    <a href="/fix/id/2" class="w3-bar-item w3-button">Comp. & Tech.</a>
+    <a href="/fix/id/3" class="w3-bar-item w3-button">Social Science</a>
+  </div>
+</div>
           <br>
           <!-- Link to Dropdown for My Account -->
               <a href="{% url 'email' %}" class="w3-bar-item w3-button">Contact</a>
