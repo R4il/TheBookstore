@@ -31,4 +31,6 @@ urlpatterns = [
     url(r'genre', books.views.genre, name='genre'),
     url(r'fix/id/(?P<genre_id>[0-9]+)/$', books.views.booksbygenre, name='booksbygenre'), # problem if i change 'fix' to 'genre'
     url(r'bestsellers', books.views.bestsellers, name='bestsellers'),
+    url(r'browse', books.views.books, name='books'),
 ]
+

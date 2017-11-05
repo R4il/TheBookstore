@@ -13,7 +13,8 @@ urlpatterns = [
     url(r'byauthor/(?P<author_id>[0-9]+)/$', by_author, name='by_author'),
 
     # /books/byauthor/<Letter>/
-    url(r'author/#', author_details, name='authoralpha'),
+    # url(r'author/#', author_details, name='authoralpha'),
+    url(r'startswith', author_alpha, name='author_alpha'),
 
     # /books/byauthor/
     url(r'byauthor/$', authors, name='authors'),

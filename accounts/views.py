@@ -40,15 +40,16 @@ def login_view(request):
 
         return HttpResponseRedirect(next)
 
-##Needs to be done
-# create cart for new users or customers with previous cart already purchased
-def create_shopping_cart(user_id):
-    return user_id
-
-##Needs to be done
-# create a future order for new users who login in to website
-def create_future_order(user_id):
-    return user_id
+##COMMENTED OUT TO PREVENT CRASH
+# ##Needs to be done
+# # create cart for new users or customers with previous cart already purchased
+# def create_shopping_cart(user_id):
+#     return user_id
+#
+# ##Needs to be done
+# # create a future order for new users who login in to website
+# def create_future_order(user_id):
+#     return user_id
 
 
 @csrf_protect
@@ -92,13 +93,14 @@ class SignUpView(CreateView):
         new_user = authenticate(username=form.cleaned_data['nickname'], password=form.cleaned_data['password1'])
         login(self.request, new_user)
 
-        # create a new shopping cart and add id to session
-        shopping_cart = create_shopping_cart(self.request.user.user_id)
-        self.request.session['orderId'] = shopping_cart.id
-
-        # create a new future cart and add id to session
-        future_cart = create_future_order(self.request.user.user_id)
-        self.request.session['fOrderId'] = future_cart.id
+        ##COMMENTED OUT TO PREVENT CRASH
+        # # create a new shopping cart and add id to session
+        # shopping_cart = create_shopping_cart(self.request.user.user_id)
+        # self.request.session['orderId'] = shopping_cart.id
+        #
+        # # create a new future cart and add id to session
+        # future_cart = create_future_order(self.request.user.user_id)
+        # self.request.session['fOrderId'] = future_cart.id
 
         return super(SignUpView, self).form_valid(form)
 
