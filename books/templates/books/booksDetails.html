@@ -18,10 +18,7 @@ ul li img {
   cursor: pointer;
   border-radius: 3%;
 }
-.modal-body {
-    position:relative; /* This avoids whatever it's absolute inside of it to go off the container */
-    height: 250px; /* let's imagine that your login box height is 250px . This height needs to be added, otherwise .img-responsive will be like "Oh no, I need to be vertically aligned?! but from which value I need to be aligned??" */
-}
+
 .img-responsive {
     height: 700px;
     position:absolute;
@@ -145,13 +142,16 @@ ul li img {
       -webkit-box-orient: vertical;
       }
       p1 {
-      width: 300px;
+      width: 350px;
       overflow: hidden;
+      text-align: justify;
+      text-justify: inter-word;
       text-overflow: ellipsis;
       overflow: hidden;
       display: -webkit-box;
       -webkit-line-clamp: 8;
       -webkit-box-orient: vertical;
+      padding: 20;
       }
       p2 {
       width: 500px;
@@ -492,14 +492,14 @@ $(document).ready(function(){
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-6 product_img">
-                        <img src="/static/covers/{{ book.cover }}" class="img-responsive">
+                    <div class="col-md-4 product_img">
+                        <img src="/static/covers/{{ book.cover }}" height="300" width="196">
                     </div>
-                    <div class="col-md-6 product_content">
-                        <h3 class="cost"><span class="glyphicon glyphicon-usd"></span> {{book.price}}</h3>
-                        <h4>Product Id: <span>{{book.id}}</span></h4>
-                        <div class="rating">
+                    <div class="col-md-8 product_content">
+                         <div class="rating">
                             <span class="rating-input">
+                                <h3>
+                                     <span class="glyphicon glyphicon-usd"></span> {{book.price}}
                                 {% for i in "12345" %}
                                     {% if book.rating >= forloop.counter %}
                                         <span class="glyphicon glyphicon-star"></span>
@@ -507,12 +507,15 @@ $(document).ready(function(){
                                         <span class="glyphicon glyphicon-star-empty"></span>
                                     {% endif %}
                                 {% endfor %}
+
+                                </h3>
                             </span>
                         </div>
                         <p1>{{book.about}}</p1>
                         <br>
                         <div class="row">
                             <div class="col-md-5 col-sm-12">
+
                                 <select class="form-control" name="select">
                                     <option value="" selected="">QTY</option>
                                     <option value="">1</option>
@@ -521,6 +524,7 @@ $(document).ready(function(){
                                     <option value="">4</option>
                                     <option value="">5</option>
                                 </select>
+
                             </div>
                         </div>
                         <div class="space-ten"></div>
