@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import DeleteView, CreateView, RedirectView, FormView, UpdateView
+from django.contrib.auth.forms import PasswordChangeForm
 from .forms import EditUserProfileForm, EditCreditCardForm, UserCreateForm, AddressForm, LoginForm, ChangePassword
 from .models import User, CreditCard, Address
 from django.contrib import messages
@@ -112,25 +113,21 @@ class LogoutView(RedirectView):
         messages.success(request, 'Successfully logged out.')
         return super().get(request, *args, **kwargs) #might have issues with python 2
 
-
-##Needs to be done
-class PasswordUpdate(UpdateView):
-    form_class = ChangePassword
-    model = User
-    template_name = 'changePasswordForm'
-    def get_success_url(self):
-        messages.success(self.request, 'Password successfully changed.')
-        return reverse('index')
-
-    def get_object(self):
-        user_id = self.request.user.user_id
-        return get_object_or_404(User, pk=user_id)
-
-#def PasswordUpdate(request):
-#    form = ChangePassword
-#    online_user_id = request.user.user_id
-#    user = User.objects.filter(user_id=online_user_id)
-#    return render(request, 'accounts/change_password.html')
+@csrf_protect
+def change_password(request):
+    form = PasswordChangeForm(user = request.user)
+    if request.method == 'POST':
+        form = PasswordChangeForm(data=request.POST, user=request.user)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, request.user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return HttpResponseRedirect(reverse('index'))
+        else:
+            messages.error(request, 'Please correct the error below.')
+            args = {'form': form}
+            return render(request, 'accounts/change_password.html', args)
+    return render(request, 'accounts/change_password.html', {'form': form})
 
 #########################################################################################################
 ##                                   CREDIT CARD FUNCTIONS                                             ##
