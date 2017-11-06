@@ -7,6 +7,25 @@
 {% block title %}Author Listing: {% endblock %}
 {% block content %}
 <style type="text/css">
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+
+ .badgescard, .firstinfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
  .badgescard, .firstinfo {
   display: flex;
@@ -97,12 +116,13 @@ body {
   padding: 10px 0px;
   color: #5A5A5A;
   font-style: initial;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 5;
    -webkit-box-orient: vertical;
+           overflow: auto;
+        position: relative;
+        margin-left: -5px;
+                     text-overflow: ellipsis;
 }
 
 @keyframes animatop {

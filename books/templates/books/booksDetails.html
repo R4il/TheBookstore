@@ -8,6 +8,19 @@
 {% block content %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style type="text/css">
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
 ul {
   list-style:none;
 }
@@ -63,7 +76,7 @@ ul li img {
       font-family: Georgia;
       font-style: italic;
       line-height: 20px;
-      height: 40px;
+      height: 50px;
       }
       .block-text ins {
       bottom: -44px;
@@ -136,12 +149,13 @@ ul li img {
       }
       p {
       width: 300px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      overflow: hidden;
       display: -webkit-box;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 4;
       -webkit-box-orient: vertical;
+        overflow: auto;
+        position: relative;
+        margin-left: -5px;
+              text-overflow: ellipsis;
       }
       p1 {
       width: 350px;
@@ -158,8 +172,12 @@ ul li img {
       p2 {
       width: 500px;
       overflow: hidden;
+          text-align: justify;
+          padding-right: 1cm;
       text-overflow: ellipsis;
-      overflow: hidden;
+        overflow: auto;
+        position: relative;
+        margin-left: -5px;
       display: -webkit-box;
       -webkit-line-clamp: 8;
       -webkit-box-orient: vertical;
