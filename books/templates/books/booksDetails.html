@@ -6,8 +6,40 @@
 {% bootstrap_javascript %}
 {% block title %} Book details: {% endblock %}
 {% block content %}
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style type="text/css">
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+ul {
+  list-style:none;
+}
+ul li {
+  list-style:none;
+}
+ul li img {
+  cursor: pointer;
+  border-radius: 3%;
+}
+
+.img-responsive {
+    height: 700px;
+    position:absolute;
+    left:50%;
+    top:5%;
+    margin-top:-25px; /* This needs to be half of the height */
+    margin-left:-25px; /* This needs to be half of the width */
+}
       .carousel-control.left,.carousel-control.right  {background:none;width:25px;}
       .carousel-control.left {left:-20px;}
       .carousel-control.right {right:-25px;}
@@ -37,12 +69,14 @@
       }
       .mark {
       padding: 12px 0;background:none;
+
       }
       .block-text p {
       color: #585858;
       font-family: Georgia;
       font-style: italic;
       line-height: 20px;
+      height: 50px;
       }
       .block-text ins {
       bottom: -44px;
@@ -83,6 +117,8 @@
       }
             .img-circle2 {
       border-radius: 3%;
+      width: 64;
+      height: 64;
       }
       a {
       width=100;
@@ -113,27 +149,35 @@
       }
       p {
       width: 300px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      overflow: hidden;
       display: -webkit-box;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 4;
       -webkit-box-orient: vertical;
+        overflow: auto;
+        position: relative;
+        margin-left: -5px;
+              text-overflow: ellipsis;
       }
       p1 {
-      width: 300px;
+      width: 350px;
       overflow: hidden;
+      text-align: justify;
+      text-justify: inter-word;
       text-overflow: ellipsis;
       overflow: hidden;
       display: -webkit-box;
       -webkit-line-clamp: 8;
       -webkit-box-orient: vertical;
+      padding: 20;
       }
       p2 {
       width: 500px;
       overflow: hidden;
+          text-align: justify;
+          padding-right: 1cm;
       text-overflow: ellipsis;
-      overflow: hidden;
+        overflow: auto;
+        position: relative;
+        margin-left: -5px;
       display: -webkit-box;
       -webkit-line-clamp: 8;
       -webkit-box-orient: vertical;
@@ -164,56 +208,102 @@ border-radius: 5px;
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
-
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
 }
 
-   </style>
+/* Modal Content (Image) */
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+
+
+
+</style>
+<script>
+    document.body.style.zoom="90%"
+</script>
 
 <div class="row">
+    <div class="col-md-0">
+    </div>
     <div class="col-md-3">
-        <img class="img-circle2" src="/static/covers/{{ book.cover }}" height= 400 class=".w3-image" hspace="80" style="float:left" />
+        <div class="container">
+            <ul class="row">
+                <li class="col-lg-2 col-md-2 col-sm-3 col-xs-4"><img src="/static/covers/{{ book.cover }}" height=400
+                                                                     hspace="105"/></li>
+            </ul>
+        </div>
+
+
     </div>
     <div class="col-md-8">
         <p></p>
         <page size="A4">
-      <ul><h1>{{book.title}}</h1></ul>
+            <ul><h1>{{book.title}}</h1></ul>
             <ul class="w3-ul" style="display: inline">
 
-                              <div class="w3-col w3-container m4 ">
-                                  <p></p>
+                <div class="w3-col w3-container m4 ">
+                    <p></p>
 
-                <li><b>Author</b>:<button type="button" class="w3-bar-item w3-button" data-toggle="modal" data-target="#authorModel">{{book.author.first}} {{book.author.last}}</button>
+                    <li><b>Author</b>:
+                        <button type="button" class="w3-bar-item w3-button" data-toggle="modal"
+                                data-target="#authorModel">{{book.author.first}} {{book.author.last}}
+                        </button>
 
-                <li><b>Genre</b>:<br> <a href="/fix/id/{{ book.genre.id }}">{{book.genre}}</a></li>
+                    <li><b>Genre</b>:<br> <a href="/fix/id/{{ book.genre.id }}">{{book.genre}}</a></li>
 
-                <li><b>Publisher</b>: <br><a href="#">{{book.publisher}}</a></li>
-                <li><b>Rating</b>:<br> Critics: {{book.rating}} <br>Customers: {{user_rating}}</li>
-                <li><b>Price: </b>{{book.price}}$</li>
-  </div>
+                    <li><b>Publisher</b>: <br><a href="#">{{book.publisher}}</a></li>
+                    <li><b>Rating</b>:<br> Critics: {{book.rating}} <br>Customers: {{user_rating}}</li>
+                    <li><b>Price: </b>{{book.price}}$</li>
+                </div>
 
             </ul>
             <div class="w3-col w3-container m8 ">
-                <p></p><p></p><p></p><p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
                 <p2>
                     {{book.about}}
                 </p2>
-                <p></p><p></p>
-                  <div class="w3-row margin-bottom-5">
-                      <div class="w3-col s4  w3-center">
-                          <a href="books/byauthor/{{author.id}}" class="w3-bar-item w3-button"  style="padding-left:15px" >Books By Author</a>
-                      </div>
-                      <div class="w3-col s4  w3-center">
-                          <a class="w3-bar-item w3-button"  href="#" data-target="#product_view" style="padding-left:15px" data-toggle="modal">Add to Cart</a>
-                      </div>
-                      <div class="w3-col s4  w3-center">  {% if purchased %}
-                          <a class="w3-bar-item w3-button"  href="/books/review/{{ book.id }}" style="padding-left:15px" >Submit Review</a>
-                          {% else %}
-                          <a class="w3-bar-item w3-button"  href="/books/review_denied" style="padding-left:15px" >Submit Review</a>
-                          {% endif %}</div>
-                  </div>
-              </div>
+                <br>
+                <b>Release Date: </b>{{book.release_date}}
+                <p></p>
+                <p></p>
+                <div class="w3-row margin-bottom-5">
+                    <div class="w3-col s4  w3-center">
+                        <a href="books/byauthor/{{author.id}}" class="w3-bar-item w3-button" style="padding-left:15px">Books
+                            By Author</a>
+                    </div>
+                    <div class="w3-col s4  w3-center">
+                        <a class="w3-bar-item w3-button" href="#" data-target="#product_view" style="padding-left:15px"
+                           data-toggle="modal">Add to Cart</a>
+                    </div>
+                    <div class="w3-col s4  w3-center"> {% if purchased %}
+                        <a class="w3-bar-item w3-button" href="/books/review/{{ book.id }}" style="padding-left:15px">Submit
+                            Review</a>
+                        {% else %}
+                        <a class="w3-bar-item w3-button" href="/books/review_denied" style="padding-left:15px">Submit
+                            Review</a>
+                        {% endif %}
+                    </div>
+                </div>
 
-
+            </div>
 
 
         </page>
@@ -232,31 +322,30 @@ border-radius: 5px;
                     {{form.as_p}}
                 </div>
                 <div class="modal-footer">
-                    <input class="btn btn-primary" type="submit" value="Save" />
+                    <input class="btn btn-primary" type="submit" value="Save"/>
                     <input name="cancel" class="btn" type="submit" value="Cancel"/>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
 <div>
-   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-   <div class="carousel-reviews broun-block">
-      <div class="container">
-         <div class="row">
-            <div id="carousel-reviews" class="carousel slide" data-ride="carousel">
-               <div class="carousel-inner">
-                  <div class="item active">
-                     {% for review in reviews %}
-                     {% if forloop.counter > 3 %}
-                     {% else %}
-                     {% if forloop.counter == 1 %}
-                     <div class="col-md-4 col-sm-6">
-                        <div class="block-text rel zmin">
-                           <a title="" href="#"> {{review.title}}</a>
-                           <div class="mark"> My rating: {{review.rating}}
-                              <span class="rating-input">
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <div class="carousel-reviews broun-block">
+        <div class="container">
+            <div class="row">
+                <div id="carousel-reviews" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            {% for review in reviews %}
+                            {% if forloop.counter0|modulo3:3 %}
+                            <div class="col-md-4 col-sm-6">
+                                <div class="block-text rel zmin">
+                                    <a title="" href="#"> {{review.title}}</a>
+                                    <div class="mark"> My rating: {{review.rating}}
+                                        <span class="rating-input">
                               {% for i in "12345" %}
                               {% if review.rating >= forloop.counter %}
                               <span class="glyphicon glyphicon-star"></span>
@@ -265,31 +354,31 @@ border-radius: 5px;
                               {% endif %}
                               {% endfor %}
                               </span>
-                           </div>
-                            <p>{{review.body}}</p>
-                            {% if review.anonymous %}
-                                <p> -Anonymous</p>
-                            {% else %}
-                                <p> -{{review.user}}</p>
+                                    </div>
+                                    <p>{{review.body}}</p>
+                                    {% if review.anonymous %}
+                                    <p> -Anonymous</p>
+                                    {% else %}
+                                    <p> -{{review.user}}</p>
+                                    {% endif %}
+                                    <ins class="ab zmin block"></ins>
+                                </div>
+                                <div class="person-text rel">
+                                    {% if review.anonymous %}
+                                    <img class="img-circle" src="/static/pics/a.jpg"/>
+                                    {% else %}
+                                    <img class="img-circle" src="/static/pics/{{review.user.cover}}" height="128" wifth="128"/>
+                                    {% endif %}
+                                    <i>{{review.user.last_login}}</i>
+                                </div>
+                            </div>
                             {% endif %}
-                           <ins class="ab zmin block"></ins>
-                        </div>
-                        <div class="person-text rel">
-                            {% if review.anonymous %}
-                                <img class="img-circle" src="/static/pics/a.jpg" />
-                            {% else %}
-                                <img class="img-circle" src="/static/pics/jose.jpg" />
-                            {% endif %}
-                           <i>{{review.user.last_login}}</i>
-                        </div>
-                     </div>
-                     {% endif %}
-                     {% if forloop.counter == 2 %}
-                     <div class="col-md-4 col-sm-6 hidden-xs">
-                        <div class="block-text rel zmin">
-                           <a title="" href="#"> {{review.title}}</a>
-                           <div class="mark"> My rating: {{review.rating}}
-                              <span class="rating-input">
+                            {% if forloop.counter0|modulo:3 %}
+                            <div class="col-md-4 col-sm-6 hidden-xs">
+                                <div class="block-text rel zmin">
+                                    <a title="" href="#"> {{review.title}}</a>
+                                    <div class="mark"> My rating: {{review.rating}}
+                                        <span class="rating-input">
                               {% for i in "12345" %}
                               {% if review.rating >= forloop.counter %}
                               <span class="glyphicon glyphicon-star"></span>
@@ -298,31 +387,31 @@ border-radius: 5px;
                               {% endif %}
                               {% endfor %}
                               </span>
-                           </div>
-                            <p>{{review.body}}</p>
-                            {% if review.anonymous %}
-                                <p> -Anonymous</p>
-                            {% else %}
-                                <p> -{{review.user}}</p>
+                                    </div>
+                                    <p>{{review.body}}</p>
+                                    {% if review.anonymous %}
+                                    <p> -Anonymous</p>
+                                    {% else %}
+                                    <p> -{{review.user}}</p>
+                                    {% endif %}
+                                    <ins class="ab zmin block"></ins>
+                                </div>
+                                <div class="person-text rel">
+                                    {% if review.anonymous %}
+                                    <img class="img-circle" src="/static/pics/a.jpg"/>
+                                    {% else %}
+                                    <img class="img-circle" src="/static/pics/{{review.user.cover}}" height="128" wifth="128"/>
+                                    {% endif %}
+                                    <i>{{review.user.last_login}}</i>
+                                </div>
+                            </div>
                             {% endif %}
-                           <ins class="ab zmin block"></ins>
-                        </div>
-                        <div class="person-text rel">
-                            {% if review.anonymous %}
-                                <img class="img-circle" src="/static/pics/a.jpg" />
-                            {% else %}
-                                <img class="img-circle" src="/static/pics/jose.jpg" />
-                            {% endif %}
-                           <i>{{review.user.last_login}}</i>
-                        </div>
-                     </div>
-                     {% endif %}
-                     {% if forloop.counter == 3 %}
-                     <div class="col-md-4 col-sm-6 hidden-sm hidden-xs">
-                        <div class="block-text rel zmin">
-                           <a title="" href="#"> {{review.title}}</a>
-                           <div class="mark"> My rating: {{review.rating}}
-                              <span class="rating-input">
+                            {% if forloop.counter0|modulo2:3 %}
+                            <div class="col-md-4 col-sm-6 hidden-sm hidden-xs">
+                                <div class="block-text rel zmin">
+                                    <a title="" href="#"> {{review.title}}</a>
+                                    <div class="mark"> My rating: {{review.rating}}
+                                        <span class="rating-input">
                               {% for i in "12345" %}
                               {% if review.rating >= forloop.counter %}
                               <span class="glyphicon glyphicon-star"></span>
@@ -331,200 +420,106 @@ border-radius: 5px;
                               {% endif %}
                               {% endfor %}
                               </span>
-                           </div>
-                            <p>{{review.body}}</p>
-                            {% if review.anonymous %}
-                                <p> -Anonymous</p>
-                            {% else %}
-                                <p> -{{review.user}}</p>
+                                    </div>
+                                    <p>{{review.body}}</p>
+                                    {% if review.anonymous %}
+                                    <p> -Anonymous</p>
+                                    {% else %}
+                                    <p> -{{review.user}}</p>
+                                    {% endif %}
+                                    <ins class="ab zmin block"></ins>
+                                </div>
+                                <div class="person-text rel">
+                                    {% if review.anonymous %}
+                                    <img class="img-circle" src="/static/pics/a.jpg"/>
+                                    {% else %}
+                                    <img class="img-circle" src="/static/pics/{{review.user.cover}}" height="128" wifth="128"/>
+                                    {% endif %}
+                                    <i>{{review.user.last_login}}</i>
+                                </div>
+                            </div>
                             {% endif %}
-                           <ins class="ab zmin block"></ins>
+                            {% endfor %}
                         </div>
-                        <div class="person-text rel">
-                            {% if review.anonymous %}
-                                <img class="img-circle" src="/static/pics/a.jpg" />
-                            {% else %}
-                                <img class="img-circle" src="/static/pics/jose.jpg" />
-                            {% endif %}
-                           <i>{{review.user.last_login}}</i>
-                        </div>
-                     </div>
-                     {% endif %}
-                     {% endif %}
-                     {% endfor %}
-                  </div>
-
-                  <div class="item">
-                  {% for review in reviews %}
-                    {% if forloop.counter < 7 %}
-                  {% if forloop.counter > 3 %}
-                  {% if forloop.counter0|modulo3:3 %}
-
-                     {% endif %}
-                     {% if forloop.counter0|modulo3:3 %}
-                     <div class="col-md-4 col-sm-6">
-                        <div class="block-text rel zmin">
-                           <a title="" href="#"> {{review.title}}1</a>
-                           <div class="mark"> My rating: {{review.rating}}
-                              <span class="rating-input">
-                              {% for i in "12345" %}
-                                {% if review.rating >= forloop.counter %}
-                                  <span class="glyphicon glyphicon-star"></span>
-                                {% else %}
-                                   <span class="glyphicon glyphicon-star-empty"></span>
-                                {% endif %}
-                              {% endfor %}
-                              </span>
-                           </div>
-                            <p>{{review.body}}</p>
-                            {% if review.anonymous %}
-                                <p> -Anonymous</p>
-                            {% else %}
-                                <p> -{{review.user}}</p>
-                            {% endif %}
-                           <ins class="ab zmin block"></ins>
-                        </div>
-                        <div class="person-text rel">
-                            {% if review.anonymous %}
-                                <p> -Anonymous</p>
-                            {% else %}
-                                <p> -{{review.user}}</p>
-                            {% endif %}
-                           <ins class="ab zmin block"></ins>
-                        </div>
-                        <div class="person-text rel">
-                            {% if review.anonymous %}
-                                <img class="img-circle" src="/static/pics/a.jpg" />
-                            {% else %}
-                                <img class="img-circle" src="/static/pics/jose.jpg" />
-                            {% endif %}
-                           <i>{{review.user.last_login}}</i>
-                        </div>
-                     </div>
-                     {% elif forloop.counter0|modulo:3 %}
-                     <div class="col-md-4 col-sm-6 hidden-xs">
-                        <div class="block-text rel zmin">
-                           <a title="" href="#"> {{review.title}}</a>
-                           <div class="mark"> My rating: {{review.rating}}
-                              <span class="rating-input">
-                              {% for i in "12345" %}
-                              {% if review.rating >= forloop.counter %}
-                              <span class="glyphicon glyphicon-star"></span>
-                              {% else %}
-                              <span class="glyphicon glyphicon-star-empty"></span>
-                              {% endif %}
-                              {% endfor %}
-                              </span>
-                           </div>
-                            <p>{{review.body}}</p>
-                            {% if review.anonymous %}
-                                <p> -Anonymous</p>
-                            {% else %}
-                                <p> -{{review.user}}</p>
-                            {% endif %}
-                           <ins class="ab zmin block"></ins>
-                        </div>
-                        <div class="person-text rel">
-                            {% if review.anonymous %}
-                                <img class="img-circle" src="/static/pics/a.jpg" />
-                            {% else %}
-                                <img class="img-circle" src="/static/pics/jose.jpg" />
-                            {% endif %}
-                           <i>{{review.user.last_login}}</i>
-                        </div>
-                     </div>
-                     {% elif forloop.counter0|modulo2:3 %}
-                     <div class="col-md-4 col-sm-6 hidden-sm hidden-xs">
-                        <div class="block-text rel zmin">
-                           <a title="" href="#"> {{review.title}}</a>
-                           <div class="mark"> My rating: {{review.rating}}
-                              <span class="rating-input">
-                                  {% for i in "12345" %}
-                                      {% if review.rating >= forloop.counter %}
-                                        <span class="glyphicon glyphicon-star"></span>
-                                      {% else %}
-                                        <span class="glyphicon glyphicon-star-empty"></span>
-                                      {% endif %}
-                                  {% endfor %}
-                              </span>
-                           </div>
-                            <p>{{review.body}}</p>
-                            {% if review.anonymous %}
-                                <p> -Anonymous</p>
-                            {% else %}
-                                <p> -{{review.user}}</p>
-                            {% endif %}
-                           <ins class="ab zmin block"></ins>
-                        </div>
-                        <div class="person-text rel">
-                            {% if review.anonymous %}
-                                <img class="img-circle" src="/static/pics/a.jpg" />
-                            {% else %}
-                                <img class="img-circle" src="/static/pics/jose.jpg" />
-                            {% endif %}
-                           <i>{{review.user.last_login}}</i>
-                        </div>
-                     </div>
-                     {% endif %}
-                  {% endif %}
-                      {% endif %}
-                  {% endfor %}
-                  </div>
+                    </div>
 
 
-
-               </div>
-               <a class="left carousel-control" href="#carousel-reviews" role="button" data-slide="prev">
-               <span class="glyphicon glyphicon-chevron-left"></span>
-               </a>
-               <a class="right carousel-control" href="#carousel-reviews" role="button" data-slide="next">
-               <span class="glyphicon glyphicon-chevron-right"></span>
-               </a>
+                </div>
+                <a class="left carousel-control" href="#carousel-reviews" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+                <a class="right carousel-control" href="#carousel-reviews" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
             </div>
-         </div>
-      </div>
-   </div>
+        </div>
+    </div>
 </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-body">
+        </div>
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 <!-- Modal -->
 <div id="authorModel" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+    <div class="modal-dialog">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h1>{{book.author.first}} {{book.author.last}}</h1>
-      </div>
-      <div class="modal-body">
-                 <h4>
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">x</button>
+                <h1>{{book.author.first}} {{book.author.last}}</h1>
+            </div>
+            <div class="modal-body">
+                <h4>
                     {{book.author.about}}
                 </h4>
-      </div>
-    </div>
+            </div>
+        </div>
 
-  </div>
+    </div>
 </div>
 
 
+<script>
+$(document).ready(function(){
+   $('li img').on('click',function(){
+        var src = $(this).attr('src');
+        var img = '<img src="' + src + '" class="img-responsive"/>';
+        $('#myModal').modal();
+        $('#myModal').on('shown.bs.modal', function(){
+            $('#myModal .modal-body').html(img);
+        });
+        $('#myModal').on('hidden.bs.modal', function(){
+            $('#myModal .modal-body').html('');
+        });
+   });
+})
+
+</script>
 <div class="modal fade product_view" id="product_view">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <a href="#" data-dismiss="modal" class="class pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+                <a href="#" data-dismiss="modal" class="class pull-right"><span
+                        class="glyphicon glyphicon-remove"></span></a>
                 <h3 class="modal-title">{{book.title}}</h3>
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-6 product_img">
-                        <img src="/static/covers/{{ book.cover }}" class="img-responsive" >
+                    <div class="col-md-4 product_img">
+                        <img src="/static/covers/{{ book.cover }}" height="300" width="196">
                     </div>
-                    <div class="col-md-6 product_content">
-                        <h3 class="cost"><span class="glyphicon glyphicon-usd"></span> {{book.price}}</h3>
-                        <h4>Product Id: <span>{{book.id}}</span></h4>
-                        <div class="rating">
+                    <div class="col-md-8 product_content">
+                         <div class="rating">
                             <span class="rating-input">
+                                <h3>
+                                     <span class="glyphicon glyphicon-usd"></span> {{book.price}}
                                 {% for i in "12345" %}
                                     {% if book.rating >= forloop.counter %}
                                         <span class="glyphicon glyphicon-star"></span>
@@ -532,12 +527,15 @@ border-radius: 5px;
                                         <span class="glyphicon glyphicon-star-empty"></span>
                                     {% endif %}
                                 {% endfor %}
+
+                                </h3>
                             </span>
                         </div>
                         <p1>{{book.about}}</p1>
                         <br>
                         <div class="row">
                             <div class="col-md-5 col-sm-12">
+
                                 <select class="form-control" name="select">
                                     <option value="" selected="">QTY</option>
                                     <option value="">1</option>
@@ -546,12 +544,17 @@ border-radius: 5px;
                                     <option value="">4</option>
                                     <option value="">5</option>
                                 </select>
+
                             </div>
                         </div>
                         <div class="space-ten"></div>
                         <div class="btn-ground">
-                            <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span> Add To Cart</button>
-                            <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-heart"></span> Add To Wishlist</button>
+                            <button type="button" class="btn btn-primary"><span
+                                    class="glyphicon glyphicon-shopping-cart"></span> Add To Cart
+                            </button>
+                            <button type="button" class="btn btn-primary"><span
+                                    class="glyphicon glyphicon-heart"></span> Add To Wishlist
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -559,6 +562,7 @@ border-radius: 5px;
         </div>
     </div>
 </div>
+
 
 {% block review %}
 

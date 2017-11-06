@@ -1,11 +1,10 @@
 {% extends 'layout.html' %}
 {% load bootstrap3 %}
-
+{% load filters %}
 {# Load CSS and JavaScript #}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
-{% block title %} Book listing {% endblock %}
-
+{% block title %}Author Listing: {% endblock %}
 {% block content %}
 <style type="text/css">
 ::-webkit-scrollbar {
@@ -69,9 +68,9 @@ body {
 .card:after {
   content: '';
   display: block;
-  width: 300px;
+  width: 190px;
   height: 300px;
-  background: #d7d7d7;
+  background: #f1f1f1;
   position: absolute;
   animation: rotatemagic 0.75s cubic-bezier(0.425, 1.04, 0.47, 1.105) 1s both;
 }
@@ -100,19 +99,13 @@ body {
   position: relative;
 }
 .firstinfo img {
-  border-radius: 5%;
+  border-radius: 50%;
 }
 .firstinfo .profileinfo {
   padding: 0px 20px;
 }
 .firstinfo .profileinfo h1 {
   font-size: 1.8em;
-    overflow: hidden;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-   -webkit-box-orient: vertical;
 }
 .firstinfo .profileinfo h3 {
   font-size: 1.2em;
@@ -147,7 +140,7 @@ body {
     bottom: 10px;
   }
   100% {
-    bottom: -12px;
+    bottom: -42px;
   }
 }
 @keyframes rotatemagic {
@@ -155,112 +148,129 @@ body {
     opacity: 0;
     transform: rotate(0deg);
     top: -24px;
-    left: -240px;
+    left: -253px;
   }
   100% {
     transform: rotate(-30deg);
-    top: -30px;
-    left: -100px;
+    top: -24px;
+    left: -78px;
   }
+
+
 }
-.no-bullets {
-    list-style-type: none;
+
+hr {
+  height: 4px;
+  margin-left: 15px;
+  margin-bottom:-3px;
+}
+.hr-primary{
+  background-image: -webkit-linear-gradient(left, rgba(204,204,204,1), rgba(68, 68, 68,.4), rgba(204,204,204,1));
 }
 
+.breadcrumb {
+  background: rgba(245, 245, 245, 0);
+  border: 0px solid rgba(245, 245, 245, 1);
+  border-radius: 25px;
+  display: block;
+  text-align:center;
+}
 
+.btn-bread{
+    margin-top:10px;
+    font-size: 12px;
 
-
+    border-radius: 3px;
+}
 </Style>
-        <div class="w3-col w3-container m2 ">
+
+<div class="container">
+    <nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand">Browse</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">Book Title</a></li>
+          <li><a href="#">Author</a></li>
+          <li><a href="#">Price</a></li>
+          <li><a href="#">Book Rating</a></li>
+          <li><a href="#">Release Date</a></li>
+        </ul>
     </div>
-            <div class="w3-col w3-container m7 ">
-<ul class="no-bullets">
-    <li>
+    </nav>
+</div>
+
+<div class="container">
+    <div class="w3-col w3-container m2 ">
+    </div>
+    <div class="w3-col w3-container m7 ">
+        {% for book in all_books %}
+
         <div class="content">
             <div class="card">
                 <div class="firstinfo">
+                    <img src="/static/covers/{{ book.cover }}"width="120" height= "120"/>
                     <div class="profileinfo">
-                        <h1> Section Title </h1>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </li>
-    <br>
-
-    {% for book in all_books %}
-
-    <li>
-        <div class="content">
-            <div class="card">
-                <div class="firstinfo"><img src="/static/covers/{{ book.cover }}"width="120" height= "120"/>
-                    <div class="profileinfo">
-                        <h1><a href='/books/{{ book.id }}'> {{ book.title }}</a></h1>
+                    <h1><a href='/books/{{ book.id }}'> {{ book.title }}</a></h1>
                         <h3><a href='/books/byauthor/{{ book.author.id }}'>Author: {{ book.author }}</a>
                         </h3>
                         <p class="bio"> {{ book.about }}</p>
-                        <p><b>Rating</b>:
-                                                      {% for i in "12345" %}
-                              {% if book.rating >= forloop.counter %}
-                              <span class="glyphicon glyphicon-star"></span>
-                              {% else %}
-                              <span class="glyphicon glyphicon-star-empty"></span>
-                              {% endif %}
-                              {% endfor %}</p>
+                        <p>Price: ${{ book.price }}</p>
+                        <p>Rating: {{book.rating}}</p>
+                        <p>Release Date: {{ book.release_date }}</p>
                     </div>
                 </div>
             </div>
+            <br>
+        {% endfor %}
         </div>
-        <br>
-    </li>
-    {% endfor %}
+        <div class="w3-col w3-container m3 ">
+        </div>
+    </div>
 
 
+    <div class="badgescard"><span class="devicons devicons-django"></span><span
+            class="devicons devicons-python"> </span><span class="devicons devicons-codepen"></span><span
+            class="devicons devicons-javascript_badge"></span><span class="devicons devicons-gulp"></span><span
+            class="devicons devicons-angular"></span><span class="devicons devicons-sass"> </span></div>
 
-    <br>
-
-    <li>
         <div class="content">
             <div class="card">
                 <div class="firstinfo">
                     <div class="profileinfo">
+                    {% if all_books.paginator.num_pages > 1 %}
                         {% if all_books.has_previous %}
-                        <a class="w3-bar-item w3-button"  href="?page={{ all_books.previous_page_number }}" style="padding-left:15px" >Previous</a>
+                            <a class="w3-bar-item w3-button"  href="?page={{ all_books.previous_page_number }}" style="padding-left:15px" >Previous</a>
                         {% endif %}
-
                         <span class="current">
-           Page <b>{{ all_books.number }} </b> of {{ all_books.paginator.num_pages }}.
-        </span>
-
+                           Page <b>{{ all_books.number }} </b> of {{ all_books.paginator.num_pages }}.
+                        </span>
                         {% if all_books.has_next %}
-                                         <a class="w3-bar-item w3-button"  href="?page={{ all_books.next_page_number }}" style="padding-left:15px" >Next</a>
+                            <a class="w3-bar-item w3-button"  href="?page={{ all_books.next_page_number }}" style="padding-left:15px" >Next</a>
                         {% endif %}
+                    {% else %}
+                        <span class="current">
+                            Page <b> 1 </b> of <b> 1 </b>.
+                        </span>
+                    {% endif %}
                     </div>
                 </div>
             </div>
         </div>
         <br>
-    </li>
 
+</div>
+<script>
+//triggered when modal is about to be shown
+$('#my_modal').on('show.bs.modal', function(e) {
 
-    <br>
+    //get data-id attribute of the clicked element
+    var authorid = $(e.relatedTarget).data('author-id');
 
-
-</ul>
-                        </div>
-            <div class="w3-col w3-container m3 ">
-    </div>
-
-
+    //populate the textbox
+    $(e.currentTarget).find('input[name="authorid"]').val(authorid);
+});
+</script>
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
