@@ -14,4 +14,5 @@ urlpatterns = [
     url(r'displaycc/', display_cc, name='displaycc'),
     url(r'deletecc/', CreditCardDelete.as_view(), name='deletecc'),
     url(r'updatecc/', CreditCardUpdate.as_view(), name='updatecc'),
+    url(r'changepw/', change_password, name='changepw')
 ]
