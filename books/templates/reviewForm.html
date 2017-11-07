@@ -3,9 +3,7 @@
 {% bootstrap_messages %}
 
 <div class="container">
-                <div class="modal-body">
-
-
+    <div class="modal-body">
         <form method="POST">{% csrf_token %}
             {% for field in form %}
                 <div class="form-group">
@@ -23,6 +21,5 @@
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
             </div>
         </form>
-                </div>
-
+    </div>
 </div>
