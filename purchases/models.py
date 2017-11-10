@@ -26,7 +26,7 @@ class Orders(models.Model):
     qty = models.IntegerField(default=1)
     
     def __str__(self):
-        return f'{self.user} {self.book}'
+        return f'{self.user} {self.book} Qty: {self.qty}'
 
     class Meta:
         unique_together = ('book', 'user')

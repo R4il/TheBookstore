@@ -171,85 +171,79 @@ body {
 
 
 </Style>
-        <div class="w3-col w3-container m2 ">
+    <div class="w3-col w3-container m2 ">
     </div>
-            <div class="w3-col w3-container m7 ">
-<ul class="no-bullets">
-    <li>
-        <div class="content">
-            <div class="card">
-                <div class="firstinfo">
-                    <div class="profileinfo">
-                        <h1> Section Title </h1>
+    <div class="w3-col w3-container m7 ">
+        <ul class="no-bullets">
+            <li>
+                <div class="content">
+                    <div class="card">
+                        <div class="firstinfo">
+                            <div class="profileinfo">
+                                <h1> Section Title </h1>
 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </li>
-    <br>
-
-    {% for book in all_books %}
-
-    <li>
-        <div class="content">
-            <div class="card">
-                <div class="firstinfo"><img src="/static/covers/{{ book.cover }}"width="120" height= "120"/>
-                    <div class="profileinfo">
-                        <h1><a href='/books/{{ book.id }}'> {{ book.title }}</a></h1>
-                        <h3><a href='/books/byauthor/{{ book.author.id }}'>Author: {{ book.author }}</a>
-                        </h3>
-                        <p class="bio"> {{ book.about }}</p>
-                        <p><b>Rating</b>:
-                                                      {% for i in "12345" %}
-                              {% if book.rating >= forloop.counter %}
-                              <span class="glyphicon glyphicon-star"></span>
-                              {% else %}
-                              <span class="glyphicon glyphicon-star-empty"></span>
-                              {% endif %}
-                              {% endfor %}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br>
-    </li>
-    {% endfor %}
-
-
-
-    <br>
-
-    <li>
-        <div class="content">
-            <div class="card">
-                <div class="firstinfo">
-                    <div class="profileinfo">
-                        {% if all_books.has_previous %}
-                        <a class="w3-bar-item w3-button"  href="?page={{ all_books.previous_page_number }}" style="padding-left:15px" >Previous</a>
-                        {% endif %}
-
-                        <span class="current">
-           Page <b>{{ all_books.number }} </b> of {{ all_books.paginator.num_pages }}.
-        </span>
-
-                        {% if all_books.has_next %}
-                                         <a class="w3-bar-item w3-button"  href="?page={{ all_books.next_page_number }}" style="padding-left:15px" >Next</a>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br>
-    </li>
-
-
-    <br>
-
-
-</ul>
+                            </div>
                         </div>
-            <div class="w3-col w3-container m3 ">
+                    </div>
+                </div>
+            </li>
+            <br>
+
+            {% for book in all_books %}
+
+            <li>
+                <div class="content">
+                    <div class="card">
+                        <div class="firstinfo"><img src="/static/covers/{{ book.cover }}"width="120" height= "120"/>
+                            <div class="profileinfo">
+                                <h1><a href='/books/{{ book.id }}'> {{ book.title }}</a></h1>
+                                <h3><a href='/books/byauthor/{{ book.author.id }}'>Author: {{ book.author }}</a>
+                                </h3>
+                                <p class="bio"> {{ book.about }}</p>
+                                <p><b>Rating</b>:
+                                                              {% for i in "12345" %}
+                                      {% if book.rating >= forloop.counter %}
+                                      <span class="glyphicon glyphicon-star"></span>
+                                      {% else %}
+                                      <span class="glyphicon glyphicon-star-empty"></span>
+                                      {% endif %}
+                                      {% endfor %}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </li>
+            {% endfor %}
+
+
+            <br>
+            <li>
+                <div class="content">
+                    <div class="card">
+                        <div class="firstinfo">
+                            <div class="profileinfo">
+                                {% if all_books.has_previous %}
+                                <a class="w3-bar-item w3-button"  href="?page={{ all_books.previous_page_number }}" style="padding-left:15px" >Previous</a>
+                                {% endif %}
+
+                                <span class="current">
+                                     Page <b>{{ all_books.number }} </b> of {{ all_books.paginator.num_pages }}.
+                                </span>
+
+                                {% if all_books.has_next %}
+                                     <a class="w3-bar-item w3-button"  href="?page={{ all_books.next_page_number }}" style="padding-left:15px" >Next</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </li>
+            <br>
+        </ul>
+    </div>
+    <div class="w3-col w3-container m3 ">
     </div>
 
 

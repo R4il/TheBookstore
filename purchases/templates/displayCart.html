@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}
+
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block title %} Shopping cart {% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+    <h2>Your Shopping cart:</h2>
+    <p style="padding:20px;"></p>
+    {% for item in cart %}
+    <h3><a href = /books/{{item.book.id}}>Book: {{ item.book }}</a></h3>
+    <h5>Qty: {{ item.qty }}</h5>
+
+    <p style="padding:3px;">
+        Total price: {{item.price}}
+    </p>
+    <div class="row">
+
+    </div>
+    <hr>
+    {% endfor %}
+
+    <form action="{% url 'checkout' %}" method="POST" class="form-inline">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success btn-md">Checkout</button>
+    </form>
+    <p style="padding:25px;"></p>
+</div>
+
+{% endblock %}
