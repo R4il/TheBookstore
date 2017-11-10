@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^accounts/', include('accounts.urls', namespace='accounts')),
     url(r"^books/", include("books.urls", namespace='books')),
     url(r"^accounts/", include("django.contrib.auth.urls")),
+    url(r"^cart/", include("purchases.urls")),
     url(r'^admin/', admin.site.urls),
     url(r'^', include('send_email.urls')),
     url(r'search', books.views.book_search, name='search'),

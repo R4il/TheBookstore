@@ -30,6 +30,9 @@
      max-width: 80%;
      width:80%;
      background-color: #2F2F2F;
+     padding: 10;
+     bottom: 165;
+         opacity: 0.95;
     }
 
 a2 {
@@ -64,7 +67,7 @@ $(window).on('resize', function (){
 });
 
 $('.carousel').carousel({
-  interval: 6000,
+  interval: 10000,
   pause: "false"
 });
   .carousel-inner > .item > img,
@@ -80,41 +83,13 @@ $('.carousel').carousel({
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-
-    <div class="carousel slide" data-ride="carousel" id="mycarousel" style="width: 100%" data-interval="2000">
-        <ol class="carousel-indicators">
-            <li data-target="#mycarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#mycarousel" data-slide-to="1"></li>
-            <li data-target="#mycarousel" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner">
-            <div class="item active pic">
-                <img src="{% static 'img/book.jpeg' %}" alt="image">
+ <iframe width="100%" height="100%" src="https://www.youtube.com/embed/kl9NYIUNP2g?rel=0&showinfo=0&autoplay=1&controls=0&loop=1&playlist=kl9NYIUNP2g" frameborder="0" gesture="media" allowfullscreen></iframe>
                 <div class="carousel-caption">
-                    <h2>Welcome to "Name" </h2>
-                    <p>Description 1</p>
+                    <h2>We offer Specialty Geek books</h2>
+                    <p>Social Sciences, History, Sci-fi and more!</p>
                 </div>
-            </div>
-            <div class="item pic">
-                <img src="{% static 'img/Book2.jpg' %}" alt="image">
-                <div class="carousel-caption">
-                    <h2>Title 1</h2>
-                    <p>Description 2</p>
-                </div>
-            </div>
-            <div class="item pic">
-                <img src="{% static 'img/Book1.jpg' %}" alt="image">
-                <div class="carousel-caption">
-                    <h2>Title 2</h2>
-                    <p>Description 3</p>
-                </div>
-            </div>
-        </div>
 
-    </div>
-</div>
 
-</div>
 
 
 {% endblock %}

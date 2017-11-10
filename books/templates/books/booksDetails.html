@@ -155,7 +155,7 @@ ul li img {
         overflow: auto;
         position: relative;
         margin-left: -5px;
-              text-overflow: ellipsis;
+
       }
       p1 {
       width: 350px;
@@ -359,7 +359,7 @@ border-radius: 5px;
                                     {% if review.anonymous %}
                                     <p> -Anonymous</p>
                                     {% else %}
-                                    <p> -{{review.user}}</p>
+                                    <p> -{{review.user}} </p>
                                     {% endif %}
                                     <ins class="ab zmin block"></ins>
                                 </div>
@@ -533,28 +533,28 @@ $(document).ready(function(){
                         </div>
                         <p1>{{book.about}}</p1>
                         <br>
-                        <div class="row">
-                            <div class="col-md-5 col-sm-12">
+                        <form method="POST"  role="form" action="/cart/{{book.id}}/">{% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-5 col-sm-12">
 
-                                <select class="form-control" name="select">
-                                    <option value="" selected="">QTY</option>
-                                    <option value="">1</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                    <option value="">4</option>
-                                    <option value="">5</option>
-                                </select>
-
+                                    <select class="form-control" name="select">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="space-ten"></div>
-                        <div class="btn-ground">
-                            <button type="button" class="btn btn-primary"><span
-                                    class="glyphicon glyphicon-shopping-cart"></span> Add To Cart
-                            </button>
-                            <button type="button" class="btn btn-primary"><span
-                                    class="glyphicon glyphicon-heart"></span> Add To Wishlist
-                            </button>
+                            <div class="space-ten"></div>
+                            <div class="btn-ground">
+                                <button type="submit" name ="cart" class="btn btn-primary"><span
+                                        class="glyphicon glyphicon-shopping-cart"></span> Add To Cart
+                                </button>
+                                <button type="submit" name ="wishlist" class="btn btn-primary"><span
+                                        class="glyphicon glyphicon-heart"></span> Add To Wishlist
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>

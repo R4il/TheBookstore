@@ -162,10 +162,10 @@ def books_details(request, book_id):
     
     if(request.user.is_anonymous == False):
         order = PreviousOrder.objects.filter(user=request.user, book=book_id)
-        if len(order) == 0:
-            request.session['purchased'] = False
-        else:
+        if len(order):
             request.session['purchased'] = True
+        else:
+            request.session['purchased'] = False
     if len(reviews):
         user_rating = 0
         for review in reviews:
