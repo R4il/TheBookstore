@@ -10,15 +10,15 @@
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
 
-{% block title %} Shopping cart {% endblock %}
+{% block title %} Wishl ist {% endblock %}
 
 {% block content %}
 
 
 <div class="container">
-    <h2>Your Shopping cart:</h2>
+    <h2>Your Wish List:</h2>
     <p style="padding:20px;"></p>
-    {% for item in cart %}
+    {% for item in wishlist %}
     <h3><a href = /books/{{item.book.id}}>Book: {{ item.book }}</a></h3>
     <h5>Qty: {{ item.qty }}</h5>
 
@@ -26,22 +26,18 @@
         Total price: {{item.price}}
     </p>
     <div class="row">
-        <form action="/cart/drop/{{item.book.id}}/" method="POST" class="form-inline">
+        <form action="/cart/wishlist/drop/{{item.book.id}}/" method="POST" class="form-inline">
             {% csrf_token %}
             <input type="hidden" value="{{ item.book }}" name="drop">
-            <button type="submit" class="btn btn-md btn-danger">Remove from cart.</button>
+            <button type="submit" class="btn btn-md btn-danger">Remove from Wishlist.</button>
         </form>
     </div>
+
     <hr>
     {% endfor %}
 
-    <form action="{% url 'checkout' %}" method="POST" class="form-inline">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-success btn-md">Checkout</button>
-    </form>
-
-    <form action="/cart/wishlist/" method="GET">
-        <button type="submit" class="btn btn-success btn-md">Wishlist</button>
+    <form action="/cart/" method="GET">
+        <button type="submit" class="btn btn-success btn-md">Back to cart</button>
     </form>
     <p style="padding:25px;"></p>
 </div>
