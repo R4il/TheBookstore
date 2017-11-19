@@ -140,7 +140,7 @@ def display_cc(request):
 
 class CreditCardUpdate(UpdateView):
     model = CreditCard
-    fields = ['credit_card_number', 'exp_date', 'cvv', 'owner_name']
+    form_class = EditCreditCardForm
     template_name_suffix = '_update_form'
 
     def get_success_url(self):

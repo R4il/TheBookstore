@@ -11,8 +11,8 @@
 
 {% block title %}Credit Card {% endblock %}
 
-
 {% block content %}
+
 <div class="container">
     <h1>Credit Card Management</h1>
     <p style="padding:20px;"></p>
@@ -20,20 +20,23 @@
         {% for field in form %}
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-2 control-label">
-                    {% bootstrap_label field.label %}
+                    {% bootstrap_label field.label %} {{ form.fieldname.errors }}
                 </div>
                 <div class="col-sm-4">
                     {% bootstrap_field field show_label=False form_group_class=None placeholder="" %}
+
                 </div>
             </div>
             <p style="padding:10px;"></p>
         {% endfor %}
-
+        {{ form.non_field_errors }}
         {% buttons %}
+
         <div class="col-sm-offset-4 col-sm-2">
             <button type="submit" class="btn btn-md btn-primary">Sign Up</button>
         </div>
         {% endbuttons %}
+
     </form>
 </div>
 <div>
@@ -41,3 +44,4 @@
 </div>
 
 {% endblock %}
+

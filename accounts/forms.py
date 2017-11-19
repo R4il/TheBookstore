@@ -1,4 +1,4 @@
-import re
+import re, datetime
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
@@ -152,6 +152,23 @@ class EditCreditCardForm(ModelForm):
     cvv = forms.CharField(label = 'CVV')
     owner_name = forms.CharField(label = 'Owner name')
 
+    #clean cvv using credit card data
+    def clean(self):
+        cleaned_data = super(EditCreditCardForm, self).clean()
+        cc = cleaned_data.get('credit_card_number')
+        cv = cleaned_data.get('cvv')
+        type = getCardType(str(cc))
+        if (re.match("^[0-9]{3}$", cv)):
+            if (type == "AmEx"):
+                raise forms.ValidationError("CVV for Amex must be 4 digits")
+        elif (re.match("^[0-9]{4}$", cv)):
+            if (type != "AmEx"):
+                raise forms.ValidationError("CVV for Visa, MasterCard, Discover must be 3 digits")
+        else:
+            raise forms.ValidationError("CVV must be 3 digits (4 for AmEx)")
+
+        return self.cleaned_data
+
     # verifies the credit card number and type
     def clean_credit_card_number(self):
        cc = self.cleaned_data['credit_card_number']
@@ -169,30 +186,47 @@ class EditCreditCardForm(ModelForm):
            else:  # otherwise it's a valid number but it's not an accepted type, alert the users as to which types are supported
                raise forms.ValidationError('Not a valid card type!\nAccepted: Visa, MasterCard, Discover, American Express')
 
+    # validates expiration date, both formatting and whether or not the date has past
     def clean_exp_date(self):
         ed = self.cleaned_data['exp_date']
+        # if it fits MM/YY
         if(re.match("^(0[1-9]|1[0-2])\/([0-9]{2}$)", ed)):
-            return ed
-        else:
-            raise forms.ValidationError("Invalid expiration date! Use format: MM/YY")
+            split = ed.partition('/') # split it based on the "/"
+            month = int(split[0]) # month is the first two digits
+            yeartwodigits = int(split[2]) # last two digits of year are last two digits
+            year = 2000 + yeartwodigits # we can assume that the actualy year is 20XX where XX is those last two digits
 
-    def clean_cvv(self):
-        cv = self.cleaned_data['cvv']
-        cardtype = "Visa" # HOLDER CODE, TEMPORARY
-        if(re.match("^[0-9]{3}$", cv)):
-            if(cardtype == "AmEx"):
-                #raise forms.ValidationError(str.format("CVV for type {} must be 4 digits", cardtype))
-                raise forms.ValidationError("CVV for Amex must be 3 digits")
+            # set the expiration date to a datetime object using the year and month (the 1st of month for simplicity)
+            date = datetime.datetime(year, month, 1)
+            now = datetime.datetime.now()
+
+            # compare them, if now > date the card's expired already
+            if(now > date):
+                raise forms.ValidationError("The card's expiration date has been passed!")
             else:
-                return cv
-        elif(re.match("^[0-9]{4}$", cv)):
-            if(cardtype != "AmEx"):
-                # raise forms.ValidationError(str.format("Cvv for type {} must be 4 digits", cardtype))
-                raise forms.ValidationError("CVV for Visa, MasterCard, Discover must be 3 digits")
-            else:
-                return cv
+                return ed
+
         else:
-            raise forms.ValidationError("Invalid CVV, must be numbers only with 3 or 4 digits depending on card type")
+            #the regex REQUIRES that leading 0
+            raise forms.ValidationError("Invalid expiration date! Use format: MM/YY (e.g. 01/23)")
+
+    # def clean_cvv(self):
+    #     cv = self.cleaned_data['cvv']
+    #     cardtype = "Visa" # HOLDER CODE, TEMPORARY
+    #     if(re.match("^[0-9]{3}$", cv)):
+    #         if(cardtype == "AmEx"):
+    #             #raise forms.ValidationError(str.format("CVV for type {} must be 4 digits", cardtype))
+    #             raise forms.ValidationError("CVV for Amex must be 3 digits")
+    #         else:
+    #             return cv
+    #     elif(re.match("^[0-9]{4}$", cv)):
+    #         if(cardtype != "AmEx"):
+    #             # raise forms.ValidationError(str.format("Cvv for type {} must be 4 digits", cardtype))
+    #             raise forms.ValidationError("CVV for Visa, MasterCard, Discover must be 3 digits")
+    #         else:
+    #             return cv
+    #     else:
+    #         raise forms.ValidationError("Invalid CVV, must be numbers only with 3 or 4 digits depending on card type")
 
     class Meta:
         model = CreditCard
