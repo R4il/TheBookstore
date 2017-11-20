@@ -16,6 +16,61 @@ import logging
 # Create your views here.
 
 
+def browsebyrelease(request):
+    all_books = Book.objects.all().order_by("title").order_by("release_date")
+    paginator = Paginator(all_books, 10)
+
+    page = request.GET.get('page')
+    try:
+        books = paginator.page(page)
+    except PageNotAnInteger:
+        books = paginator.page(1)
+    except EmptyPage:
+        books = paginator.page(paginator.num_pages)
+
+    context = {
+        "all_books": books,
+    }
+    return render(request, 'books/browse.html', context)
+
+
+def browsebyrating(request):
+    all_books = Book.objects.all().order_by("title").order_by("rating")
+    paginator = Paginator(all_books, 10)
+
+    page = request.GET.get('page')
+    try:
+        books = paginator.page(page)
+    except PageNotAnInteger:
+        books = paginator.page(1)
+    except EmptyPage:
+        books = paginator.page(paginator.num_pages)
+
+    context = {
+        "all_books": books,
+    }
+    return render(request, 'books/browse.html', context)
+
+
+def browsebyprice(request):
+    all_books = Book.objects.all().order_by("title").order_by('price')    # LOWEST TO HIGHEST
+    # all_books = Book.objects.all().order_by("title").order_by('-price') # HIGHEST TO LOWEST
+    paginator = Paginator(all_books, 10)
+
+    page = request.GET.get('page')
+    try:
+        books = paginator.page(page)
+    except PageNotAnInteger:
+        books = paginator.page(1)
+    except EmptyPage:
+        books = paginator.page(paginator.num_pages)
+
+    context = {
+        "all_books": books,
+    }
+    return render(request, 'books/browse.html', context)
+
+
 def author_alpha(request):
     all_authors = Author.objects.all().order_by("last")
     query = request.GET.get("letter")
@@ -63,6 +118,7 @@ def genre(request):
 def booksbygenre(request, genre_id):
     all_books = Book.objects.filter(genre_id=genre_id).order_by("title")
     paginator = Paginator(all_books, 5)  # Show 10 contacts per page
+    genre = Genre.objects.filter(pk=genre_id)
 
     page = request.GET.get('page')
     try:
@@ -75,7 +131,9 @@ def booksbygenre(request, genre_id):
         books = paginator.page(paginator.num_pages)
 
     context = {
-        "all_books": books
+        "all_books": books,
+        "section": "genre",
+        "section_title": genre,
     }
 
     return render(request, "books/listBooks.html", context)
@@ -96,7 +154,9 @@ def bestsellers(request):
         books = paginator.page(paginator.num_pages)
 
     context = {
-        "all_books": books
+        "all_books": books,
+        "section": "bestseller",
+        "section_title": "-Best Sellers-",
     }
 
     return render(request, "books/listBooks.html", context)
@@ -104,7 +164,7 @@ def bestsellers(request):
 
 def books(request):
     all_books = Book.objects.all().order_by("title")
-    paginator = Paginator(all_books, 5)  # Show 10 contacts per page
+    paginator = Paginator(all_books, 10)  # Show 10 contacts per page
 
     page = request.GET.get('page')
     try:
@@ -205,10 +265,13 @@ def author_details(request, author_id):
 
 def by_author(request, author_id):
     all_books = Book.objects.filter(author_id=author_id)
+    authorname = Author.objects.filter(pk=author_id)
 
     template = loader.get_template('books/listBooks.html')
     context = {
         'all_books': all_books,
+        'section': "author",
+        'section_title': authorname,
     }
     return HttpResponse(template.render(context, request))
 

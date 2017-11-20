@@ -180,8 +180,17 @@ body {
                     <div class="card">
                         <div class="firstinfo">
                             <div class="profileinfo">
-                                <h1> Section Title </h1>
-
+                                {% if section == "bestseller" %}
+                                    <h1> {{ section_title }} </h1>
+                                {% elif section == "genre" %}
+                                    {% for name in section_title %}
+                                        <h1> {{ name.genre }} </h1>
+                                    {% endfor %}
+                                {% elif section == "author" %}
+                                    {% for name in section_title %}
+                                        <h1> Books by: {{ name.first }} {{ name.last }} </h1>
+                                    {% endfor %}
+                                {% endif %}
                             </div>
                         </div>
                     </div>

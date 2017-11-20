@@ -184,24 +184,57 @@ hr {
 }
 </Style>
 
-<div class="container">
-    <nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand">Browse</a>
-        </div>
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#">Book Title</a></li>
-          <li><a href="#">Author</a></li>
-          <li><a href="#">Price</a></li>
-          <li><a href="#">Book Rating</a></li>
-          <li><a href="#">Release Date</a></li>
-        </ul>
-    </div>
-    </nav>
-</div>
 
+
+<div class="container">
+
+    <!DOCTYPE html>
+<html>
+<head>
+<style>
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #111;
+}
+
+.active {
+    background-color: #4CAF50;
+}
+</style>
+</head>
+    <body>
+        <ul>
+            <li class="active"><a href="{% url 'index' %}">Homepage</a></li>
+            <li><a href="{% url 'books' %}">Book Title</a></li>
+            <li><a href="{% url 'browsebyprice' %}">Price</a></li>
+            <li><a href="{% url 'browsebyrating' %}">Book Rating</a></li>
+            <li><a href="{% url 'browsebyrelease' %}">Release Date</a></li>
+        </ul>
+    </body>
+</html>
+
+
+</div>
+<br>
 <div class="container">
     <div class="w3-col w3-container m2 ">
     </div>
