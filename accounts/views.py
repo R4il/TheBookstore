@@ -38,6 +38,7 @@ def login_view(request):
         else:
             # bad login credentials were provided
             messages.error(request, 'Sorry the credentials you input, were incorrect.')
+            return render(request, 'invalidLogin.html')
 
         return HttpResponseRedirect(next)
 

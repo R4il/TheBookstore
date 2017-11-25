@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+{% load bootstrap3 %}
+{% load filters %}
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% block title %}Invalid Login Credentials!{% endblock %}
+{% block content %}
+<div class="container">
+      <h3 align="center">Invalid username/password combo!</h3>
+</div>
+{% endblock %}
