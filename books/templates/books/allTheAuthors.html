@@ -230,6 +230,8 @@ hr {
                 </div>
             </div>
             <br>
+            {% empty %}
+            <li>Sorry, no authors were found.</li>
             {% endfor %}
         </div>
         <div class="w3-col w3-container m3 ">
@@ -244,6 +246,7 @@ hr {
         <span class="devicons devicons-gulp"></span>
         <span class="devicons devicons-angular"></span><span class="devicons devicons-sass"> </span></div>
 
+        {% if all_authors.has_next %}
         <div class="content">
             <div class="card">
                 <div class="firstinfo">
@@ -261,6 +264,7 @@ hr {
                 </div>
             </div>
         </div>
+        {% endif %}
         <br>
 
 

@@ -227,6 +227,7 @@ body {
 
 
             <br>
+            {% if all_books.has_next %}
             <li>
                 <div class="content">
                     <div class="card">
@@ -249,6 +250,7 @@ body {
                 </div>
                 <br>
             </li>
+            {% endif %}
             <br>
         </ul>
     </div>

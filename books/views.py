@@ -93,6 +93,7 @@ def book_search(request):
     context = {
         "queryset": queryset,
         "authorset": authorset,
+
     }
     return render(request, 'searchlayout.html', context)
 
