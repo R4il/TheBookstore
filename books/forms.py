@@ -23,6 +23,6 @@ class ReviewForm(forms.ModelForm):
     def clean_rating(self):
         cleaned_data = self.cleaned_data
         if cleaned_data.get("rating") > 5 or cleaned_data.get("rating") < 0:
-            raise forms.ValidationError("Rating most be between 0 and 5")
+            raise forms.ValidationError("Rating must be between 0 and 5")
         return cleaned_data['rating']
 

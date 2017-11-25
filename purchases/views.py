@@ -1,7 +1,5 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from django.views.generic import DeleteView, CreateView, RedirectView, FormView, UpdateView
-from django.core.urlresolvers import reverse_lazy, reverse
 from .models import *
 # Create your views here.
 
@@ -19,32 +17,32 @@ def cart(request, book_id):
     return HttpResponseRedirect(f'/books/{book_id}')
 
 
-def displayCart(request):
+def display_cart(request):
     user = request.user.user_id
-    userCart = Orders.objects.filter(user_id=user)
-    for item in userCart:
-        itemPrice = item.book.price * item.qty
-        item.price = itemPrice
-    return render(request, 'displayCart.html', {'cart': userCart})
+    user_cart = Orders.objects.filter(user_id=user)
+    for item in user_cart:
+        item_price = item.book.price * item.qty
+        item.price = item_price
+    return render(request, 'displayCart.html', {'cart': user_cart})
 
 
-def displayWishlist(request):
+def display_wishlist(request):
     user = request.user.user_id
     wishlist = WishList.objects.filter(user_id=user)
     for item in wishlist:
-        itemPrice = item.book.price * item.qty
-        item.price = itemPrice
+        item_price = item.book.price * item.qty
+        item.price = item_price
     return render(request, 'displayWishlist.html', {'wishlist': wishlist})
 
 
 def checkout(request):
     user = request.user.user_id
-    userCart = Orders.objects.filter(user_id=user)
-    for item in userCart:
+    user_cart = Orders.objects.filter(user_id=user)
+    for item in user_cart:
         item.delete()
         order, created = PreviousOrder.objects.get_or_create(book=item.book, user=item.user, qty=item.qty)
         order.save()
-    userCart.delete()
+    user_cart.delete()
     return HttpResponseRedirect('/books')
 
 
@@ -57,7 +55,7 @@ def drop(request, book_id):
     return HttpResponseRedirect(f'/cart')
 
 
-def dropWishlist(request, book_id):
+def drop_wishlist(request, book_id):
     if request.user.is_anonymous:
         return HttpResponseRedirect('/accounts/signUp/')
     if book_id:

@@ -4,15 +4,11 @@ from .forms import ReviewForm
 from purchases.models import PreviousOrder
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.views.generic import DeleteView, CreateView, RedirectView, FormView, UpdateView
+from django.views.generic import CreateView
 from django.contrib import messages
-from django.core.urlresolvers import reverse_lazy, reverse
 from django.db import transaction
-from django.db.models import Q, Count
+from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
-import logging
-
 # Create your views here.
 
 
@@ -231,7 +227,6 @@ def books_details(request, book_id):
             'author': author,
             'reviews': reviews,
             'user_rating': user_rating,
-            #'purchased': request.session['purchased'],
         }
     return HttpResponse(template.render(context, request))
 
