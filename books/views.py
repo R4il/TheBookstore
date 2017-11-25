@@ -117,17 +117,15 @@ def genre(request):
 
 def booksbygenre(request, genre_id):
     all_books = Book.objects.filter(genre_id=genre_id).order_by("title")
-    paginator = Paginator(all_books, 5)  # Show 10 contacts per page
+    paginator = Paginator(all_books, 5)
     genre = Genre.objects.filter(pk=genre_id)
 
     page = request.GET.get('page')
     try:
         books = paginator.page(page)
     except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
         books = paginator.page(1)
     except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
         books = paginator.page(paginator.num_pages)
 
     context = {
@@ -147,10 +145,8 @@ def bestsellers(request):
     try:
         books = paginator.page(page)
     except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
         books = paginator.page(1)
     except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
         books = paginator.page(paginator.num_pages)
 
     context = {
@@ -170,10 +166,8 @@ def books(request):
     try:
         books = paginator.page(page)
     except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
         books = paginator.page(1)
     except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
         books = paginator.page(paginator.num_pages)
 
     context = {
@@ -185,31 +179,19 @@ def books(request):
 
 def authors(request):
     all_authors = Author.objects.all().order_by('last')
-    paginator = Paginator(all_authors, 5)# Show 20 contacts per page
+    paginator = Paginator(all_authors, 5)
     page = request.GET.get('page')
 
     try:
         all_authors = paginator.page(page)
     except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
         all_authors = paginator.page(1)
     except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
         all_authors = paginator.page(paginator.num_pages)
 
     template = loader.get_template('books/allTheAuthors.html')
     context = {
         'all_authors': all_authors,
-    }
-    return HttpResponse(template.render(context, request))
-
-
-def authorsalpha(request):#tobe done
-    all_authors = Author.objects.all().order_by('last')
-    template = loader.get_template('books/allTheAuthors.html')
-    authors = Author.objects.filter(name__iregex=r"[[:<:]]{0}".format(searchStr))
-    context = {
-        'authoralpha': authoralpha,
     }
     return HttpResponse(template.render(context, request))
 

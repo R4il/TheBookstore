@@ -29,7 +29,6 @@ urlpatterns = [
     url(r'^', include('send_email.urls')),
     url(r'search', books.views.book_search, name='search'),
     url(r'author/id/(?P<author_id>[0-9]+)/$', books.views.search_byauthor, name='search_byauthor'),
-    # url(r'^genre', books.views.genre, name='genre'),
     url(r'^genre/(?P<genre_id>[0-9]+)/$', books.views.booksbygenre, name='booksbygenre'),
     url(r'bestsellers', books.views.bestsellers, name='bestsellers'),
     url(r'^browse/$', books.views.books, name='books'),
