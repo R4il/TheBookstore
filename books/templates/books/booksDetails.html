@@ -252,7 +252,6 @@ border-radius: 5px;
     </div>
     <div class="col-md-8">
         <p></p>
-        <page size="A4">
             <ul><h1>{{book.title}}</h1></ul>
             <ul class="w3-ul" style="display: inline">
 
@@ -264,36 +263,32 @@ border-radius: 5px;
                                 data-target="#authorModel">{{book.author.first}} {{book.author.last}}
                         </button>
 
-                    <li><b>Genre</b>:<br> <a href="/fix/id/{{ book.genre.id }}">{{book.genre}}</a></li>
+                    <li><b>Genre</b>:<br> <a href="/genre/{{ book.genre.id }}">{{book.genre}}</a></li>
 
                     <li><b>Publisher</b>: <br><a href="#">{{book.publisher}}</a></li>
                     <li><b>Rating</b>:<br> Critics: {{book.rating}} <br>Customers: {{user_rating}}</li>
                     <li><b>Price: </b>{{book.price}}$</li>
+                    <li><b>Release Date: </b>{{book.release_date}}</li>
                 </div>
 
             </ul>
             <div class="w3-col w3-container m8 ">
                 <p></p>
-                <p></p>
-                <p></p>
-                <p></p>
                 <p2>
                     {{book.about}}
                 </p2>
                 <br>
-                <b>Release Date: </b>{{book.release_date}}
-                <p></p>
                 <p></p>
                 <div class="w3-row margin-bottom-5">
-                    <div class="w3-col s4  w3-center">
+                    <div class="w3-col s4  w3-left">
                         <a href="books/byauthor/{{author.id}}" class="w3-bar-item w3-button" style="padding-left:15px">Books
                             By Author</a>
                     </div>
-                    <div class="w3-col s4  w3-center">
+                    <div class="w3-col s4  w3-left">
                         <a class="w3-bar-item w3-button" href="#" data-target="#product_view" style="padding-left:15px"
                            data-toggle="modal">Add to Cart</a>
                     </div>
-                    <div class="w3-col s4  w3-center"> {% if purchased %}
+                    <div class="w3-col s4  w3-left"> {% if purchased %}
                         <a class="w3-bar-item w3-button" href="/books/review/{{ book.id }}" style="padding-left:15px">Submit
                             Review</a>
                         {% else %}
@@ -302,10 +297,7 @@ border-radius: 5px;
                         {% endif %}
                     </div>
                 </div>
-
             </div>
-
-
         </page>
     </div>
 </div>
@@ -531,7 +523,6 @@ $(document).ready(function(){
                                 </h3>
                             </span>
                         </div>
-                        <p1>{{book.about}}</p1>
                         <br>
                         <form method="POST"  role="form" action="/cart/{{book.id}}/">{% csrf_token %}
                             <div class="row">
